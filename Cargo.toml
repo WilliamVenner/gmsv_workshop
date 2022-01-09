@@ -1,0 +1,15 @@
+[package]
+name = "gmsv_downloadugc"
+version = "0.1.0"
+edition = "2021"
+
+[profile.release]
+codegen-units = 1
+lto = "thin"
+opt-level = "s"
+
+[dependencies]
+gmod = { version = "11.1.1", default-features = false }
+steamworks = "0.8.0"
+lazy_static = "1.4.0"
+crossbeam = "0.8.1"
