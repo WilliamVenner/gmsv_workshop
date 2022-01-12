@@ -1,46 +1,35 @@
-#![feature(c_unwind)]
+// lua_run require("downloadugc") steamworks.DownloadUGC(2711867367, function(path, f) PrintTable({path, f}) PrintTable({game.MountGMA(path)}) end)
 
-use steamworks::PublishedFileId;
+#![feature(c_unwind)]
+#![feature(hash_drain_filter)]
 
 #[macro_use] extern crate gmod;
 
-mod workshop;
 mod util;
+mod workshop;
 
-// TODO refactor
-
-lazy_static::lazy_static! {
-	static ref UGC_CHAN: Option<(workshop::Steam, crossbeam::channel::Receiver<(gmod::lua::LuaReference, Result<String, ()>)>)> = Some(workshop::Steam::new());
+thread_local! {
+	static STEAM: util::ChadCell<workshop::Steam> = util::ChadCell::new(workshop::Steam::init());
+	static LUA: util::ChadCell<Option<gmod::lua::State>> = util::ChadCell::new(None);
 }
 
-unsafe extern "C-unwind" fn poll(lua: gmod::lua::State) -> i32 {
-	let ugc = match &*UGC_CHAN {
-		Some(ugc) => &ugc.1,
-		None => return 0
-	};
-
-	while let Ok((reference, result)) = ugc.try_recv() {
-		lua.from_reference(reference);
-		lua.dereference(reference);
-		if let Ok(folder) = result {
-			lua.push_string(&folder);
-		} else {
-			lua.push_nil();
-		}
-		lua.pcall_ignore(1, 0);
-	}
-
-	0
+pub fn lua() -> gmod::lua::State {
+	LUA.with(|lua| unsafe { lua.unwrap_unchecked() })
 }
 
 unsafe extern "C-unwind" fn download(lua: gmod::lua::State) -> i32 {
 	let workshop_id = lua.to_integer(1);
-	if workshop_id <= 0 { return 0; }
 
-	let ugc = match &*UGC_CHAN {
-		Some(ugc) => &ugc.0,
-		None => return 0
-	};
+	if workshop_id <= 0 {
+		if !lua.is_nil(2) {
+			lua.check_function(2);
+			lua.push_value(2);
+			lua.push_nil();
+			lua.push_nil();
+			lua.pcall_ignore(2, 0);
+		}
+		return 0;
+	}
 
 	let callback = if !lua.is_nil(2) {
 		lua.check_function(2);
@@ -50,30 +39,31 @@ unsafe extern "C-unwind" fn download(lua: gmod::lua::State) -> i32 {
 		None
 	};
 
-	ugc.download(PublishedFileId(workshop_id as _), callback);
+	STEAM.with(|steam| {
+		let steam = steam.get_mut();
 
-	// TODO remove this hook later
-	// TODO use a 1 second timer
-	lua.get_global(lua_string!("hook"));
-	lua.get_field(-1, lua_string!("Add"));
-	lua.push_string("Think");
-	lua.push_string("gmsv_downloadugc");
-	lua.push_function(poll);
-	lua.call(3, 0);
-	lua.pop();
+		steam.download(steamworks::PublishedFileId(workshop_id as _), callback);
+	});
 
 	0
 }
 
 #[gmod13_open]
 unsafe fn gmod13_open(lua: gmod::lua::State) -> i32 {
-	lua.push_function(download);
-	lua.set_global(lua_string!("gmsv_downloadugc"));
-	0
-}
+	LUA.with(|cell| {
+		*cell.get_mut() = Some(lua);
+	});
 
-#[gmod13_close]
-unsafe fn gmod13_close(lua: gmod::lua::State) -> i32 {
+	lua.get_global(lua_string!("steamworks"));
+	if lua.is_nil(-1) {
+		lua.pop();
+		lua.new_table();
+	}
+
+	lua.push_function(download);
+	lua.set_field(-2, lua_string!("DownloadUGC"));
+
+	lua.set_global(lua_string!("steamworks"));
 
 	0
 }

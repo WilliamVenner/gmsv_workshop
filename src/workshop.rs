@@ -1,126 +1,174 @@
-use std::{net::Ipv4Addr, thread::JoinHandle, time::Duration, sync::{atomic::AtomicBool, Arc, Mutex}};
-
 use gmod::lua::LuaReference;
-use steamworks::{PublishedFileId, SteamError};
+use std::collections::HashMap;
+use steamworks::PublishedFileId;
 
-use crate::util::AtomicWriteOnceCell;
+use crate::util;
 
-#[inline]
-fn send_callback(callback: Option<LuaReference>, tx: &crossbeam::channel::Sender<(LuaReference, Result<String, ()>)>, result: Result<String, ()>) {
-	if let Some(callback) = callback {
-		let _ = tx.send((callback, result));
-	}
+macro_rules! check_installed {
+	($ugc:ident, $workshop_id:expr) => {
+		if let (Some(info), steamworks::ItemState::INSTALLED) = (
+			$ugc.item_install_info($workshop_id),
+			$ugc.item_state($workshop_id),
+		) {
+			Some(info.folder)
+		} else {
+			None
+		}
+	};
 }
 
 pub struct Steam {
-	tx: Option<crossbeam::channel::Sender<(PublishedFileId, Option<LuaReference>)>>,
-	thread: Option<JoinHandle<()>>,
-	result: Arc<AtomicWriteOnceCell<Result<(), steamworks::SteamError>>>,
+	pub server: steamworks::Server,
+	pub callbacks: HashMap<PublishedFileId, LuaReference>,
+	pub queued: HashMap<PublishedFileId, Option<LuaReference>>,
 }
 impl Steam {
-	pub fn new() -> (Steam, crossbeam::channel::Receiver<(LuaReference, Result<String, ()>)>) {
-		let result = Arc::new(AtomicWriteOnceCell::uninit());
-		let (tx, rx) = crossbeam::channel::unbounded();
-		let (downloaded_tx, downloaded_rx) = crossbeam::channel::unbounded();
+	pub fn init() -> Steam {
+		let (server, _) = unsafe {
+			steamworks::Server::from_raw(steamworks::sys::SteamAPI_SteamGameServer_v013())
+		};
 
-		let result_ref = result.clone();
-		let thread = std::thread::spawn(move || unsafe {
-			static CONNECTED: AtomicBool = AtomicBool::new(false);
-			CONNECTED.store(false, std::sync::atomic::Ordering::Release);
+		let steam = Steam {
+			callbacks: Default::default(),
+			queued: Default::default(),
+			server,
+		};
 
-			let (server, callbacks) = match steamworks::Server::init(Ipv4Addr::LOCALHOST, 0, 0, 0, steamworks::ServerMode::NoAuthentication, "0") {
-				Ok(steam) => {
-					result_ref.set(Ok(()));
-					steam
-				},
-				Err(err) => {
-					result_ref.set(Err(err));
-					return;
-				}
+		steam
+	}
+
+	pub fn download(&mut self, workshop_id: PublishedFileId, callback: Option<LuaReference>) {
+		let lua = crate::lua();
+		let ugc = self.server.ugc();
+
+		if let Some(folder) = check_installed!(ugc, workshop_id) {
+			return Self::callback(lua, callback, Some(folder));
+		}
+
+		if !self.server.is_logged_in() {
+			unsafe {
+				lua.get_global(lua_string!("hook"));
+				lua.get_field(-1, lua_string!("Add"));
+				lua.push_string("Think");
+				lua.push_string("gmsv_downloadugc_queued");
+				lua.push_function(Self::process_queued);
+				lua.call(3, 0);
+				lua.pop();
+			}
+
+			self.queued.insert(workshop_id, callback);
+
+			println!("[gmsv_downloadugc] Queued {:?}", workshop_id);
+			return;
+		}
+
+		let success = {
+			ugc.suspend_downloads(false);
+			ugc.download_item(workshop_id, true)
+		};
+		if !success {
+			eprintln!(
+				"[gmsv_downloadugc] Item ID {:?} is invalid or the server is not logged onto Steam",
+				workshop_id
+			);
+			return Self::callback(lua, callback, None);
+		}
+
+		if let Some(folder) = check_installed!(ugc, workshop_id) {
+			return Self::callback(lua, callback, Some(folder));
+		}
+
+		println!("[gmsv_downloadugc] Downloading {:?}", workshop_id);
+
+		if let Some(callback) = callback {
+			self.callbacks.insert(workshop_id, callback);
+		}
+
+		unsafe {
+			lua.get_global(lua_string!("timer"));
+			lua.get_field(-1, lua_string!("Create"));
+			lua.push_string("gmsv_downloadugc");
+			lua.push_integer(1);
+			lua.push_integer(0);
+			lua.push_function(Self::poll);
+			lua.call(4, 0);
+			lua.pop();
+		}
+	}
+
+	extern "C-unwind" fn process_queued(lua: gmod::lua::State) -> i32 {
+		crate::STEAM.with(|steam| {
+			let steam = steam.get_mut();
+
+			if !steam.server.is_logged_in() {
+				return 0;
 			};
 
-			loop {
-				let _connect = server.register_callback(|steam_callback: steamworks::SteamServersConnected| {
-					CONNECTED.store(true, std::sync::atomic::Ordering::Release);
-				});
-
-				let _failed = server.register_callback(|steam_callback: steamworks::SteamServerConnectFailure| {
-					println!("[gmsv_downloadugc] Failed to connect to Steam: {}, retrying...", steam_callback.reason);
-
-					CONNECTED.store(false, std::sync::atomic::Ordering::Release);
-
-					// TODO
-				});
-
-				server.log_on_anonymous();
-
-				while !CONNECTED.load(std::sync::atomic::Ordering::Relaxed) {
-					callbacks.run_callbacks();
-					std::thread::sleep(Duration::from_millis(50));
-				}
-
-				let ugc = server.ugc();
-				while let Ok((workshop_id, callback)) = rx.recv() {
-					if let Some(info) = ugc.item_install_info(workshop_id) {
-						send_callback(callback, &downloaded_tx, Ok(info.folder));
-					} else {
-						if !ugc.download_item(workshop_id, false) {
-							eprintln!("[gmsv_downloadugc] Item ID {:?} is invalid or the server is not logged onto Steam", workshop_id);
-							send_callback(callback, &downloaded_tx, Err(()));
-							continue;
-						}
-
-						let download_result = Arc::new(AtomicBool::new(false));
-						let download_result_ref = download_result.clone();
-						let _download_result = server.register_callback(move |steam_callback: steamworks::DownloadItemResult| {
-							if let Some(err) = steam_callback.error {
-								eprintln!("[gmsv_downloadugc] Error downloading {:?}: {}", workshop_id, err);
-							}
-							download_result_ref.store(true, std::sync::atomic::Ordering::Release);
-						});
-
-						while !download_result.load(std::sync::atomic::Ordering::Relaxed) {
-							callbacks.run_callbacks();
-							std::thread::sleep(Duration::from_millis(50));
-						}
-
-						match server.ugc().item_install_info(workshop_id) {
-							Some(info) => {
-								send_callback(callback, &downloaded_tx, Ok(info.folder));
-							},
-							None => {
-								eprintln!("[gmsv_downloadugc] Error downloading {:?}: item missing from disk?", workshop_id);
-								send_callback(callback, &downloaded_tx, Err(()));
-							}
-						}
-					}
-				}
+			for (workshop_id, callback) in std::mem::take(&mut steam.queued) {
+				steam.download(workshop_id, callback);
 			}
+
+			unsafe {
+				lua.get_global(lua_string!("hook"));
+				lua.get_field(-1, lua_string!("Remove"));
+				lua.push_string("Think");
+				lua.push_string("gmsv_downloadugc_queued");
+				lua.call(2, 0);
+				lua.pop();
+			}
+
+			0
+		})
+	}
+
+	unsafe extern "C-unwind" fn poll(lua: gmod::lua::State) -> i32 {
+		crate::STEAM.with(|steam| {
+			let steam = steam.get_mut();
+			let ugc = steam.server.ugc();
+
+			steam.callbacks.drain_filter(|workshop_id, callback| {
+				if let Some(folder) = check_installed!(ugc, *workshop_id) {
+					Self::callback(lua, Some(*callback), Some(folder));
+					true
+				} else {
+					false
+				}
+			});
 		});
 
-		(
-			Steam {
-				tx: Some(tx),
-				thread: Some(thread),
-				result
-			},
-
-			downloaded_rx
-		)
+		0
 	}
 
-	pub fn download(&self, workshop_id: PublishedFileId, callback: Option<LuaReference>) {
-		if let Some(ref tx) = self.tx {
-			let _ = tx.send((workshop_id, callback));
+	fn callback(lua: gmod::lua::State, callback: Option<LuaReference>, folder: Option<String>) {
+		if let Some(callback) = callback {
+			unsafe {
+				lua.from_reference(callback);
+				lua.dereference(callback);
+
+				if let Some(gma) = folder.map(util::find_gma).and_then(|res| res.ok().flatten()) {
+					lua.push_string(gma.to_string_lossy().as_ref());
+
+					if let Some(relative_path) = util::base_path_relative(&gma) {
+						lua.get_global(lua_string!("file"));
+						lua.get_field(-1, lua_string!("Open"));
+						lua.push_string(relative_path.to_string_lossy().as_ref());
+						lua.push_string("rb");
+						lua.push_string("BASE_PATH");
+						lua.call(3, 1);
+						lua.remove(lua.get_top() - 1);
+					} else {
+						eprintln!("[gmsv_downloadugc] Failed to find relative path for {:?}, please let me know here: https://github.com/WilliamVenner/gmsv_downloadugc/issues/new", gma);
+						lua.push_nil();
+					}
+				} else {
+					lua.push_nil();
+					lua.push_nil();
+				}
+
+				lua.pcall_ignore(2, 0);
+			}
 		}
 	}
 }
-impl Drop for Steam {
-	fn drop(&mut self) {
-		drop(self.tx.take());
 
-		if let Some(thread) = self.thread.take() {
-			let _ = thread.join();
-		}
-	}
-}
+unsafe impl Sync for Steam {}

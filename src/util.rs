@@ -1,52 +1,63 @@
-use std::{sync::atomic::AtomicBool, mem::MaybeUninit, cell::UnsafeCell};
+use std::{path::{Path, PathBuf}, cell::UnsafeCell};
 
-pub struct AtomicWriteOnceCell<T> {
-	value: UnsafeCell<MaybeUninit<T>>,
-	initialized: AtomicBool
-}
-impl<T> AtomicWriteOnceCell<T> {
-	pub const fn uninit() -> AtomicWriteOnceCell<T> {
-		AtomicWriteOnceCell {
-			value: UnsafeCell::new(MaybeUninit::uninit()),
-			initialized: AtomicBool::new(false)
-		}
-	}
-
-	pub const fn new(val: T) -> AtomicWriteOnceCell<T> {
-		AtomicWriteOnceCell {
-			value: UnsafeCell::new(MaybeUninit::new(val)),
-			initialized: AtomicBool::new(true)
-		}
-	}
-
-	pub fn get(&self) -> Option<&T> {
-		if self.initialized.load(std::sync::atomic::Ordering::Relaxed) {
-			Some(unsafe { (&*self.value.get()).assume_init_ref() })
-		} else {
-			None
-		}
-	}
-
-	/// Panics if the value is already initialized
-	///
-	/// Unsafe because this can potentially produce a data race. Should only ever be called by a single thread once.
-	pub unsafe fn set(&self, val: T) {
-		if self.initialized.load(std::sync::atomic::Ordering::Acquire) {
-			panic!("Value is already initialized");
-		}
-		(&mut *self.value.get()).as_mut_ptr().write(val);
-		self.initialized.store(true, std::sync::atomic::Ordering::Release);
-	}
-}
-impl<T> From<Option<T>> for AtomicWriteOnceCell<T> {
-    fn from(opt: Option<T>) -> Self {
-        opt.map(|val| {
-			AtomicWriteOnceCell::new(val)
+/// Find a GMA file in a directory
+pub fn find_gma<P: AsRef<Path>>(path: P) -> Result<Option<PathBuf>, std::io::Error> {
+	Ok(path
+		.as_ref()
+		.read_dir()?
+		.filter_map(|entry| entry.ok())
+		.filter_map(|entry| {
+			if entry.file_type().ok()?.is_file() {
+				Some(entry.path())
+			} else {
+				None
+			}
 		})
-		.unwrap_or_else(|| {
-			AtomicWriteOnceCell::uninit()
+		.filter(|path| {
+			path.extension()
+				.map(|str| str.eq_ignore_ascii_case("gma"))
+				.unwrap_or(false)
 		})
-    }
+		.next())
 }
-unsafe impl<T> Send for AtomicWriteOnceCell<T> {}
-unsafe impl<T> Sync for AtomicWriteOnceCell<T> {}
+
+/// Strips a path to make it relative to Gmod's BASE_PATH
+pub fn base_path_relative<'a>(path: &'a Path) -> Option<&'a Path> {
+	thread_local! {
+		static BASE_PATH: std::path::PathBuf = std::env::current_exe().expect("Failed to get the path of the current executable...?").parent().expect("The current executable has no parent folder...?").to_path_buf();
+	}
+	BASE_PATH.with(|base_path| {
+		path.strip_prefix(base_path).ok()
+	})
+}
+
+pub struct ChadCell<T>(UnsafeCell<T>);
+impl<T> ChadCell<T> {
+	pub const fn new(val: T) -> ChadCell<T> {
+		ChadCell(UnsafeCell::new(val))
+	}
+}
+impl<T> ChadCell<T> {
+	pub fn get_mut(&self) -> &mut T {
+		unsafe { &mut *self.0.get() }
+	}
+}
+impl<T> std::ops::Deref for ChadCell<T> {
+	type Target = T;
+
+	#[inline]
+	fn deref(&self) -> &Self::Target {
+		unsafe { &*self.0.get() }
+	}
+}
+impl<T> std::ops::DerefMut for ChadCell<T> {
+	#[inline]
+	fn deref_mut(&mut self) -> &mut Self::Target {
+		unsafe { &mut *self.0.get() }
+	}
+}
+impl<T: Default> Default for ChadCell<T> {
+	fn default() -> Self {
+		Self(Default::default())
+	}
+}
