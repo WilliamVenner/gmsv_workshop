@@ -60,6 +60,9 @@ unsafe fn gmod13_open(lua: gmod::lua::State) -> i32 {
 		lua.new_table();
 	}
 
+	lua.push_string(env!("CARGO_PKG_VERSION"));
+	lua.set_field(-2, lua_string!("gmsv_downloadugc"));
+
 	lua.push_function(download);
 	lua.set_field(-2, lua_string!("DownloadUGC"));
 
