@@ -1,6 +1,5 @@
 #[macro_use] extern crate build_cfg;
 
-#[build_cfg_main]
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     println!("cargo:rerun-if-changed=build.rs");
 
