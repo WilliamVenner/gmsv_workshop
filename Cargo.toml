@@ -21,4 +21,4 @@ refresh-bindgen = []
 
 [dependencies]
 gmod = { version = "11.1.1", default-features = false }
-steamworks = { path = "./steamworks-rs", features = ["raw-bindings", "refresh-bindgen"] }
+steamworks = { path = "./steamworks-rs", features = ["raw-bindings"] }
