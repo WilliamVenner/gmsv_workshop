@@ -1,5 +1,6 @@
 #[macro_use] extern crate build_cfg;
 
+#[build_cfg_main]
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     println!("cargo:rerun-if-changed=build.rs");
 
@@ -46,7 +47,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     println!("cargo:rustc-link-search={}", out_path.display());
     println!("cargo:rustc-link-lib=dylib={}", lib);
 
-	#[cfg(feature = "refresh-bindgen")] {
+	if build_cfg!(feature = "refresh-bindgen") {
 		macro_rules! platform_bindings {
 			($file:literal) => {{
 				if build_cfg!(all(target_os = "windows", target_pointer_width = "32")) {
