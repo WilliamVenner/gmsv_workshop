@@ -86,8 +86,6 @@ unsafe fn gmod13_open(lua: gmod::lua::State) -> i32 {
 		*cell.get_mut() = Some(lua);
 	});
 
-	// cxx::init();
-
 	lua.get_global(lua_string!("steamworks"));
 	if lua.is_nil(-1) {
 		lua.pop();
@@ -95,7 +93,7 @@ unsafe fn gmod13_open(lua: gmod::lua::State) -> i32 {
 	}
 
 	lua.push_string(env!("CARGO_PKG_VERSION"));
-	lua.set_field(-2, lua_string!("gmsv_downloadugc"));
+	lua.set_field(-2, lua_string!("gmsv_workshop"));
 
 	lua.push_function(download);
 	lua.set_field(-2, lua_string!("DownloadUGC"));
