@@ -1,5 +1,5 @@
 use gmod::lua::LuaReference;
-use std::collections::HashMap;
+use std::{collections::HashMap, mem::ManuallyDrop};
 use steamworks::PublishedFileId;
 
 use crate::util;
@@ -302,8 +302,8 @@ use super::*;
 }
 
 pub struct Steam {
-	pub server: steamworks::Server,
-	pub callbacks: steamworks::SingleClient<steamworks::ServerManager>,
+	pub server: ManuallyDrop<steamworks::Server>,
+	pub callbacks: ManuallyDrop<steamworks::SingleClient<steamworks::ServerManager>>,
 	pub pending: HashMap<PublishedFileId, LuaReference>,
 	pub queued: HashMap<PublishedFileId, Option<LuaReference>>,
 }
@@ -316,7 +316,8 @@ impl Steam {
 		let steam = Steam {
 			pending: Default::default(),
 			queued: Default::default(),
-			server, callbacks
+			server: ManuallyDrop::new(server),
+			callbacks: ManuallyDrop::new(callbacks)
 		};
 
 		steam
