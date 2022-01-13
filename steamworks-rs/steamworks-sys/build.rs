@@ -1,10 +1,9 @@
-extern crate bindgen;
+#[macro_use] extern crate build_cfg;
 
-#[cfg(feature = "docs-only")]
-fn main() {}
-
-#[cfg(not(feature = "docs-only"))]
+#[build_cfg_main]
 fn main() -> Result<(), Box<dyn std::error::Error>> {
+    println!("cargo:rerun-if-changed=build.rs");
+
     use std::env;
     use std::path::{Path, PathBuf};
     use std::fs::{self};
@@ -48,28 +47,42 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     println!("cargo:rustc-link-search={}", out_path.display());
     println!("cargo:rustc-link-lib=dylib={}", lib);
 
-    let bindings = bindgen::Builder::default()
-        .header(sdk_loc.join("public/steam/steam_api_flat.h").to_string_lossy())
-        .header(sdk_loc.join("public/steam/steam_gameserver.h").to_string_lossy())
-        .clang_arg("-xc++")
-        .clang_arg("-std=c++11")
-        .clang_arg(format!("-I{}", sdk_loc.join("public").display()))
-        .rustfmt_bindings(true)
-        .default_enum_style(bindgen::EnumVariation::Rust {
-            non_exhaustive: true
-        })
-        .generate()
-        .expect("Unable to generate bindings");
+	#[cfg(feature = "refresh-bindgen")] {
+		macro_rules! platform_bindings {
+			($file:literal) => {{
+				if build_cfg!(all(target_os = "windows", target_pointer_width = "32")) {
+					concat!($file, "_", "win32", ".rs")
+				} else if build_cfg!(all(target_os = "windows", target_pointer_width = "64")) {
+					concat!($file, "_", "win64", ".rs")
+				} else if build_cfg!(all(target_os = "linux", target_pointer_width = "32")) {
+					concat!($file, "_", "linux32", ".rs")
+				} else if build_cfg!(all(target_os = "linux", target_pointer_width = "64")) {
+					concat!($file, "_", "linux64", ".rs")
+				} else {
+					unimplemented!()
+				}
+			}}
+		}
 
-    bindings
-        .write_to_file(
-            if env::var("STEAM_SDK_MAKE_BINDINGS").is_ok() {
-                Path::new("src/bindings.rs").to_owned()
-            } else {
-                out_path.join("bindings.rs")
-            }
-        )
-        .expect("Couldn't write bindings!");
+		let bindings = bindgen::Builder::default()
+			.header(sdk_loc.join("public/steam/steam_api_flat.h").to_string_lossy())
+			.header(sdk_loc.join("public/steam/steam_gameserver.h").to_string_lossy())
+			.clang_arg("-xc++")
+			.clang_arg("-std=c++11")
+			.clang_arg(format!("-I{}", sdk_loc.join("public").display()))
+			.rustfmt_bindings(true)
+			.default_enum_style(bindgen::EnumVariation::Rust {
+				non_exhaustive: true
+			})
+			.generate()
+			.expect("Unable to generate bindings");
+
+		bindings
+			.write_to_file(
+				Path::new(platform_bindings!("src/bindings")).to_owned()
+			)
+			.expect("Couldn't write bindings!");
+	}
 
     Ok(())
 }

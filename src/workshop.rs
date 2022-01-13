@@ -233,7 +233,13 @@ use super::*;
 				lua.push_binary_string(cstr_to_bytes!(info.m_rgchDescription));
 				lua.set_field(-2, lua_string!("description"));
 
-				lua.push_string(&info.m_ulSteamIDOwner.to_string());
+				// On Linux64 Valve packs and aligns the struct to 4 bytes, we need to do an unaligned read on the SteamID64 :(
+				#[cfg(all(target_os = "linux", target_pointer_width = "64"))] {
+					lua.push_string(&std::ptr::read_unaligned(std::ptr::addr_of!(info.m_ulSteamIDOwner)).to_string());
+				}
+				#[cfg(not(all(target_os = "linux", target_pointer_width = "64")))] {
+					lua.push_string(&info.m_ulSteamIDOwner.to_string());
+				}
 				lua.set_field(-2, lua_string!("owner"));
 
 				lua.push_binary_string(cstr_to_bytes!(info.m_rgchTags));
@@ -283,7 +289,9 @@ use super::*;
 			};
 
 			query.allow_cached_response(60).include_children(true).fetch(move |result| {
-				debug_assert_eq!(thread_id, std::thread::current().id());
+				#[cfg(debug_assertions)]
+				assert_eq!(thread_id, std::thread::current().id());
+
 				callbacks::pop();
 				self::callback(crate::lua(), callback, workshop_id, result.map_err(Some));
 			});

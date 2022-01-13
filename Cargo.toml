@@ -16,6 +16,9 @@ codegen-units = 1
 lto = "thin"
 opt-level = "s"
 
+[features]
+refresh-bindgen = []
+
 [dependencies]
 gmod = { version = "11.1.1", default-features = false }
-steamworks = { path = "./steamworks-rs", features = ["raw-bindings"] }
+steamworks = { path = "./steamworks-rs", features = ["raw-bindings", "refresh-bindgen"] }
