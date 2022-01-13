@@ -1,4 +1,4 @@
-<h1 align="center">SQLx</h1>
+<h1 align="center">gmsv_workshop</h1>
 
 This module allows for servers to use the [`steamworks.DownloadUGC`](https://wiki.facepunch.com/gmod/steamworks.DownloadUGC) and [`steamworks.FileInfo`](https://wiki.facepunch.com/gmod/steamworks.FileInfo) functions, enabling runtime downloading & mounting of Workshop addons and GMA files through [`game.MountGMA`](https://wiki.facepunch.com/gmod/game.MountGMA)
 
