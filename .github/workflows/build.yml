@@ -14,8 +14,12 @@ jobs:
     container: quay.io/pypa/manylinux2014_x86_64
     steps:
     - uses: actions/checkout@v2
+    - name: Install Yum Extras
+      run: yum -y install yum-utils
+    - name: Enable extras repository
+      run: yum-config-manager --enable extras && yum makecache
     - name: Install build dependencies
-      run: yum -y install glibc-devel.i686 libgcc.i686
+      run: yum -y install glibc-devel.i686 libgcc.i686 clang
     - name: Install nightly toolchain
       uses: actions-rs/toolchain@v1
       with:
@@ -49,6 +53,9 @@ jobs:
     runs-on: windows-latest
     steps:
     - uses: actions/checkout@v2
+    - uses: KyleMayes/install-llvm-action@v1
+      with:
+        version: "12"
     - name: Install nightly toolchain
       run: rustup toolchain install nightly
     - name: Add targets
