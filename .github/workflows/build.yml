@@ -30,18 +30,18 @@ jobs:
       run: cargo build --release --target x86_64-unknown-linux-gnu
     - name: Strip debug symbols
       run: |
-        strip target/i686-unknown-linux-gnu/release/libgmsv_downloadugc.so
-        strip target/x86_64-unknown-linux-gnu/release/libgmsv_downloadugc.so
+        strip target/i686-unknown-linux-gnu/release/libgmsv_workshop.so
+        strip target/x86_64-unknown-linux-gnu/release/libgmsv_workshop.so
     - name: Rename binaries
       run: |
-        mv target/i686-unknown-linux-gnu/release/libgmsv_downloadugc.so target/i686-unknown-linux-gnu/release/gmsv_downloadugc_linux.dll
-        mv target/x86_64-unknown-linux-gnu/release/libgmsv_downloadugc.so target/x86_64-unknown-linux-gnu/release/gmsv_downloadugc_linux64.dll
+        mv target/i686-unknown-linux-gnu/release/libgmsv_workshop.so target/i686-unknown-linux-gnu/release/gmsv_workshop_linux.dll
+        mv target/x86_64-unknown-linux-gnu/release/libgmsv_workshop.so target/x86_64-unknown-linux-gnu/release/gmsv_workshop_linux64.dll
     - name: Release
       uses: softprops/action-gh-release@v1
       with:
         files: |
-          target/i686-unknown-linux-gnu/release/gmsv_downloadugc_linux.dll
-          target/x86_64-unknown-linux-gnu/release/gmsv_downloadugc_linux64.dll
+          target/i686-unknown-linux-gnu/release/gmsv_workshop_linux.dll
+          target/x86_64-unknown-linux-gnu/release/gmsv_workshop_linux64.dll
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -63,13 +63,13 @@ jobs:
         RUSTFLAGS: -Ctarget-feature=+crt-static
     - name: Rename binaries
       run: |
-        mv target/i686-pc-windows-msvc/release/gmsv_downloadugc.dll target/i686-pc-windows-msvc/release/gmsv_downloadugc_win32.dll
-        mv target/x86_64-pc-windows-msvc/release/gmsv_downloadugc.dll target/x86_64-pc-windows-msvc/release/gmsv_downloadugc_win64.dll
+        mv target/i686-pc-windows-msvc/release/gmsv_workshop.dll target/i686-pc-windows-msvc/release/gmsv_workshop_win32.dll
+        mv target/x86_64-pc-windows-msvc/release/gmsv_workshop.dll target/x86_64-pc-windows-msvc/release/gmsv_workshop_win64.dll
     - name: Release
       uses: softprops/action-gh-release@v1
       with:
         files: |
-          target/i686-pc-windows-msvc/release/gmsv_downloadugc_win32.dll
-          target/x86_64-pc-windows-msvc/release/gmsv_downloadugc_win64.dll
+          target/i686-pc-windows-msvc/release/gmsv_workshop_win32.dll
+          target/x86_64-pc-windows-msvc/release/gmsv_workshop_win64.dll
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
