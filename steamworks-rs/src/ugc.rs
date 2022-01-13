@@ -892,7 +892,7 @@ impl <Manager> UserListQuery<Manager> {
         }
 
         self.fetch(move |res|
-            cb(res.map(|qr| qr.iter().filter_map(|v| v.map(|v| PublishedFileId(v.published_file_id.0))).collect::<Vec<_>>())))
+            cb(res.map(|qr| qr.iter().filter_map(|v| v.map(|v| PublishedFileId(v.m_nPublishedFileId))).collect::<Vec<_>>())))
     }
 }
 
@@ -1135,7 +1135,7 @@ impl <Manager> ItemDetailsQuery<Manager> {
             register_call_result::<sys::SteamUGCQueryCompleted_t, _, _>(
                 &inner, api_call, CALLBACK_BASE_ID + 1,
                 move |v, io_error| {
-                    let ugc = sys::SteamAPI_SteamUGC_v014();
+                    let ugc = sys::SteamAPI_SteamGameServerUGC_v014();
                     if io_error {
                         sys::SteamAPI_ISteamUGC_ReleaseQueryUGCRequest(ugc, handle);
                         cb(Err(SteamError::IOFailure));
@@ -1231,7 +1231,7 @@ impl<'a> QueryResults<'a> {
     /// Gets a result.
     ///
     /// Returns None if index was out of bounds.
-    pub fn get(&self, index: u32) -> Option<QueryResult> {
+    pub fn get(&self, index: u32) -> Option<sys::SteamUGCDetails_t> {
         if index >= self.num_results_returned {
             return None;
         }
@@ -1243,6 +1243,7 @@ impl<'a> QueryResults<'a> {
 
             if raw_details.m_eResult != sys::EResult::k_EResultOK { return None }
 
+			/*
             let tags = CStr::from_ptr(raw_details.m_rgchTags.as_ptr())
                 .to_string_lossy()
                 .split(',')
@@ -1276,11 +1277,14 @@ impl<'a> QueryResults<'a> {
                 file_type: raw_details.m_eFileType.into(),
                 file_size: raw_details.m_nFileSize.max(0) as u32,
             })
+			*/
+
+			Some(raw_details)
         }
     }
 
     /// Returns an iterator that runs over all the fetched results
-    pub fn iter<'b>(&'b self) -> impl Iterator<Item=Option<QueryResult>> + 'b {
+    pub fn iter<'b>(&'b self) -> impl Iterator<Item=Option<sys::SteamUGCDetails_t>> + 'b {
         (0..self.returned_results())
             .map(move |i| self.get(i))
     }
@@ -1291,7 +1295,7 @@ impl<'a> QueryResults<'a> {
     ///
     /// Returns None if the index was out of bounds.
     pub fn get_children(&self, index: u32) -> Option<Vec<PublishedFileId>> {
-        let num_children = self.get(index)?.num_children;
+        let num_children = self.get(index)?.m_unNumChildren;
         let mut children: Vec<sys::PublishedFileId_t> = vec![0; num_children as usize];
 
         let ok = unsafe {

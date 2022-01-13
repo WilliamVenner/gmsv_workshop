@@ -52,11 +52,16 @@ pub(crate) unsafe fn register_callback<C, F, Manager>(inner: &Arc<Inner<Manager>
     }
 }
 
-pub(crate) unsafe fn register_call_result<C, F, Manager>(inner: &Arc<Inner<Manager>>, api_call: sys::SteamAPICall_t, _callback_id: i32, f: F)
+pub(crate) unsafe fn register_call_result<C, F, Manager>(inner: &Arc<Inner<Manager>>, api_call: sys::SteamAPICall_t, callback_id: i32, f: F)
     where F: for <'a> FnOnce(&'a C, bool) + 'static + Send
 {
     let mut callbacks = inner.callbacks.lock().unwrap();
-    callbacks.call_results.insert(api_call, Box::new(move |param, failed| {
-        f(&*(param as *const C), failed)
-    }));
+    callbacks.call_results.insert(api_call, CallResult {
+		size: std::mem::size_of::<C>(),
+		callback: Box::new(move |param, failed| {
+			f(&*(param as *const C), failed)
+		}),
+		callback_id,
+		failed: false
+	});
 }

@@ -290,6 +290,17 @@ impl Server {
         }
     }
 
+    /// Returns an accessor to the steam friends interface
+    pub fn friends(&self) -> Friends<ServerManager> {
+        unsafe {
+            let friends = sys::SteamAPI_SteamFriends_v017();
+            debug_assert!(!friends.is_null());
+            Friends {
+                friends: friends,
+                inner: self.inner.clone(),
+            }
+        }
+    }
 
     /// Sets the maximum number of players allowed on the server at once.
     ///

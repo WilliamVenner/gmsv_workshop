@@ -1,4 +1,5 @@
 #![allow(unused)]
+#![feature(hash_drain_filter)]
 
 #[macro_use]
 extern crate thiserror;
@@ -85,9 +86,16 @@ struct Inner<Manager> {
     //networking_sockets_data: Mutex<NetworkingSocketsData<Manager>>,
 }
 
+struct CallResult {
+	callback: Box<dyn FnOnce(*mut c_void, bool) + Send + 'static>,
+	callback_id: i32,
+	size: usize,
+	failed: bool
+}
+
 struct Callbacks {
     callbacks: HashMap<i32, Box<dyn FnMut(*mut c_void) + Send + 'static>>,
-    call_results: HashMap<sys::SteamAPICall_t, Box<dyn FnOnce(*mut c_void, bool) + Send + 'static>>,
+    call_results: HashMap<sys::SteamAPICall_t, CallResult>,
 }
 
 /*
@@ -231,7 +239,7 @@ where
                         // The &{val} pattern here is to avoid taking a reference to a packed field
                         // Since the value here is Copy, we can just copy it and borrow the copy
                         if let Some(cb) = callbacks.call_results.remove(&{ apicall.m_hAsyncCall }) {
-                            cb(apicall_result.as_mut_ptr() as *mut _, failed);
+                            (cb.callback)(apicall_result.as_mut_ptr() as *mut _, failed);
                         }
                     }
                 } else {
@@ -243,6 +251,25 @@ where
             }
         }
     }
+
+	pub fn run_call_results(&self) {
+        unsafe {
+			let steamutils = sys::SteamAPI_SteamGameServerUtils_v010();
+			debug_assert_ne!(steamutils, std::ptr::null_mut());
+			let call_results = &mut self.inner.callbacks.lock().unwrap().call_results;
+			for (api, mut callback) in call_results.drain_filter(|api, callback| {
+				let complete = sys::SteamAPI_ISteamUtils_IsAPICallCompleted(steamutils, *api, &mut callback.failed);
+				complete
+			}) {
+				let mut mem = vec![0u8; callback.size];
+				if sys::SteamAPI_ISteamUtils_GetAPICallResult(steamutils, api, mem.as_mut_ptr() as *mut _, callback.size as _, callback.callback_id, &mut callback.failed) {
+					(callback.callback)(mem.as_mut_ptr() as *mut _, callback.failed);
+				} else {
+					debug_assert!(false);
+				}
+			}
+		}
+	}
 }
 
 impl<Manager> Client<Manager> {

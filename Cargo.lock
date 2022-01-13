@@ -160,7 +160,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "gmsv_downloadugc"
+name = "gmsv_workshop"
 version = "1.0.0"
 dependencies = [
  "gmod",
