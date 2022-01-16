@@ -1,6 +1,30 @@
 #![allow(unused)]
 #![feature(hash_drain_filter)]
 
+#[macro_export]
+#[cfg(target_pointer_width = "64")]
+macro_rules! sys_ugc {
+	() => { $crate::sys::SteamAPI_SteamGameServerUGC_v014() }
+}
+
+#[macro_export]
+#[cfg(target_pointer_width = "64")]
+macro_rules! sys_gameserver {
+	() => { $crate::sys::SteamAPI_SteamGameServer_v013() }
+}
+
+#[macro_export]
+#[cfg(target_pointer_width = "32")]
+macro_rules! sys_ugc {
+	() => { $crate::sys::SteamAPI_SteamGameServerUGC_v016() }
+}
+
+#[macro_export]
+#[cfg(target_pointer_width = "32")]
+macro_rules! sys_gameserver {
+	() => { $crate::sys::SteamAPI_SteamGameServer_v014() }
+}
+
 #[macro_use]
 extern crate thiserror;
 #[macro_use]
@@ -370,32 +394,32 @@ impl<Manager> Client<Manager> {
         }
     }
 
-    /// Returns an accessor to the steam remote storage interface
-    pub fn remote_storage(&self) -> RemoteStorage<Manager> {
-        unsafe {
-            let rs = sys::SteamAPI_SteamRemoteStorage_v014();
-            debug_assert!(!rs.is_null());
-            let util = sys::SteamAPI_SteamUtils_v010();
-            debug_assert!(!util.is_null());
-            RemoteStorage {
-                rs,
-                util,
-                inner: self.inner.clone(),
-            }
-        }
-    }
+    ///// Returns an accessor to the steam remote storage interface
+    //pub fn remote_storage(&self) -> RemoteStorage<Manager> {
+    //    unsafe {
+    //        let rs = sys::SteamAPI_SteamRemoteStorage_v014();
+    //        debug_assert!(!rs.is_null());
+    //        let util = sys::SteamAPI_SteamUtils_v010();
+    //        debug_assert!(!util.is_null());
+    //        RemoteStorage {
+    //            rs,
+    //            util,
+    //            inner: self.inner.clone(),
+    //        }
+    //    }
+    //}
 
-    /// Returns an accessor to the steam UGC interface (steam workshop)
-    pub fn ugc(&self) -> UGC<Manager> {
-        unsafe {
-            let ugc = sys::SteamAPI_SteamUGC_v014();
-            debug_assert!(!ugc.is_null());
-            UGC {
-                ugc,
-                inner: self.inner.clone(),
-            }
-        }
-    }
+    ///// Returns an accessor to the steam UGC interface (steam workshop)
+    //pub fn ugc(&self) -> UGC<Manager> {
+    //    unsafe {
+    //        let ugc = sys::SteamAPI_SteamUGC_v014();
+    //        debug_assert!(!ugc.is_null());
+    //        UGC {
+    //            ugc,
+    //            inner: self.inner.clone(),
+    //        }
+    //    }
+    //}
 
 	/*
     pub fn networking_messages(&self) -> networking_messages::NetworkingMessages<Manager> {

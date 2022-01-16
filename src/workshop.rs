@@ -38,7 +38,7 @@ pub mod downloads {
 						lua.call(3, 1);
 						lua.remove(lua.get_top() - 1);
 					} else {
-						eprintln!("[gmsv_downloadugc] Failed to find relative path for {:?}, please let me know here: https://github.com/WilliamVenner/gmsv_downloadugc/issues/new", gma);
+						eprintln!("[gmsv_downloadugc] Failed to find relative path for {}, please let me know here: https://github.com/WilliamVenner/gmsv_downloadugc/issues/new", gma.display());
 						lua.push_nil();
 					}
 				} else {
@@ -73,7 +73,7 @@ pub mod downloads {
 
 				self.queued.insert(workshop_id, callback);
 
-				println!("[gmsv_downloadugc] Queued {:?}", workshop_id);
+				println!("[gmsv_downloadugc] Queued {}", workshop_id);
 				return;
 			}
 
@@ -83,7 +83,7 @@ pub mod downloads {
 			};
 			if !success {
 				eprintln!(
-					"[gmsv_downloadugc] Item ID {:?} is invalid or the server is not logged onto Steam",
+					"[gmsv_downloadugc] Item ID {} is invalid or the server is not logged onto Steam",
 					workshop_id
 				);
 				return self::callback(lua, callback, None);
@@ -93,7 +93,7 @@ pub mod downloads {
 				return self::callback(lua, callback, Some(folder));
 			}
 
-			println!("[gmsv_downloadugc] Downloading {:?}", workshop_id);
+			println!("[gmsv_downloadugc] Downloading {}", workshop_id);
 
 			if let Some(callback) = callback {
 				self.pending.insert(workshop_id, callback);
@@ -310,7 +310,7 @@ pub struct Steam {
 impl Steam {
 	pub fn init() -> Steam {
 		let (server, callbacks) = unsafe {
-			steamworks::Server::from_raw(steamworks::sys::SteamAPI_SteamGameServer_v013())
+			steamworks::Server::from_raw(steamworks::sys_gameserver!())
 		};
 
 		let steam = Steam {

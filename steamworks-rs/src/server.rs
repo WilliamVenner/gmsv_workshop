@@ -76,7 +76,7 @@ impl Server {
                 return Err(SteamError::InitFailed);
             }
             sys::SteamAPI_ManualDispatch_Init();
-            let server_raw = sys::SteamAPI_SteamGameServer_v013();
+            let server_raw = sys_gameserver!();
             let server = Arc::new(Inner {
                 _manager: ServerManager { _priv: () },
                 callbacks: Mutex::new(Callbacks {
@@ -259,11 +259,11 @@ impl Server {
 
     /// If active, updates the master server with this server's presence so players can find it via
     /// the steam matchmaking/server browser interfaces.
-    pub fn enable_heartbeats(&self, active: bool) {
-        unsafe {
-            sys::SteamAPI_ISteamGameServer_EnableHeartbeats(self.server, active);
-        }
-    }
+    //pub fn enable_heartbeats(&self, active: bool) {
+    //    unsafe {
+    //        sys::SteamAPI_ISteamGameServer_EnableHeartbeats(self.server, active);
+    //    }
+    //}
 
     /// If your game is a "mod," pass the string that identifies it.  The default is an empty
     /// string, meaning this application is the original game, not a mod.
@@ -316,7 +316,7 @@ impl Server {
     /// **For this to work properly, you need to call `UGC::init_for_game_server()`!**
     pub fn ugc(&self) -> UGC<ServerManager> {
         unsafe {
-            let ugc = sys::SteamAPI_SteamGameServerUGC_v014();
+            let ugc = sys_ugc!();
             debug_assert!(!ugc.is_null());
             UGC {
                 ugc,

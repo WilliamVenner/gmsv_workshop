@@ -80,8 +80,6 @@ where
 		}
 	}
 }
-pub const QUERY_PORT_NOT_INITIALIZED: u32 = 65535;
-pub const QUERY_PORT_ERROR: u32 = 65534;
 pub const _VCRT_COMPILER_PREPROCESSOR: u32 = 1;
 pub const _SAL_VERSION: u32 = 20;
 pub const __SAL_H_VERSION: u32 = 180000000;
@@ -233,7 +231,7 @@ pub const STEAMMATCHMAKINGSERVERS_INTERFACE_VERSION: &[u8; 27usize] =
 pub const STEAMGAMESEARCH_INTERFACE_VERSION: &[u8; 24usize] = b"SteamMatchGameSearch001\0";
 pub const STEAMPARTIES_INTERFACE_VERSION: &[u8; 16usize] = b"SteamParties002\0";
 pub const STEAMREMOTESTORAGE_INTERFACE_VERSION: &[u8; 40usize] =
-	b"STEAMREMOTESTORAGE_INTERFACE_VERSION014\0";
+	b"STEAMREMOTESTORAGE_INTERFACE_VERSION016\0";
 pub const STEAMUSERSTATS_INTERFACE_VERSION: &[u8; 36usize] =
 	b"STEAMUSERSTATS_INTERFACE_VERSION012\0";
 pub const STEAMAPPS_INTERFACE_VERSION: &[u8; 31usize] = b"STEAMAPPS_INTERFACE_VERSION008\0";
@@ -256,7 +254,7 @@ pub const STEAM_INPUT_MAX_ORIGINS: u32 = 8;
 pub const STEAM_INPUT_MAX_ACTIVE_LAYERS: u32 = 16;
 pub const STEAM_INPUT_MIN_ANALOG_ACTION_DATA: f64 = -1.0;
 pub const STEAM_INPUT_MAX_ANALOG_ACTION_DATA: f64 = 1.0;
-pub const STEAMINPUT_INTERFACE_VERSION: &[u8; 14usize] = b"SteamInput001\0";
+pub const STEAMINPUT_INTERFACE_VERSION: &[u8; 14usize] = b"SteamInput006\0";
 pub const STEAM_CONTROLLER_MAX_COUNT: u32 = 16;
 pub const STEAM_CONTROLLER_MAX_ANALOG_ACTIONS: u32 = 16;
 pub const STEAM_CONTROLLER_MAX_DIGITAL_ACTIONS: u32 = 128;
@@ -264,8 +262,8 @@ pub const STEAM_CONTROLLER_MAX_ORIGINS: u32 = 8;
 pub const STEAM_CONTROLLER_MAX_ACTIVE_LAYERS: u32 = 16;
 pub const STEAM_CONTROLLER_MIN_ANALOG_ACTION_DATA: f64 = -1.0;
 pub const STEAM_CONTROLLER_MAX_ANALOG_ACTION_DATA: f64 = 1.0;
-pub const STEAMCONTROLLER_INTERFACE_VERSION: &[u8; 19usize] = b"SteamController007\0";
-pub const STEAMUGC_INTERFACE_VERSION: &[u8; 30usize] = b"STEAMUGC_INTERFACE_VERSION014\0";
+pub const STEAMCONTROLLER_INTERFACE_VERSION: &[u8; 19usize] = b"SteamController008\0";
+pub const STEAMUGC_INTERFACE_VERSION: &[u8; 30usize] = b"STEAMUGC_INTERFACE_VERSION016\0";
 pub const STEAMAPPLIST_INTERFACE_VERSION: &[u8; 34usize] = b"STEAMAPPLIST_INTERFACE_VERSION001\0";
 pub const STEAMHTMLSURFACE_INTERFACE_VERSION: &[u8; 39usize] =
 	b"STEAMHTMLSURFACE_INTERFACE_VERSION_005\0";
@@ -281,9 +279,9 @@ pub const WINT_MIN: u32 = 0;
 pub const WINT_MAX: u32 = 65535;
 pub const STEAMNETWORKINGMESSAGES_INTERFACE_VERSION: &[u8; 27usize] =
 	b"SteamNetworkingMessages002\0";
-pub const STEAMNETWORKINGSOCKETS_INTERFACE_VERSION: &[u8; 26usize] = b"SteamNetworkingSockets009\0";
-pub const STEAMNETWORKINGUTILS_INTERFACE_VERSION: &[u8; 24usize] = b"SteamNetworkingUtils003\0";
-pub const STEAMGAMESERVER_INTERFACE_VERSION: &[u8; 19usize] = b"SteamGameServer013\0";
+pub const STEAMNETWORKINGSOCKETS_INTERFACE_VERSION: &[u8; 26usize] = b"SteamNetworkingSockets012\0";
+pub const STEAMNETWORKINGUTILS_INTERFACE_VERSION: &[u8; 24usize] = b"SteamNetworkingUtils004\0";
+pub const STEAMGAMESERVER_INTERFACE_VERSION: &[u8; 19usize] = b"SteamGameServer014\0";
 pub const STEAMGAMESERVERSTATS_INTERFACE_VERSION: &[u8; 24usize] = b"SteamGameServerStats001\0";
 pub type uint8 = ::std::os::raw::c_uchar;
 pub type int8 = ::std::os::raw::c_schar;
@@ -297,41 +295,14 @@ pub type lint64 = int64;
 pub type ulint64 = uint64;
 pub type intp = ::std::os::raw::c_int;
 pub type uintp = ::std::os::raw::c_uint;
-pub const k_cubSaltSize: ::std::os::raw::c_int = 8;
-pub type Salt_t = [uint8; 8usize];
-pub type GID_t = uint64;
-pub const k_GIDNil: GID_t = 18446744073709551615;
-pub type JobID_t = uint64;
-pub type TxnID_t = GID_t;
-extern "C" {
-	pub static k_TxnIDNil: GID_t;
-}
-pub const k_TxnIDUnknown: GID_t = 0;
-pub const k_JobIDNil: JobID_t = 18446744073709551615;
-pub type PackageId_t = uint32;
-pub const k_uPackageIdInvalid: PackageId_t = 4294967295;
-pub type BundleId_t = uint32;
-pub const k_uBundleIdInvalid: BundleId_t = 0;
 pub type AppId_t = uint32;
 pub const k_uAppIdInvalid: AppId_t = 0;
-pub type AssetClassId_t = uint64;
-pub const k_ulAssetClassIdInvalid: AssetClassId_t = 0;
-pub type PhysicalItemId_t = uint32;
-pub const k_uPhysicalItemIdInvalid: PhysicalItemId_t = 0;
 pub type DepotId_t = uint32;
 pub const k_uDepotIdInvalid: DepotId_t = 0;
 pub type RTime32 = uint32;
-pub type CellID_t = uint32;
-pub const k_uCellIDInvalid: CellID_t = 4294967295;
 pub type SteamAPICall_t = uint64;
 pub const k_uAPICallInvalid: SteamAPICall_t = 0;
 pub type AccountID_t = uint32;
-pub type PartnerId_t = uint32;
-pub const k_uPartnerIdInvalid: PartnerId_t = 0;
-pub type ManifestId_t = uint64;
-pub const k_uManifestIdInvalid: ManifestId_t = 0;
-pub type SiteId_t = uint64;
-pub const k_ulSiteIdInvalid: SiteId_t = 0;
 pub type PartyBeaconID_t = uint64;
 pub const k_ulPartyBeaconIdInvalid: PartyBeaconID_t = 0;
 #[repr(i32)]
@@ -559,6 +530,13 @@ pub enum EResult {
 	k_EResultAccountDeleted = 114,
 	k_EResultExistingUserCancelledLicense = 115,
 	k_EResultCommunityCooldown = 116,
+	k_EResultNoLauncherSpecified = 117,
+	k_EResultMustAgreeToSSA = 118,
+	k_EResultLauncherMigrated = 119,
+	k_EResultSteamRealmMismatch = 120,
+	k_EResultInvalidSignature = 121,
+	k_EResultParseFailure = 122,
+	k_EResultNoVerifiedPhone = 123,
 }
 #[repr(i32)]
 #[non_exhaustive]
@@ -652,81 +630,6 @@ pub enum EAccountType {
 #[repr(i32)]
 #[non_exhaustive]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum EAppReleaseState {
-	k_EAppReleaseState_Unknown = 0,
-	k_EAppReleaseState_Unavailable = 1,
-	k_EAppReleaseState_Prerelease = 2,
-	k_EAppReleaseState_PreloadOnly = 3,
-	k_EAppReleaseState_Released = 4,
-}
-#[repr(i32)]
-#[non_exhaustive]
-#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum EAppOwnershipFlags {
-	k_EAppOwnershipFlags_None = 0,
-	k_EAppOwnershipFlags_OwnsLicense = 1,
-	k_EAppOwnershipFlags_FreeLicense = 2,
-	k_EAppOwnershipFlags_RegionRestricted = 4,
-	k_EAppOwnershipFlags_LowViolence = 8,
-	k_EAppOwnershipFlags_InvalidPlatform = 16,
-	k_EAppOwnershipFlags_SharedLicense = 32,
-	k_EAppOwnershipFlags_FreeWeekend = 64,
-	k_EAppOwnershipFlags_RetailLicense = 128,
-	k_EAppOwnershipFlags_LicenseLocked = 256,
-	k_EAppOwnershipFlags_LicensePending = 512,
-	k_EAppOwnershipFlags_LicenseExpired = 1024,
-	k_EAppOwnershipFlags_LicensePermanent = 2048,
-	k_EAppOwnershipFlags_LicenseRecurring = 4096,
-	k_EAppOwnershipFlags_LicenseCanceled = 8192,
-	k_EAppOwnershipFlags_AutoGrant = 16384,
-	k_EAppOwnershipFlags_PendingGift = 32768,
-	k_EAppOwnershipFlags_RentalNotActivated = 65536,
-	k_EAppOwnershipFlags_Rental = 131072,
-	k_EAppOwnershipFlags_SiteLicense = 262144,
-	k_EAppOwnershipFlags_LegacyFreeSub = 524288,
-	k_EAppOwnershipFlags_InvalidOSType = 1048576,
-	k_EAppOwnershipFlags_TimedTrial = 2097152,
-}
-#[repr(i32)]
-#[non_exhaustive]
-#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum EAppType {
-	k_EAppType_Invalid = 0,
-	k_EAppType_Game = 1,
-	k_EAppType_Application = 2,
-	k_EAppType_Tool = 4,
-	k_EAppType_Demo = 8,
-	k_EAppType_Media_DEPRECATED = 16,
-	k_EAppType_DLC = 32,
-	k_EAppType_Guide = 64,
-	k_EAppType_Driver = 128,
-	k_EAppType_Config = 256,
-	k_EAppType_Hardware = 512,
-	k_EAppType_Franchise = 1024,
-	k_EAppType_Video = 2048,
-	k_EAppType_Plugin = 4096,
-	k_EAppType_MusicAlbum = 8192,
-	k_EAppType_Series = 16384,
-	k_EAppType_Comic_UNUSED = 32768,
-	k_EAppType_Beta = 65536,
-	k_EAppType_Shortcut = 1073741824,
-	k_EAppType_DepotOnly = -2147483648,
-}
-#[repr(i32)]
-#[non_exhaustive]
-#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum ESteamUserStatType {
-	k_ESteamUserStatTypeINVALID = 0,
-	k_ESteamUserStatTypeINT = 1,
-	k_ESteamUserStatTypeFLOAT = 2,
-	k_ESteamUserStatTypeAVGRATE = 3,
-	k_ESteamUserStatTypeACHIEVEMENTS = 4,
-	k_ESteamUserStatTypeGROUPACHIEVEMENTS = 5,
-	k_ESteamUserStatTypeMAX = 6,
-}
-#[repr(i32)]
-#[non_exhaustive]
-#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
 pub enum EChatEntryType {
 	k_EChatEntryTypeInvalid = 0,
 	k_EChatEntryTypeChatMsg = 1,
@@ -758,13 +661,6 @@ pub enum EChatRoomEnterResponse {
 	k_EChatRoomEnterResponseYouBlockedMember = 11,
 	k_EChatRoomEnterResponseRatelimitExceeded = 15,
 }
-pub type PFNLegacyKeyRegistration = ::std::option::Option<
-	unsafe extern "C" fn(
-		pchCDKey: *const ::std::os::raw::c_char,
-		pchInstallPath: *const ::std::os::raw::c_char,
-	),
->;
-pub type PFNLegacyKeyInstalled = ::std::option::Option<unsafe extern "C" fn() -> bool>;
 pub const k_unSteamAccountIDMask: ::std::os::raw::c_uint = 4294967295;
 pub const k_unSteamAccountInstanceMask: ::std::os::raw::c_uint = 1048575;
 pub const k_unSteamUserDefaultInstance: ::std::os::raw::c_uint = 1;
@@ -776,17 +672,6 @@ pub enum EChatSteamIDInstanceFlags {
 	k_EChatInstanceFlagClan = 524288,
 	k_EChatInstanceFlagLobby = 262144,
 	k_EChatInstanceFlagMMSLobby = 131072,
-}
-#[repr(i32)]
-#[non_exhaustive]
-#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum EMarketingMessageFlags {
-	k_EMarketingMessageFlagsNone = 0,
-	k_EMarketingMessageFlagsHighPriority = 1,
-	k_EMarketingMessageFlagsPlatformWindows = 2,
-	k_EMarketingMessageFlagsPlatformMac = 4,
-	k_EMarketingMessageFlagsPlatformLinux = 8,
-	k_EMarketingMessageFlagsPlatformRestrictions = 14,
 }
 #[repr(i32)]
 #[non_exhaustive]
@@ -825,66 +710,6 @@ pub enum EBroadcastUploadResult {
 	k_EBroadcastUploadResultDisconnect = 21,
 	k_EBroadcastUploadResultVideoInitFailed = 22,
 	k_EBroadcastUploadResultAudioInitFailed = 23,
-}
-#[repr(i32)]
-#[non_exhaustive]
-#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum ELaunchOptionType {
-	k_ELaunchOptionType_None = 0,
-	k_ELaunchOptionType_Default = 1,
-	k_ELaunchOptionType_SafeMode = 2,
-	k_ELaunchOptionType_Multiplayer = 3,
-	k_ELaunchOptionType_Config = 4,
-	k_ELaunchOptionType_OpenVR = 5,
-	k_ELaunchOptionType_Server = 6,
-	k_ELaunchOptionType_Editor = 7,
-	k_ELaunchOptionType_Manual = 8,
-	k_ELaunchOptionType_Benchmark = 9,
-	k_ELaunchOptionType_Option1 = 10,
-	k_ELaunchOptionType_Option2 = 11,
-	k_ELaunchOptionType_Option3 = 12,
-	k_ELaunchOptionType_OculusVR = 13,
-	k_ELaunchOptionType_OpenVROverlay = 14,
-	k_ELaunchOptionType_OSVR = 15,
-	k_ELaunchOptionType_Dialog = 1000,
-}
-#[repr(i32)]
-#[non_exhaustive]
-#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum EVRHMDType {
-	k_eEVRHMDType_None = -1,
-	k_eEVRHMDType_Unknown = 0,
-	k_eEVRHMDType_HTC_Dev = 1,
-	k_eEVRHMDType_HTC_VivePre = 2,
-	k_eEVRHMDType_HTC_Vive = 3,
-	k_eEVRHMDType_HTC_VivePro = 4,
-	k_eEVRHMDType_HTC_ViveCosmos = 5,
-	k_eEVRHMDType_HTC_Unknown = 20,
-	k_eEVRHMDType_Oculus_DK1 = 21,
-	k_eEVRHMDType_Oculus_DK2 = 22,
-	k_eEVRHMDType_Oculus_Rift = 23,
-	k_eEVRHMDType_Oculus_RiftS = 24,
-	k_eEVRHMDType_Oculus_Quest = 25,
-	k_eEVRHMDType_Oculus_Unknown = 40,
-	k_eEVRHMDType_Acer_Unknown = 50,
-	k_eEVRHMDType_Acer_WindowsMR = 51,
-	k_eEVRHMDType_Dell_Unknown = 60,
-	k_eEVRHMDType_Dell_Visor = 61,
-	k_eEVRHMDType_Lenovo_Unknown = 70,
-	k_eEVRHMDType_Lenovo_Explorer = 71,
-	k_eEVRHMDType_HP_Unknown = 80,
-	k_eEVRHMDType_HP_WindowsMR = 81,
-	k_eEVRHMDType_HP_Reverb = 82,
-	k_eEVRHMDType_Samsung_Unknown = 90,
-	k_eEVRHMDType_Samsung_Odyssey = 91,
-	k_eEVRHMDType_Unannounced_Unknown = 100,
-	k_eEVRHMDType_Unannounced_WindowsMR = 101,
-	k_eEVRHMDType_vridge = 110,
-	k_eEVRHMDType_Huawei_Unknown = 120,
-	k_eEVRHMDType_Huawei_VR2 = 121,
-	k_eEVRHMDType_Huawei_EndOfRange = 129,
-	k_eEVRHmdType_Valve_Unknown = 130,
-	k_eEVRHmdType_Valve_Index = 131,
 }
 #[repr(i32)]
 #[non_exhaustive]
@@ -1273,7 +1098,6 @@ impl CGameID {
 pub const k_cchGameExtraInfoMax: ::std::os::raw::c_int = 64;
 pub type PFNPreMinidumpCallback =
 	::std::option::Option<unsafe extern "C" fn(context: *mut ::std::os::raw::c_void)>;
-pub type BREAKPAD_HANDLE = *mut ::std::os::raw::c_void;
 #[repr(i32)]
 #[non_exhaustive]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
@@ -2548,416 +2372,235 @@ pub const k_iSteamUtilsCallbacks: _bindgen_ty_7 = _bindgen_ty_7::k_iSteamUtilsCa
 pub enum _bindgen_ty_7 {
 	k_iSteamUtilsCallbacks = 700,
 }
-pub const k_iClientFriendsCallbacks: _bindgen_ty_8 = _bindgen_ty_8::k_iClientFriendsCallbacks;
+pub const k_iSteamAppsCallbacks: _bindgen_ty_8 = _bindgen_ty_8::k_iSteamAppsCallbacks;
 #[repr(i32)]
 #[non_exhaustive]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
 pub enum _bindgen_ty_8 {
-	k_iClientFriendsCallbacks = 800,
+	k_iSteamAppsCallbacks = 1000,
 }
-pub const k_iClientUserCallbacks: _bindgen_ty_9 = _bindgen_ty_9::k_iClientUserCallbacks;
+pub const k_iSteamUserStatsCallbacks: _bindgen_ty_9 = _bindgen_ty_9::k_iSteamUserStatsCallbacks;
 #[repr(i32)]
 #[non_exhaustive]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
 pub enum _bindgen_ty_9 {
-	k_iClientUserCallbacks = 900,
+	k_iSteamUserStatsCallbacks = 1100,
 }
-pub const k_iSteamAppsCallbacks: _bindgen_ty_10 = _bindgen_ty_10::k_iSteamAppsCallbacks;
+pub const k_iSteamNetworkingCallbacks: _bindgen_ty_10 = _bindgen_ty_10::k_iSteamNetworkingCallbacks;
 #[repr(i32)]
 #[non_exhaustive]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
 pub enum _bindgen_ty_10 {
-	k_iSteamAppsCallbacks = 1000,
+	k_iSteamNetworkingCallbacks = 1200,
 }
-pub const k_iSteamUserStatsCallbacks: _bindgen_ty_11 = _bindgen_ty_11::k_iSteamUserStatsCallbacks;
+pub const k_iSteamNetworkingSocketsCallbacks: _bindgen_ty_11 =
+	_bindgen_ty_11::k_iSteamNetworkingSocketsCallbacks;
 #[repr(i32)]
 #[non_exhaustive]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
 pub enum _bindgen_ty_11 {
-	k_iSteamUserStatsCallbacks = 1100,
+	k_iSteamNetworkingSocketsCallbacks = 1220,
 }
-pub const k_iSteamNetworkingCallbacks: _bindgen_ty_12 = _bindgen_ty_12::k_iSteamNetworkingCallbacks;
+pub const k_iSteamNetworkingMessagesCallbacks: _bindgen_ty_12 =
+	_bindgen_ty_12::k_iSteamNetworkingMessagesCallbacks;
 #[repr(i32)]
 #[non_exhaustive]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
 pub enum _bindgen_ty_12 {
-	k_iSteamNetworkingCallbacks = 1200,
+	k_iSteamNetworkingMessagesCallbacks = 1250,
 }
-pub const k_iSteamNetworkingSocketsCallbacks: _bindgen_ty_13 =
-	_bindgen_ty_13::k_iSteamNetworkingSocketsCallbacks;
+pub const k_iSteamNetworkingUtilsCallbacks: _bindgen_ty_13 =
+	_bindgen_ty_13::k_iSteamNetworkingUtilsCallbacks;
 #[repr(i32)]
 #[non_exhaustive]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
 pub enum _bindgen_ty_13 {
-	k_iSteamNetworkingSocketsCallbacks = 1220,
+	k_iSteamNetworkingUtilsCallbacks = 1280,
 }
-pub const k_iSteamNetworkingMessagesCallbacks: _bindgen_ty_14 =
-	_bindgen_ty_14::k_iSteamNetworkingMessagesCallbacks;
+pub const k_iSteamRemoteStorageCallbacks: _bindgen_ty_14 =
+	_bindgen_ty_14::k_iSteamRemoteStorageCallbacks;
 #[repr(i32)]
 #[non_exhaustive]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
 pub enum _bindgen_ty_14 {
-	k_iSteamNetworkingMessagesCallbacks = 1250,
+	k_iSteamRemoteStorageCallbacks = 1300,
 }
-pub const k_iSteamNetworkingUtilsCallbacks: _bindgen_ty_15 =
-	_bindgen_ty_15::k_iSteamNetworkingUtilsCallbacks;
+pub const k_iSteamGameServerItemsCallbacks: _bindgen_ty_15 =
+	_bindgen_ty_15::k_iSteamGameServerItemsCallbacks;
 #[repr(i32)]
 #[non_exhaustive]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
 pub enum _bindgen_ty_15 {
-	k_iSteamNetworkingUtilsCallbacks = 1280,
+	k_iSteamGameServerItemsCallbacks = 1500,
 }
-pub const k_iClientRemoteStorageCallbacks: _bindgen_ty_16 =
-	_bindgen_ty_16::k_iClientRemoteStorageCallbacks;
+pub const k_iSteamGameCoordinatorCallbacks: _bindgen_ty_16 =
+	_bindgen_ty_16::k_iSteamGameCoordinatorCallbacks;
 #[repr(i32)]
 #[non_exhaustive]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
 pub enum _bindgen_ty_16 {
-	k_iClientRemoteStorageCallbacks = 1300,
+	k_iSteamGameCoordinatorCallbacks = 1700,
 }
-pub const k_iClientDepotBuilderCallbacks: _bindgen_ty_17 =
-	_bindgen_ty_17::k_iClientDepotBuilderCallbacks;
+pub const k_iSteamGameServerStatsCallbacks: _bindgen_ty_17 =
+	_bindgen_ty_17::k_iSteamGameServerStatsCallbacks;
 #[repr(i32)]
 #[non_exhaustive]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
 pub enum _bindgen_ty_17 {
-	k_iClientDepotBuilderCallbacks = 1400,
+	k_iSteamGameServerStatsCallbacks = 1800,
 }
-pub const k_iSteamGameServerItemsCallbacks: _bindgen_ty_18 =
-	_bindgen_ty_18::k_iSteamGameServerItemsCallbacks;
+pub const k_iSteam2AsyncCallbacks: _bindgen_ty_18 = _bindgen_ty_18::k_iSteam2AsyncCallbacks;
 #[repr(i32)]
 #[non_exhaustive]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
 pub enum _bindgen_ty_18 {
-	k_iSteamGameServerItemsCallbacks = 1500,
+	k_iSteam2AsyncCallbacks = 1900,
 }
-pub const k_iClientUtilsCallbacks: _bindgen_ty_19 = _bindgen_ty_19::k_iClientUtilsCallbacks;
+pub const k_iSteamGameStatsCallbacks: _bindgen_ty_19 = _bindgen_ty_19::k_iSteamGameStatsCallbacks;
 #[repr(i32)]
 #[non_exhaustive]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
 pub enum _bindgen_ty_19 {
-	k_iClientUtilsCallbacks = 1600,
+	k_iSteamGameStatsCallbacks = 2000,
 }
-pub const k_iSteamGameCoordinatorCallbacks: _bindgen_ty_20 =
-	_bindgen_ty_20::k_iSteamGameCoordinatorCallbacks;
+pub const k_iSteamHTTPCallbacks: _bindgen_ty_20 = _bindgen_ty_20::k_iSteamHTTPCallbacks;
 #[repr(i32)]
 #[non_exhaustive]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
 pub enum _bindgen_ty_20 {
-	k_iSteamGameCoordinatorCallbacks = 1700,
+	k_iSteamHTTPCallbacks = 2100,
 }
-pub const k_iSteamGameServerStatsCallbacks: _bindgen_ty_21 =
-	_bindgen_ty_21::k_iSteamGameServerStatsCallbacks;
+pub const k_iSteamScreenshotsCallbacks: _bindgen_ty_21 =
+	_bindgen_ty_21::k_iSteamScreenshotsCallbacks;
 #[repr(i32)]
 #[non_exhaustive]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
 pub enum _bindgen_ty_21 {
-	k_iSteamGameServerStatsCallbacks = 1800,
+	k_iSteamScreenshotsCallbacks = 2300,
 }
-pub const k_iSteam2AsyncCallbacks: _bindgen_ty_22 = _bindgen_ty_22::k_iSteam2AsyncCallbacks;
+pub const k_iSteamStreamLauncherCallbacks: _bindgen_ty_22 =
+	_bindgen_ty_22::k_iSteamStreamLauncherCallbacks;
 #[repr(i32)]
 #[non_exhaustive]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
 pub enum _bindgen_ty_22 {
-	k_iSteam2AsyncCallbacks = 1900,
+	k_iSteamStreamLauncherCallbacks = 2600,
 }
-pub const k_iSteamGameStatsCallbacks: _bindgen_ty_23 = _bindgen_ty_23::k_iSteamGameStatsCallbacks;
+pub const k_iSteamControllerCallbacks: _bindgen_ty_23 = _bindgen_ty_23::k_iSteamControllerCallbacks;
 #[repr(i32)]
 #[non_exhaustive]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
 pub enum _bindgen_ty_23 {
-	k_iSteamGameStatsCallbacks = 2000,
+	k_iSteamControllerCallbacks = 2800,
 }
-pub const k_iClientHTTPCallbacks: _bindgen_ty_24 = _bindgen_ty_24::k_iClientHTTPCallbacks;
+pub const k_iSteamUGCCallbacks: _bindgen_ty_24 = _bindgen_ty_24::k_iSteamUGCCallbacks;
 #[repr(i32)]
 #[non_exhaustive]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
 pub enum _bindgen_ty_24 {
-	k_iClientHTTPCallbacks = 2100,
+	k_iSteamUGCCallbacks = 3400,
 }
-pub const k_iClientScreenshotsCallbacks: _bindgen_ty_25 =
-	_bindgen_ty_25::k_iClientScreenshotsCallbacks;
+pub const k_iSteamStreamClientCallbacks: _bindgen_ty_25 =
+	_bindgen_ty_25::k_iSteamStreamClientCallbacks;
 #[repr(i32)]
 #[non_exhaustive]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
 pub enum _bindgen_ty_25 {
-	k_iClientScreenshotsCallbacks = 2200,
+	k_iSteamStreamClientCallbacks = 3500,
 }
-pub const k_iSteamScreenshotsCallbacks: _bindgen_ty_26 =
-	_bindgen_ty_26::k_iSteamScreenshotsCallbacks;
+pub const k_iSteamAppListCallbacks: _bindgen_ty_26 = _bindgen_ty_26::k_iSteamAppListCallbacks;
 #[repr(i32)]
 #[non_exhaustive]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
 pub enum _bindgen_ty_26 {
-	k_iSteamScreenshotsCallbacks = 2300,
+	k_iSteamAppListCallbacks = 3900,
 }
-pub const k_iClientAudioCallbacks: _bindgen_ty_27 = _bindgen_ty_27::k_iClientAudioCallbacks;
+pub const k_iSteamMusicCallbacks: _bindgen_ty_27 = _bindgen_ty_27::k_iSteamMusicCallbacks;
 #[repr(i32)]
 #[non_exhaustive]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
 pub enum _bindgen_ty_27 {
-	k_iClientAudioCallbacks = 2400,
+	k_iSteamMusicCallbacks = 4000,
 }
-pub const k_iClientUnifiedMessagesCallbacks: _bindgen_ty_28 =
-	_bindgen_ty_28::k_iClientUnifiedMessagesCallbacks;
+pub const k_iSteamMusicRemoteCallbacks: _bindgen_ty_28 =
+	_bindgen_ty_28::k_iSteamMusicRemoteCallbacks;
 #[repr(i32)]
 #[non_exhaustive]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
 pub enum _bindgen_ty_28 {
-	k_iClientUnifiedMessagesCallbacks = 2500,
+	k_iSteamMusicRemoteCallbacks = 4100,
 }
-pub const k_iSteamStreamLauncherCallbacks: _bindgen_ty_29 =
-	_bindgen_ty_29::k_iSteamStreamLauncherCallbacks;
+pub const k_iSteamGameNotificationCallbacks: _bindgen_ty_29 =
+	_bindgen_ty_29::k_iSteamGameNotificationCallbacks;
 #[repr(i32)]
 #[non_exhaustive]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
 pub enum _bindgen_ty_29 {
-	k_iSteamStreamLauncherCallbacks = 2600,
+	k_iSteamGameNotificationCallbacks = 4400,
 }
-pub const k_iClientControllerCallbacks: _bindgen_ty_30 =
-	_bindgen_ty_30::k_iClientControllerCallbacks;
+pub const k_iSteamHTMLSurfaceCallbacks: _bindgen_ty_30 =
+	_bindgen_ty_30::k_iSteamHTMLSurfaceCallbacks;
 #[repr(i32)]
 #[non_exhaustive]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
 pub enum _bindgen_ty_30 {
-	k_iClientControllerCallbacks = 2700,
+	k_iSteamHTMLSurfaceCallbacks = 4500,
 }
-pub const k_iSteamControllerCallbacks: _bindgen_ty_31 = _bindgen_ty_31::k_iSteamControllerCallbacks;
+pub const k_iSteamVideoCallbacks: _bindgen_ty_31 = _bindgen_ty_31::k_iSteamVideoCallbacks;
 #[repr(i32)]
 #[non_exhaustive]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
 pub enum _bindgen_ty_31 {
-	k_iSteamControllerCallbacks = 2800,
+	k_iSteamVideoCallbacks = 4600,
 }
-pub const k_iClientParentalSettingsCallbacks: _bindgen_ty_32 =
-	_bindgen_ty_32::k_iClientParentalSettingsCallbacks;
+pub const k_iSteamInventoryCallbacks: _bindgen_ty_32 = _bindgen_ty_32::k_iSteamInventoryCallbacks;
 #[repr(i32)]
 #[non_exhaustive]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
 pub enum _bindgen_ty_32 {
-	k_iClientParentalSettingsCallbacks = 2900,
+	k_iSteamInventoryCallbacks = 4700,
 }
-pub const k_iClientDeviceAuthCallbacks: _bindgen_ty_33 =
-	_bindgen_ty_33::k_iClientDeviceAuthCallbacks;
+pub const k_ISteamParentalSettingsCallbacks: _bindgen_ty_33 =
+	_bindgen_ty_33::k_ISteamParentalSettingsCallbacks;
 #[repr(i32)]
 #[non_exhaustive]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
 pub enum _bindgen_ty_33 {
-	k_iClientDeviceAuthCallbacks = 3000,
+	k_ISteamParentalSettingsCallbacks = 5000,
 }
-pub const k_iClientNetworkDeviceManagerCallbacks: _bindgen_ty_34 =
-	_bindgen_ty_34::k_iClientNetworkDeviceManagerCallbacks;
+pub const k_iSteamGameSearchCallbacks: _bindgen_ty_34 = _bindgen_ty_34::k_iSteamGameSearchCallbacks;
 #[repr(i32)]
 #[non_exhaustive]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
 pub enum _bindgen_ty_34 {
-	k_iClientNetworkDeviceManagerCallbacks = 3100,
+	k_iSteamGameSearchCallbacks = 5200,
 }
-pub const k_iClientMusicCallbacks: _bindgen_ty_35 = _bindgen_ty_35::k_iClientMusicCallbacks;
+pub const k_iSteamPartiesCallbacks: _bindgen_ty_35 = _bindgen_ty_35::k_iSteamPartiesCallbacks;
 #[repr(i32)]
 #[non_exhaustive]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
 pub enum _bindgen_ty_35 {
-	k_iClientMusicCallbacks = 3200,
+	k_iSteamPartiesCallbacks = 5300,
 }
-pub const k_iClientRemoteClientManagerCallbacks: _bindgen_ty_36 =
-	_bindgen_ty_36::k_iClientRemoteClientManagerCallbacks;
+pub const k_iSteamSTARCallbacks: _bindgen_ty_36 = _bindgen_ty_36::k_iSteamSTARCallbacks;
 #[repr(i32)]
 #[non_exhaustive]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
 pub enum _bindgen_ty_36 {
-	k_iClientRemoteClientManagerCallbacks = 3300,
+	k_iSteamSTARCallbacks = 5500,
 }
-pub const k_iClientUGCCallbacks: _bindgen_ty_37 = _bindgen_ty_37::k_iClientUGCCallbacks;
+pub const k_iSteamRemotePlayCallbacks: _bindgen_ty_37 = _bindgen_ty_37::k_iSteamRemotePlayCallbacks;
 #[repr(i32)]
 #[non_exhaustive]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
 pub enum _bindgen_ty_37 {
-	k_iClientUGCCallbacks = 3400,
+	k_iSteamRemotePlayCallbacks = 5700,
 }
-pub const k_iSteamStreamClientCallbacks: _bindgen_ty_38 =
-	_bindgen_ty_38::k_iSteamStreamClientCallbacks;
+pub const k_iSteamChatCallbacks: _bindgen_ty_38 = _bindgen_ty_38::k_iSteamChatCallbacks;
 #[repr(i32)]
 #[non_exhaustive]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
 pub enum _bindgen_ty_38 {
-	k_iSteamStreamClientCallbacks = 3500,
-}
-pub const k_IClientProductBuilderCallbacks: _bindgen_ty_39 =
-	_bindgen_ty_39::k_IClientProductBuilderCallbacks;
-#[repr(i32)]
-#[non_exhaustive]
-#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _bindgen_ty_39 {
-	k_IClientProductBuilderCallbacks = 3600,
-}
-pub const k_iClientShortcutsCallbacks: _bindgen_ty_40 = _bindgen_ty_40::k_iClientShortcutsCallbacks;
-#[repr(i32)]
-#[non_exhaustive]
-#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _bindgen_ty_40 {
-	k_iClientShortcutsCallbacks = 3700,
-}
-pub const k_iClientRemoteControlManagerCallbacks: _bindgen_ty_41 =
-	_bindgen_ty_41::k_iClientRemoteControlManagerCallbacks;
-#[repr(i32)]
-#[non_exhaustive]
-#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _bindgen_ty_41 {
-	k_iClientRemoteControlManagerCallbacks = 3800,
-}
-pub const k_iSteamAppListCallbacks: _bindgen_ty_42 = _bindgen_ty_42::k_iSteamAppListCallbacks;
-#[repr(i32)]
-#[non_exhaustive]
-#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _bindgen_ty_42 {
-	k_iSteamAppListCallbacks = 3900,
-}
-pub const k_iSteamMusicCallbacks: _bindgen_ty_43 = _bindgen_ty_43::k_iSteamMusicCallbacks;
-#[repr(i32)]
-#[non_exhaustive]
-#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _bindgen_ty_43 {
-	k_iSteamMusicCallbacks = 4000,
-}
-pub const k_iSteamMusicRemoteCallbacks: _bindgen_ty_44 =
-	_bindgen_ty_44::k_iSteamMusicRemoteCallbacks;
-#[repr(i32)]
-#[non_exhaustive]
-#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _bindgen_ty_44 {
-	k_iSteamMusicRemoteCallbacks = 4100,
-}
-pub const k_iClientVRCallbacks: _bindgen_ty_45 = _bindgen_ty_45::k_iClientVRCallbacks;
-#[repr(i32)]
-#[non_exhaustive]
-#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _bindgen_ty_45 {
-	k_iClientVRCallbacks = 4200,
-}
-pub const k_iClientGameNotificationCallbacks: _bindgen_ty_46 =
-	_bindgen_ty_46::k_iClientGameNotificationCallbacks;
-#[repr(i32)]
-#[non_exhaustive]
-#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _bindgen_ty_46 {
-	k_iClientGameNotificationCallbacks = 4300,
-}
-pub const k_iSteamGameNotificationCallbacks: _bindgen_ty_47 =
-	_bindgen_ty_47::k_iSteamGameNotificationCallbacks;
-#[repr(i32)]
-#[non_exhaustive]
-#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _bindgen_ty_47 {
-	k_iSteamGameNotificationCallbacks = 4400,
-}
-pub const k_iSteamHTMLSurfaceCallbacks: _bindgen_ty_48 =
-	_bindgen_ty_48::k_iSteamHTMLSurfaceCallbacks;
-#[repr(i32)]
-#[non_exhaustive]
-#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _bindgen_ty_48 {
-	k_iSteamHTMLSurfaceCallbacks = 4500,
-}
-pub const k_iClientVideoCallbacks: _bindgen_ty_49 = _bindgen_ty_49::k_iClientVideoCallbacks;
-#[repr(i32)]
-#[non_exhaustive]
-#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _bindgen_ty_49 {
-	k_iClientVideoCallbacks = 4600,
-}
-pub const k_iClientInventoryCallbacks: _bindgen_ty_50 = _bindgen_ty_50::k_iClientInventoryCallbacks;
-#[repr(i32)]
-#[non_exhaustive]
-#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _bindgen_ty_50 {
-	k_iClientInventoryCallbacks = 4700,
-}
-pub const k_iClientBluetoothManagerCallbacks: _bindgen_ty_51 =
-	_bindgen_ty_51::k_iClientBluetoothManagerCallbacks;
-#[repr(i32)]
-#[non_exhaustive]
-#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _bindgen_ty_51 {
-	k_iClientBluetoothManagerCallbacks = 4800,
-}
-pub const k_iClientSharedConnectionCallbacks: _bindgen_ty_52 =
-	_bindgen_ty_52::k_iClientSharedConnectionCallbacks;
-#[repr(i32)]
-#[non_exhaustive]
-#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _bindgen_ty_52 {
-	k_iClientSharedConnectionCallbacks = 4900,
-}
-pub const k_ISteamParentalSettingsCallbacks: _bindgen_ty_53 =
-	_bindgen_ty_53::k_ISteamParentalSettingsCallbacks;
-#[repr(i32)]
-#[non_exhaustive]
-#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _bindgen_ty_53 {
-	k_ISteamParentalSettingsCallbacks = 5000,
-}
-pub const k_iClientShaderCallbacks: _bindgen_ty_54 = _bindgen_ty_54::k_iClientShaderCallbacks;
-#[repr(i32)]
-#[non_exhaustive]
-#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _bindgen_ty_54 {
-	k_iClientShaderCallbacks = 5100,
-}
-pub const k_iSteamGameSearchCallbacks: _bindgen_ty_55 = _bindgen_ty_55::k_iSteamGameSearchCallbacks;
-#[repr(i32)]
-#[non_exhaustive]
-#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _bindgen_ty_55 {
-	k_iSteamGameSearchCallbacks = 5200,
-}
-pub const k_iSteamPartiesCallbacks: _bindgen_ty_56 = _bindgen_ty_56::k_iSteamPartiesCallbacks;
-#[repr(i32)]
-#[non_exhaustive]
-#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _bindgen_ty_56 {
-	k_iSteamPartiesCallbacks = 5300,
-}
-pub const k_iClientPartiesCallbacks: _bindgen_ty_57 = _bindgen_ty_57::k_iClientPartiesCallbacks;
-#[repr(i32)]
-#[non_exhaustive]
-#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _bindgen_ty_57 {
-	k_iClientPartiesCallbacks = 5400,
-}
-pub const k_iSteamSTARCallbacks: _bindgen_ty_58 = _bindgen_ty_58::k_iSteamSTARCallbacks;
-#[repr(i32)]
-#[non_exhaustive]
-#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _bindgen_ty_58 {
-	k_iSteamSTARCallbacks = 5500,
-}
-pub const k_iClientSTARCallbacks: _bindgen_ty_59 = _bindgen_ty_59::k_iClientSTARCallbacks;
-#[repr(i32)]
-#[non_exhaustive]
-#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _bindgen_ty_59 {
-	k_iClientSTARCallbacks = 5600,
-}
-pub const k_iSteamRemotePlayCallbacks: _bindgen_ty_60 = _bindgen_ty_60::k_iSteamRemotePlayCallbacks;
-#[repr(i32)]
-#[non_exhaustive]
-#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _bindgen_ty_60 {
-	k_iSteamRemotePlayCallbacks = 5700,
-}
-pub const k_iClientCompatCallbacks: _bindgen_ty_61 = _bindgen_ty_61::k_iClientCompatCallbacks;
-#[repr(i32)]
-#[non_exhaustive]
-#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _bindgen_ty_61 {
-	k_iClientCompatCallbacks = 5800,
-}
-pub const k_iSteamChatCallbacks: _bindgen_ty_62 = _bindgen_ty_62::k_iSteamChatCallbacks;
-#[repr(i32)]
-#[non_exhaustive]
-#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _bindgen_ty_62 {
 	k_iSteamChatCallbacks = 5900,
 }
 #[repr(C)]
@@ -3269,13 +2912,12 @@ pub struct CSteamGameServerAPIContext {
 	pub m_pSteamHTTP: *mut ISteamHTTP,
 	pub m_pSteamInventory: *mut ISteamInventory,
 	pub m_pSteamUGC: *mut ISteamUGC,
-	pub m_pSteamApps: *mut ISteamApps,
 }
 #[test]
 fn bindgen_test_layout_CSteamGameServerAPIContext() {
 	assert_eq!(
 		::std::mem::size_of::<CSteamGameServerAPIContext>(),
-		36usize,
+		32usize,
 		concat!("Size of: ", stringify!(CSteamGameServerAPIContext))
 	);
 	assert_eq!(
@@ -3383,18 +3025,6 @@ fn bindgen_test_layout_CSteamGameServerAPIContext() {
 			stringify!(CSteamGameServerAPIContext),
 			"::",
 			stringify!(m_pSteamUGC)
-		)
-	);
-	assert_eq!(
-		unsafe {
-			&(*(::std::ptr::null::<CSteamGameServerAPIContext>())).m_pSteamApps as *const _ as usize
-		},
-		32usize,
-		concat!(
-			"Offset of field: ",
-			stringify!(CSteamGameServerAPIContext),
-			"::",
-			stringify!(m_pSteamApps)
 		)
 	);
 }
@@ -4342,12 +3972,12 @@ fn bindgen_test_layout_FriendGameInfo_t() {
 		)
 	);
 }
-pub const k_cchPersonaNameMax: _bindgen_ty_63 = _bindgen_ty_63::k_cchPersonaNameMax;
-pub const k_cwchPersonaNameMax: _bindgen_ty_63 = _bindgen_ty_63::k_cwchPersonaNameMax;
+pub const k_cchPersonaNameMax: _bindgen_ty_39 = _bindgen_ty_39::k_cchPersonaNameMax;
+pub const k_cwchPersonaNameMax: _bindgen_ty_39 = _bindgen_ty_39::k_cwchPersonaNameMax;
 #[repr(i32)]
 #[non_exhaustive]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _bindgen_ty_63 {
+pub enum _bindgen_ty_39 {
 	k_cchPersonaNameMax = 128,
 	k_cwchPersonaNameMax = 32,
 }
@@ -4365,27 +3995,27 @@ pub enum EUserRestriction {
 	k_nUserRestrictionTrading = 64,
 }
 pub const k_cubChatMetadataMax: uint32 = 8192;
-pub const k_cchMaxRichPresenceKeys: _bindgen_ty_64 = _bindgen_ty_64::k_cchMaxRichPresenceKeys;
+pub const k_cchMaxRichPresenceKeys: _bindgen_ty_40 = _bindgen_ty_40::k_cchMaxRichPresenceKeys;
 #[repr(i32)]
 #[non_exhaustive]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _bindgen_ty_64 {
+pub enum _bindgen_ty_40 {
 	k_cchMaxRichPresenceKeys = 30,
 }
-pub const k_cchMaxRichPresenceKeyLength: _bindgen_ty_65 =
-	_bindgen_ty_65::k_cchMaxRichPresenceKeyLength;
+pub const k_cchMaxRichPresenceKeyLength: _bindgen_ty_41 =
+	_bindgen_ty_41::k_cchMaxRichPresenceKeyLength;
 #[repr(i32)]
 #[non_exhaustive]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _bindgen_ty_65 {
+pub enum _bindgen_ty_41 {
 	k_cchMaxRichPresenceKeyLength = 64,
 }
-pub const k_cchMaxRichPresenceValueLength: _bindgen_ty_66 =
-	_bindgen_ty_66::k_cchMaxRichPresenceValueLength;
+pub const k_cchMaxRichPresenceValueLength: _bindgen_ty_42 =
+	_bindgen_ty_42::k_cchMaxRichPresenceValueLength;
 #[repr(i32)]
 #[non_exhaustive]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _bindgen_ty_66 {
+pub enum _bindgen_ty_42 {
 	k_cchMaxRichPresenceValueLength = 256,
 }
 #[repr(i32)]
@@ -5592,6 +5222,15 @@ pub enum EGamepadTextInputLineMode {
 #[repr(i32)]
 #[non_exhaustive]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub enum EFloatingGamepadTextInputMode {
+	k_EFloatingGamepadTextInputModeModeSingleLine = 0,
+	k_EFloatingGamepadTextInputModeModeMultipleLines = 1,
+	k_EFloatingGamepadTextInputModeModeEmail = 2,
+	k_EFloatingGamepadTextInputModeModeNumeric = 3,
+}
+#[repr(i32)]
+#[non_exhaustive]
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
 pub enum ETextFilteringContext {
 	k_ETextFilteringContextUnknown = 0,
 	k_ETextFilteringContextGameContent = 1,
@@ -5871,6 +5510,62 @@ fn bindgen_test_layout_GamepadTextInputDismissed_t() {
 			stringify!(GamepadTextInputDismissed_t),
 			"::",
 			stringify!(m_unSubmittedText)
+		)
+	);
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct AppResumingFromSuspend_t {
+	pub _address: u8,
+}
+pub const AppResumingFromSuspend_t_k_iCallback: AppResumingFromSuspend_t__bindgen_ty_1 =
+	AppResumingFromSuspend_t__bindgen_ty_1::k_iCallback;
+#[repr(i32)]
+#[non_exhaustive]
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub enum AppResumingFromSuspend_t__bindgen_ty_1 {
+	k_iCallback = 736,
+}
+#[test]
+fn bindgen_test_layout_AppResumingFromSuspend_t() {
+	assert_eq!(
+		::std::mem::size_of::<AppResumingFromSuspend_t>(),
+		1usize,
+		concat!("Size of: ", stringify!(AppResumingFromSuspend_t))
+	);
+	assert_eq!(
+		::std::mem::align_of::<AppResumingFromSuspend_t>(),
+		1usize,
+		concat!("Alignment of ", stringify!(AppResumingFromSuspend_t))
+	);
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct FloatingGamepadTextInputDismissed_t {
+	pub _address: u8,
+}
+pub const FloatingGamepadTextInputDismissed_t_k_iCallback:
+	FloatingGamepadTextInputDismissed_t__bindgen_ty_1 =
+	FloatingGamepadTextInputDismissed_t__bindgen_ty_1::k_iCallback;
+#[repr(i32)]
+#[non_exhaustive]
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub enum FloatingGamepadTextInputDismissed_t__bindgen_ty_1 {
+	k_iCallback = 738,
+}
+#[test]
+fn bindgen_test_layout_FloatingGamepadTextInputDismissed_t() {
+	assert_eq!(
+		::std::mem::size_of::<FloatingGamepadTextInputDismissed_t>(),
+		1usize,
+		concat!("Size of: ", stringify!(FloatingGamepadTextInputDismissed_t))
+	);
+	assert_eq!(
+		::std::mem::align_of::<FloatingGamepadTextInputDismissed_t>(),
+		1usize,
+		concat!(
+			"Alignment of ",
+			stringify!(FloatingGamepadTextInputDismissed_t)
 		)
 	);
 }
@@ -9036,6 +8731,22 @@ pub enum EUGCReadAction {
 	k_EUGCRead_ContinueReading = 1,
 	k_EUGCRead_Close = 2,
 }
+#[repr(i32)]
+#[non_exhaustive]
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub enum ERemoteStorageLocalFileChange {
+	k_ERemoteStorageLocalFileChange_Invalid = 0,
+	k_ERemoteStorageLocalFileChange_FileUpdated = 1,
+	k_ERemoteStorageLocalFileChange_FileDeleted = 2,
+}
+#[repr(i32)]
+#[non_exhaustive]
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub enum ERemoteStorageFilePathType {
+	k_ERemoteStorageFilePathType_Invalid = 0,
+	k_ERemoteStorageFilePathType_Absolute = 1,
+	k_ERemoteStorageFilePathType_APIFilename = 2,
+}
 #[repr(C)]
 pub struct ISteamRemoteStorage__bindgen_vtable(::std::os::raw::c_void);
 #[repr(C)]
@@ -9054,289 +8765,6 @@ fn bindgen_test_layout_ISteamRemoteStorage() {
 		::std::mem::align_of::<ISteamRemoteStorage>(),
 		4usize,
 		concat!("Alignment of ", stringify!(ISteamRemoteStorage))
-	);
-}
-#[repr(C)]
-#[derive(Debug, Copy, Clone)]
-pub struct RemoteStorageAppSyncedClient_t {
-	pub m_nAppID: AppId_t,
-	pub m_eResult: EResult,
-	pub m_unNumDownloads: ::std::os::raw::c_int,
-}
-pub const RemoteStorageAppSyncedClient_t_k_iCallback: RemoteStorageAppSyncedClient_t__bindgen_ty_1 =
-	RemoteStorageAppSyncedClient_t__bindgen_ty_1::k_iCallback;
-#[repr(i32)]
-#[non_exhaustive]
-#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum RemoteStorageAppSyncedClient_t__bindgen_ty_1 {
-	k_iCallback = 1301,
-}
-#[test]
-fn bindgen_test_layout_RemoteStorageAppSyncedClient_t() {
-	assert_eq!(
-		::std::mem::size_of::<RemoteStorageAppSyncedClient_t>(),
-		12usize,
-		concat!("Size of: ", stringify!(RemoteStorageAppSyncedClient_t))
-	);
-	assert_eq!(
-		::std::mem::align_of::<RemoteStorageAppSyncedClient_t>(),
-		4usize,
-		concat!("Alignment of ", stringify!(RemoteStorageAppSyncedClient_t))
-	);
-	assert_eq!(
-		unsafe {
-			&(*(::std::ptr::null::<RemoteStorageAppSyncedClient_t>())).m_nAppID as *const _ as usize
-		},
-		0usize,
-		concat!(
-			"Offset of field: ",
-			stringify!(RemoteStorageAppSyncedClient_t),
-			"::",
-			stringify!(m_nAppID)
-		)
-	);
-	assert_eq!(
-		unsafe {
-			&(*(::std::ptr::null::<RemoteStorageAppSyncedClient_t>())).m_eResult as *const _
-				as usize
-		},
-		4usize,
-		concat!(
-			"Offset of field: ",
-			stringify!(RemoteStorageAppSyncedClient_t),
-			"::",
-			stringify!(m_eResult)
-		)
-	);
-	assert_eq!(
-		unsafe {
-			&(*(::std::ptr::null::<RemoteStorageAppSyncedClient_t>())).m_unNumDownloads as *const _
-				as usize
-		},
-		8usize,
-		concat!(
-			"Offset of field: ",
-			stringify!(RemoteStorageAppSyncedClient_t),
-			"::",
-			stringify!(m_unNumDownloads)
-		)
-	);
-}
-#[repr(C)]
-#[derive(Debug, Copy, Clone)]
-pub struct RemoteStorageAppSyncedServer_t {
-	pub m_nAppID: AppId_t,
-	pub m_eResult: EResult,
-	pub m_unNumUploads: ::std::os::raw::c_int,
-}
-pub const RemoteStorageAppSyncedServer_t_k_iCallback: RemoteStorageAppSyncedServer_t__bindgen_ty_1 =
-	RemoteStorageAppSyncedServer_t__bindgen_ty_1::k_iCallback;
-#[repr(i32)]
-#[non_exhaustive]
-#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum RemoteStorageAppSyncedServer_t__bindgen_ty_1 {
-	k_iCallback = 1302,
-}
-#[test]
-fn bindgen_test_layout_RemoteStorageAppSyncedServer_t() {
-	assert_eq!(
-		::std::mem::size_of::<RemoteStorageAppSyncedServer_t>(),
-		12usize,
-		concat!("Size of: ", stringify!(RemoteStorageAppSyncedServer_t))
-	);
-	assert_eq!(
-		::std::mem::align_of::<RemoteStorageAppSyncedServer_t>(),
-		4usize,
-		concat!("Alignment of ", stringify!(RemoteStorageAppSyncedServer_t))
-	);
-	assert_eq!(
-		unsafe {
-			&(*(::std::ptr::null::<RemoteStorageAppSyncedServer_t>())).m_nAppID as *const _ as usize
-		},
-		0usize,
-		concat!(
-			"Offset of field: ",
-			stringify!(RemoteStorageAppSyncedServer_t),
-			"::",
-			stringify!(m_nAppID)
-		)
-	);
-	assert_eq!(
-		unsafe {
-			&(*(::std::ptr::null::<RemoteStorageAppSyncedServer_t>())).m_eResult as *const _
-				as usize
-		},
-		4usize,
-		concat!(
-			"Offset of field: ",
-			stringify!(RemoteStorageAppSyncedServer_t),
-			"::",
-			stringify!(m_eResult)
-		)
-	);
-	assert_eq!(
-		unsafe {
-			&(*(::std::ptr::null::<RemoteStorageAppSyncedServer_t>())).m_unNumUploads as *const _
-				as usize
-		},
-		8usize,
-		concat!(
-			"Offset of field: ",
-			stringify!(RemoteStorageAppSyncedServer_t),
-			"::",
-			stringify!(m_unNumUploads)
-		)
-	);
-}
-#[repr(C)]
-#[derive(Debug, Copy, Clone)]
-pub struct RemoteStorageAppSyncProgress_t {
-	pub m_rgchCurrentFile: [::std::os::raw::c_char; 260usize],
-	pub m_nAppID: AppId_t,
-	pub m_uBytesTransferredThisChunk: uint32,
-	pub m_dAppPercentComplete: f64,
-	pub m_bUploading: bool,
-}
-pub const RemoteStorageAppSyncProgress_t_k_iCallback: RemoteStorageAppSyncProgress_t__bindgen_ty_1 =
-	RemoteStorageAppSyncProgress_t__bindgen_ty_1::k_iCallback;
-#[repr(i32)]
-#[non_exhaustive]
-#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum RemoteStorageAppSyncProgress_t__bindgen_ty_1 {
-	k_iCallback = 1303,
-}
-#[test]
-fn bindgen_test_layout_RemoteStorageAppSyncProgress_t() {
-	assert_eq!(
-		::std::mem::size_of::<RemoteStorageAppSyncProgress_t>(),
-		288usize,
-		concat!("Size of: ", stringify!(RemoteStorageAppSyncProgress_t))
-	);
-	assert_eq!(
-		::std::mem::align_of::<RemoteStorageAppSyncProgress_t>(),
-		8usize,
-		concat!("Alignment of ", stringify!(RemoteStorageAppSyncProgress_t))
-	);
-	assert_eq!(
-		unsafe {
-			&(*(::std::ptr::null::<RemoteStorageAppSyncProgress_t>())).m_rgchCurrentFile as *const _
-				as usize
-		},
-		0usize,
-		concat!(
-			"Offset of field: ",
-			stringify!(RemoteStorageAppSyncProgress_t),
-			"::",
-			stringify!(m_rgchCurrentFile)
-		)
-	);
-	assert_eq!(
-		unsafe {
-			&(*(::std::ptr::null::<RemoteStorageAppSyncProgress_t>())).m_nAppID as *const _ as usize
-		},
-		260usize,
-		concat!(
-			"Offset of field: ",
-			stringify!(RemoteStorageAppSyncProgress_t),
-			"::",
-			stringify!(m_nAppID)
-		)
-	);
-	assert_eq!(
-		unsafe {
-			&(*(::std::ptr::null::<RemoteStorageAppSyncProgress_t>())).m_uBytesTransferredThisChunk
-				as *const _ as usize
-		},
-		264usize,
-		concat!(
-			"Offset of field: ",
-			stringify!(RemoteStorageAppSyncProgress_t),
-			"::",
-			stringify!(m_uBytesTransferredThisChunk)
-		)
-	);
-	assert_eq!(
-		unsafe {
-			&(*(::std::ptr::null::<RemoteStorageAppSyncProgress_t>())).m_dAppPercentComplete
-				as *const _ as usize
-		},
-		272usize,
-		concat!(
-			"Offset of field: ",
-			stringify!(RemoteStorageAppSyncProgress_t),
-			"::",
-			stringify!(m_dAppPercentComplete)
-		)
-	);
-	assert_eq!(
-		unsafe {
-			&(*(::std::ptr::null::<RemoteStorageAppSyncProgress_t>())).m_bUploading as *const _
-				as usize
-		},
-		280usize,
-		concat!(
-			"Offset of field: ",
-			stringify!(RemoteStorageAppSyncProgress_t),
-			"::",
-			stringify!(m_bUploading)
-		)
-	);
-}
-#[repr(C)]
-#[derive(Debug, Copy, Clone)]
-pub struct RemoteStorageAppSyncStatusCheck_t {
-	pub m_nAppID: AppId_t,
-	pub m_eResult: EResult,
-}
-pub const RemoteStorageAppSyncStatusCheck_t_k_iCallback:
-	RemoteStorageAppSyncStatusCheck_t__bindgen_ty_1 =
-	RemoteStorageAppSyncStatusCheck_t__bindgen_ty_1::k_iCallback;
-#[repr(i32)]
-#[non_exhaustive]
-#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum RemoteStorageAppSyncStatusCheck_t__bindgen_ty_1 {
-	k_iCallback = 1305,
-}
-#[test]
-fn bindgen_test_layout_RemoteStorageAppSyncStatusCheck_t() {
-	assert_eq!(
-		::std::mem::size_of::<RemoteStorageAppSyncStatusCheck_t>(),
-		8usize,
-		concat!("Size of: ", stringify!(RemoteStorageAppSyncStatusCheck_t))
-	);
-	assert_eq!(
-		::std::mem::align_of::<RemoteStorageAppSyncStatusCheck_t>(),
-		4usize,
-		concat!(
-			"Alignment of ",
-			stringify!(RemoteStorageAppSyncStatusCheck_t)
-		)
-	);
-	assert_eq!(
-		unsafe {
-			&(*(::std::ptr::null::<RemoteStorageAppSyncStatusCheck_t>())).m_nAppID as *const _
-				as usize
-		},
-		0usize,
-		concat!(
-			"Offset of field: ",
-			stringify!(RemoteStorageAppSyncStatusCheck_t),
-			"::",
-			stringify!(m_nAppID)
-		)
-	);
-	assert_eq!(
-		unsafe {
-			&(*(::std::ptr::null::<RemoteStorageAppSyncStatusCheck_t>())).m_eResult as *const _
-				as usize
-		},
-		4usize,
-		concat!(
-			"Offset of field: ",
-			stringify!(RemoteStorageAppSyncStatusCheck_t),
-			"::",
-			stringify!(m_eResult)
-		)
 	);
 }
 #[repr(C)]
@@ -11448,25 +10876,51 @@ fn bindgen_test_layout_RemoteStorageFileReadAsyncComplete_t() {
 		)
 	);
 }
-pub const k_cchStatNameMax: _bindgen_ty_67 = _bindgen_ty_67::k_cchStatNameMax;
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct RemoteStorageLocalFileChange_t {
+	pub _address: u8,
+}
+pub const RemoteStorageLocalFileChange_t_k_iCallback: RemoteStorageLocalFileChange_t__bindgen_ty_1 =
+	RemoteStorageLocalFileChange_t__bindgen_ty_1::k_iCallback;
 #[repr(i32)]
 #[non_exhaustive]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _bindgen_ty_67 {
+pub enum RemoteStorageLocalFileChange_t__bindgen_ty_1 {
+	k_iCallback = 1333,
+}
+#[test]
+fn bindgen_test_layout_RemoteStorageLocalFileChange_t() {
+	assert_eq!(
+		::std::mem::size_of::<RemoteStorageLocalFileChange_t>(),
+		1usize,
+		concat!("Size of: ", stringify!(RemoteStorageLocalFileChange_t))
+	);
+	assert_eq!(
+		::std::mem::align_of::<RemoteStorageLocalFileChange_t>(),
+		1usize,
+		concat!("Alignment of ", stringify!(RemoteStorageLocalFileChange_t))
+	);
+}
+pub const k_cchStatNameMax: _bindgen_ty_43 = _bindgen_ty_43::k_cchStatNameMax;
+#[repr(i32)]
+#[non_exhaustive]
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub enum _bindgen_ty_43 {
 	k_cchStatNameMax = 128,
 }
-pub const k_cchLeaderboardNameMax: _bindgen_ty_68 = _bindgen_ty_68::k_cchLeaderboardNameMax;
+pub const k_cchLeaderboardNameMax: _bindgen_ty_44 = _bindgen_ty_44::k_cchLeaderboardNameMax;
 #[repr(i32)]
 #[non_exhaustive]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _bindgen_ty_68 {
+pub enum _bindgen_ty_44 {
 	k_cchLeaderboardNameMax = 128,
 }
-pub const k_cLeaderboardDetailsMax: _bindgen_ty_69 = _bindgen_ty_69::k_cLeaderboardDetailsMax;
+pub const k_cLeaderboardDetailsMax: _bindgen_ty_45 = _bindgen_ty_45::k_cLeaderboardDetailsMax;
 #[repr(i32)]
 #[non_exhaustive]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
-pub enum _bindgen_ty_69 {
+pub enum _bindgen_ty_45 {
 	k_cLeaderboardDetailsMax = 64,
 }
 pub type SteamLeaderboard_t = uint64;
@@ -12795,10 +12249,10 @@ fn bindgen_test_layout_TimedTrialStatus_t() {
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
 pub enum EP2PSessionError {
 	k_EP2PSessionErrorNone = 0,
-	k_EP2PSessionErrorNotRunningApp = 1,
 	k_EP2PSessionErrorNoRightsToApp = 2,
-	k_EP2PSessionErrorDestinationNotLoggedIn = 3,
 	k_EP2PSessionErrorTimeout = 4,
+	k_EP2PSessionErrorNotRunningApp_DELETED = 1,
+	k_EP2PSessionErrorDestinationNotLoggedIn_DELETED = 3,
 	k_EP2PSessionErrorMax = 5,
 }
 #[repr(i32)]
@@ -14292,11 +13746,11 @@ pub enum EInputActionOrigin {
 	k_EInputActionOrigin_XBoxOne_DPad_West = 140,
 	k_EInputActionOrigin_XBoxOne_DPad_East = 141,
 	k_EInputActionOrigin_XBoxOne_DPad_Move = 142,
-	k_EInputActionOrigin_XBoxOne_Reserved1 = 143,
-	k_EInputActionOrigin_XBoxOne_Reserved2 = 144,
-	k_EInputActionOrigin_XBoxOne_Reserved3 = 145,
-	k_EInputActionOrigin_XBoxOne_Reserved4 = 146,
-	k_EInputActionOrigin_XBoxOne_Reserved5 = 147,
+	k_EInputActionOrigin_XBoxOne_LeftGrip_Lower = 143,
+	k_EInputActionOrigin_XBoxOne_LeftGrip_Upper = 144,
+	k_EInputActionOrigin_XBoxOne_RightGrip_Lower = 145,
+	k_EInputActionOrigin_XBoxOne_RightGrip_Upper = 146,
+	k_EInputActionOrigin_XBoxOne_Share = 147,
 	k_EInputActionOrigin_XBoxOne_Reserved6 = 148,
 	k_EInputActionOrigin_XBoxOne_Reserved7 = 149,
 	k_EInputActionOrigin_XBoxOne_Reserved8 = 150,
@@ -14407,7 +13861,155 @@ pub enum EInputActionOrigin {
 	k_EInputActionOrigin_Switch_Reserved18 = 255,
 	k_EInputActionOrigin_Switch_Reserved19 = 256,
 	k_EInputActionOrigin_Switch_Reserved20 = 257,
-	k_EInputActionOrigin_Count = 258,
+	k_EInputActionOrigin_PS5_X = 258,
+	k_EInputActionOrigin_PS5_Circle = 259,
+	k_EInputActionOrigin_PS5_Triangle = 260,
+	k_EInputActionOrigin_PS5_Square = 261,
+	k_EInputActionOrigin_PS5_LeftBumper = 262,
+	k_EInputActionOrigin_PS5_RightBumper = 263,
+	k_EInputActionOrigin_PS5_Option = 264,
+	k_EInputActionOrigin_PS5_Create = 265,
+	k_EInputActionOrigin_PS5_Mute = 266,
+	k_EInputActionOrigin_PS5_LeftPad_Touch = 267,
+	k_EInputActionOrigin_PS5_LeftPad_Swipe = 268,
+	k_EInputActionOrigin_PS5_LeftPad_Click = 269,
+	k_EInputActionOrigin_PS5_LeftPad_DPadNorth = 270,
+	k_EInputActionOrigin_PS5_LeftPad_DPadSouth = 271,
+	k_EInputActionOrigin_PS5_LeftPad_DPadWest = 272,
+	k_EInputActionOrigin_PS5_LeftPad_DPadEast = 273,
+	k_EInputActionOrigin_PS5_RightPad_Touch = 274,
+	k_EInputActionOrigin_PS5_RightPad_Swipe = 275,
+	k_EInputActionOrigin_PS5_RightPad_Click = 276,
+	k_EInputActionOrigin_PS5_RightPad_DPadNorth = 277,
+	k_EInputActionOrigin_PS5_RightPad_DPadSouth = 278,
+	k_EInputActionOrigin_PS5_RightPad_DPadWest = 279,
+	k_EInputActionOrigin_PS5_RightPad_DPadEast = 280,
+	k_EInputActionOrigin_PS5_CenterPad_Touch = 281,
+	k_EInputActionOrigin_PS5_CenterPad_Swipe = 282,
+	k_EInputActionOrigin_PS5_CenterPad_Click = 283,
+	k_EInputActionOrigin_PS5_CenterPad_DPadNorth = 284,
+	k_EInputActionOrigin_PS5_CenterPad_DPadSouth = 285,
+	k_EInputActionOrigin_PS5_CenterPad_DPadWest = 286,
+	k_EInputActionOrigin_PS5_CenterPad_DPadEast = 287,
+	k_EInputActionOrigin_PS5_LeftTrigger_Pull = 288,
+	k_EInputActionOrigin_PS5_LeftTrigger_Click = 289,
+	k_EInputActionOrigin_PS5_RightTrigger_Pull = 290,
+	k_EInputActionOrigin_PS5_RightTrigger_Click = 291,
+	k_EInputActionOrigin_PS5_LeftStick_Move = 292,
+	k_EInputActionOrigin_PS5_LeftStick_Click = 293,
+	k_EInputActionOrigin_PS5_LeftStick_DPadNorth = 294,
+	k_EInputActionOrigin_PS5_LeftStick_DPadSouth = 295,
+	k_EInputActionOrigin_PS5_LeftStick_DPadWest = 296,
+	k_EInputActionOrigin_PS5_LeftStick_DPadEast = 297,
+	k_EInputActionOrigin_PS5_RightStick_Move = 298,
+	k_EInputActionOrigin_PS5_RightStick_Click = 299,
+	k_EInputActionOrigin_PS5_RightStick_DPadNorth = 300,
+	k_EInputActionOrigin_PS5_RightStick_DPadSouth = 301,
+	k_EInputActionOrigin_PS5_RightStick_DPadWest = 302,
+	k_EInputActionOrigin_PS5_RightStick_DPadEast = 303,
+	k_EInputActionOrigin_PS5_DPad_North = 304,
+	k_EInputActionOrigin_PS5_DPad_South = 305,
+	k_EInputActionOrigin_PS5_DPad_West = 306,
+	k_EInputActionOrigin_PS5_DPad_East = 307,
+	k_EInputActionOrigin_PS5_Gyro_Move = 308,
+	k_EInputActionOrigin_PS5_Gyro_Pitch = 309,
+	k_EInputActionOrigin_PS5_Gyro_Yaw = 310,
+	k_EInputActionOrigin_PS5_Gyro_Roll = 311,
+	k_EInputActionOrigin_PS5_DPad_Move = 312,
+	k_EInputActionOrigin_PS5_Reserved1 = 313,
+	k_EInputActionOrigin_PS5_Reserved2 = 314,
+	k_EInputActionOrigin_PS5_Reserved3 = 315,
+	k_EInputActionOrigin_PS5_Reserved4 = 316,
+	k_EInputActionOrigin_PS5_Reserved5 = 317,
+	k_EInputActionOrigin_PS5_Reserved6 = 318,
+	k_EInputActionOrigin_PS5_Reserved7 = 319,
+	k_EInputActionOrigin_PS5_Reserved8 = 320,
+	k_EInputActionOrigin_PS5_Reserved9 = 321,
+	k_EInputActionOrigin_PS5_Reserved10 = 322,
+	k_EInputActionOrigin_PS5_Reserved11 = 323,
+	k_EInputActionOrigin_PS5_Reserved12 = 324,
+	k_EInputActionOrigin_PS5_Reserved13 = 325,
+	k_EInputActionOrigin_PS5_Reserved14 = 326,
+	k_EInputActionOrigin_PS5_Reserved15 = 327,
+	k_EInputActionOrigin_PS5_Reserved16 = 328,
+	k_EInputActionOrigin_PS5_Reserved17 = 329,
+	k_EInputActionOrigin_PS5_Reserved18 = 330,
+	k_EInputActionOrigin_PS5_Reserved19 = 331,
+	k_EInputActionOrigin_PS5_Reserved20 = 332,
+	k_EInputActionOrigin_SteamDeck_A = 333,
+	k_EInputActionOrigin_SteamDeck_B = 334,
+	k_EInputActionOrigin_SteamDeck_X = 335,
+	k_EInputActionOrigin_SteamDeck_Y = 336,
+	k_EInputActionOrigin_SteamDeck_L1 = 337,
+	k_EInputActionOrigin_SteamDeck_R1 = 338,
+	k_EInputActionOrigin_SteamDeck_Menu = 339,
+	k_EInputActionOrigin_SteamDeck_View = 340,
+	k_EInputActionOrigin_SteamDeck_LeftPad_Touch = 341,
+	k_EInputActionOrigin_SteamDeck_LeftPad_Swipe = 342,
+	k_EInputActionOrigin_SteamDeck_LeftPad_Click = 343,
+	k_EInputActionOrigin_SteamDeck_LeftPad_DPadNorth = 344,
+	k_EInputActionOrigin_SteamDeck_LeftPad_DPadSouth = 345,
+	k_EInputActionOrigin_SteamDeck_LeftPad_DPadWest = 346,
+	k_EInputActionOrigin_SteamDeck_LeftPad_DPadEast = 347,
+	k_EInputActionOrigin_SteamDeck_RightPad_Touch = 348,
+	k_EInputActionOrigin_SteamDeck_RightPad_Swipe = 349,
+	k_EInputActionOrigin_SteamDeck_RightPad_Click = 350,
+	k_EInputActionOrigin_SteamDeck_RightPad_DPadNorth = 351,
+	k_EInputActionOrigin_SteamDeck_RightPad_DPadSouth = 352,
+	k_EInputActionOrigin_SteamDeck_RightPad_DPadWest = 353,
+	k_EInputActionOrigin_SteamDeck_RightPad_DPadEast = 354,
+	k_EInputActionOrigin_SteamDeck_L2_SoftPull = 355,
+	k_EInputActionOrigin_SteamDeck_L2 = 356,
+	k_EInputActionOrigin_SteamDeck_R2_SoftPull = 357,
+	k_EInputActionOrigin_SteamDeck_R2 = 358,
+	k_EInputActionOrigin_SteamDeck_LeftStick_Move = 359,
+	k_EInputActionOrigin_SteamDeck_L3 = 360,
+	k_EInputActionOrigin_SteamDeck_LeftStick_DPadNorth = 361,
+	k_EInputActionOrigin_SteamDeck_LeftStick_DPadSouth = 362,
+	k_EInputActionOrigin_SteamDeck_LeftStick_DPadWest = 363,
+	k_EInputActionOrigin_SteamDeck_LeftStick_DPadEast = 364,
+	k_EInputActionOrigin_SteamDeck_LeftStick_Touch = 365,
+	k_EInputActionOrigin_SteamDeck_RightStick_Move = 366,
+	k_EInputActionOrigin_SteamDeck_R3 = 367,
+	k_EInputActionOrigin_SteamDeck_RightStick_DPadNorth = 368,
+	k_EInputActionOrigin_SteamDeck_RightStick_DPadSouth = 369,
+	k_EInputActionOrigin_SteamDeck_RightStick_DPadWest = 370,
+	k_EInputActionOrigin_SteamDeck_RightStick_DPadEast = 371,
+	k_EInputActionOrigin_SteamDeck_RightStick_Touch = 372,
+	k_EInputActionOrigin_SteamDeck_L4 = 373,
+	k_EInputActionOrigin_SteamDeck_R4 = 374,
+	k_EInputActionOrigin_SteamDeck_L5 = 375,
+	k_EInputActionOrigin_SteamDeck_R5 = 376,
+	k_EInputActionOrigin_SteamDeck_DPad_Move = 377,
+	k_EInputActionOrigin_SteamDeck_DPad_North = 378,
+	k_EInputActionOrigin_SteamDeck_DPad_South = 379,
+	k_EInputActionOrigin_SteamDeck_DPad_West = 380,
+	k_EInputActionOrigin_SteamDeck_DPad_East = 381,
+	k_EInputActionOrigin_SteamDeck_Gyro_Move = 382,
+	k_EInputActionOrigin_SteamDeck_Gyro_Pitch = 383,
+	k_EInputActionOrigin_SteamDeck_Gyro_Yaw = 384,
+	k_EInputActionOrigin_SteamDeck_Gyro_Roll = 385,
+	k_EInputActionOrigin_SteamDeck_Reserved1 = 386,
+	k_EInputActionOrigin_SteamDeck_Reserved2 = 387,
+	k_EInputActionOrigin_SteamDeck_Reserved3 = 388,
+	k_EInputActionOrigin_SteamDeck_Reserved4 = 389,
+	k_EInputActionOrigin_SteamDeck_Reserved5 = 390,
+	k_EInputActionOrigin_SteamDeck_Reserved6 = 391,
+	k_EInputActionOrigin_SteamDeck_Reserved7 = 392,
+	k_EInputActionOrigin_SteamDeck_Reserved8 = 393,
+	k_EInputActionOrigin_SteamDeck_Reserved9 = 394,
+	k_EInputActionOrigin_SteamDeck_Reserved10 = 395,
+	k_EInputActionOrigin_SteamDeck_Reserved11 = 396,
+	k_EInputActionOrigin_SteamDeck_Reserved12 = 397,
+	k_EInputActionOrigin_SteamDeck_Reserved13 = 398,
+	k_EInputActionOrigin_SteamDeck_Reserved14 = 399,
+	k_EInputActionOrigin_SteamDeck_Reserved15 = 400,
+	k_EInputActionOrigin_SteamDeck_Reserved16 = 401,
+	k_EInputActionOrigin_SteamDeck_Reserved17 = 402,
+	k_EInputActionOrigin_SteamDeck_Reserved18 = 403,
+	k_EInputActionOrigin_SteamDeck_Reserved19 = 404,
+	k_EInputActionOrigin_SteamDeck_Reserved20 = 405,
+	k_EInputActionOrigin_Count = 406,
 	k_EInputActionOrigin_MaximumPossibleValue = 32767,
 }
 #[repr(i32)]
@@ -14454,6 +14056,22 @@ pub enum ESteamControllerPad {
 #[repr(i32)]
 #[non_exhaustive]
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub enum EControllerHapticLocation {
+	k_EControllerHapticLocation_Left = 1,
+	k_EControllerHapticLocation_Right = 2,
+	k_EControllerHapticLocation_Both = 3,
+}
+#[repr(i32)]
+#[non_exhaustive]
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub enum EControllerHapticType {
+	k_EControllerHapticType_Off = 0,
+	k_EControllerHapticType_Tick = 1,
+	k_EControllerHapticType_Click = 2,
+}
+#[repr(i32)]
+#[non_exhaustive]
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
 pub enum ESteamInputType {
 	k_ESteamInputType_Unknown = 0,
 	k_ESteamInputType_SteamController = 1,
@@ -14468,8 +14086,20 @@ pub enum ESteamInputType {
 	k_ESteamInputType_SwitchProController = 10,
 	k_ESteamInputType_MobileTouch = 11,
 	k_ESteamInputType_PS3Controller = 12,
-	k_ESteamInputType_Count = 13,
+	k_ESteamInputType_PS5Controller = 13,
+	k_ESteamInputType_SteamDeckController = 14,
+	k_ESteamInputType_Count = 15,
 	k_ESteamInputType_MaximumPossibleValue = 255,
+}
+#[repr(i32)]
+#[non_exhaustive]
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub enum ESteamInputConfigurationEnableType {
+	k_ESteamInputConfigurationEnableType_None = 0,
+	k_ESteamInputConfigurationEnableType_Playstation = 1,
+	k_ESteamInputConfigurationEnableType_Xbox = 2,
+	k_ESteamInputConfigurationEnableType_Generic = 4,
+	k_ESteamInputConfigurationEnableType_Switch = 8,
 }
 #[repr(i32)]
 #[non_exhaustive]
@@ -14477,6 +14107,32 @@ pub enum ESteamInputType {
 pub enum ESteamInputLEDFlag {
 	k_ESteamInputLEDFlag_SetColor = 0,
 	k_ESteamInputLEDFlag_RestoreUserDefault = 1,
+}
+#[repr(i32)]
+#[non_exhaustive]
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub enum ESteamInputGlyphSize {
+	k_ESteamInputGlyphSize_Small = 0,
+	k_ESteamInputGlyphSize_Medium = 1,
+	k_ESteamInputGlyphSize_Large = 2,
+	k_ESteamInputGlyphSize_Count = 3,
+}
+#[repr(i32)]
+#[non_exhaustive]
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub enum ESteamInputGlyphStyle {
+	ESteamInputGlyphStyle_Knockout = 0,
+	ESteamInputGlyphStyle_Light = 1,
+	ESteamInputGlyphStyle_Dark = 2,
+	ESteamInputGlyphStyle_NeutralColorABXY = 16,
+	ESteamInputGlyphStyle_SolidABXY = 32,
+}
+#[repr(i32)]
+#[non_exhaustive]
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub enum ESteamInputActionEventType {
+	ESteamInputActionEventType_DigitalAction = 0,
+	ESteamInputActionEventType_AnalogAction = 1,
 }
 pub type InputHandle_t = uint64;
 pub type InputActionSetHandle_t = uint64;
@@ -14711,6 +14367,206 @@ fn bindgen_test_layout_InputMotionData_t() {
 		)
 	);
 }
+#[repr(C, packed)]
+#[derive(Copy, Clone)]
+pub struct SteamInputActionEvent_t {
+	pub controllerHandle: InputHandle_t,
+	pub eEventType: ESteamInputActionEventType,
+	pub __bindgen_anon_1: SteamInputActionEvent_t__bindgen_ty_1,
+}
+#[repr(C, packed)]
+#[derive(Debug, Copy, Clone)]
+pub struct SteamInputActionEvent_t_AnalogAction_t {
+	pub actionHandle: InputAnalogActionHandle_t,
+	pub analogActionData: InputAnalogActionData_t,
+}
+#[test]
+fn bindgen_test_layout_SteamInputActionEvent_t_AnalogAction_t() {
+	assert_eq!(
+		::std::mem::size_of::<SteamInputActionEvent_t_AnalogAction_t>(),
+		21usize,
+		concat!(
+			"Size of: ",
+			stringify!(SteamInputActionEvent_t_AnalogAction_t)
+		)
+	);
+	assert_eq!(
+		::std::mem::align_of::<SteamInputActionEvent_t_AnalogAction_t>(),
+		1usize,
+		concat!(
+			"Alignment of ",
+			stringify!(SteamInputActionEvent_t_AnalogAction_t)
+		)
+	);
+	assert_eq!(
+		unsafe {
+			&(*(::std::ptr::null::<SteamInputActionEvent_t_AnalogAction_t>())).actionHandle
+				as *const _ as usize
+		},
+		0usize,
+		concat!(
+			"Offset of field: ",
+			stringify!(SteamInputActionEvent_t_AnalogAction_t),
+			"::",
+			stringify!(actionHandle)
+		)
+	);
+	assert_eq!(
+		unsafe {
+			&(*(::std::ptr::null::<SteamInputActionEvent_t_AnalogAction_t>())).analogActionData
+				as *const _ as usize
+		},
+		8usize,
+		concat!(
+			"Offset of field: ",
+			stringify!(SteamInputActionEvent_t_AnalogAction_t),
+			"::",
+			stringify!(analogActionData)
+		)
+	);
+}
+#[repr(C, packed)]
+#[derive(Debug, Copy, Clone)]
+pub struct SteamInputActionEvent_t_DigitalAction_t {
+	pub actionHandle: InputDigitalActionHandle_t,
+	pub digitalActionData: InputDigitalActionData_t,
+}
+#[test]
+fn bindgen_test_layout_SteamInputActionEvent_t_DigitalAction_t() {
+	assert_eq!(
+		::std::mem::size_of::<SteamInputActionEvent_t_DigitalAction_t>(),
+		10usize,
+		concat!(
+			"Size of: ",
+			stringify!(SteamInputActionEvent_t_DigitalAction_t)
+		)
+	);
+	assert_eq!(
+		::std::mem::align_of::<SteamInputActionEvent_t_DigitalAction_t>(),
+		1usize,
+		concat!(
+			"Alignment of ",
+			stringify!(SteamInputActionEvent_t_DigitalAction_t)
+		)
+	);
+	assert_eq!(
+		unsafe {
+			&(*(::std::ptr::null::<SteamInputActionEvent_t_DigitalAction_t>())).actionHandle
+				as *const _ as usize
+		},
+		0usize,
+		concat!(
+			"Offset of field: ",
+			stringify!(SteamInputActionEvent_t_DigitalAction_t),
+			"::",
+			stringify!(actionHandle)
+		)
+	);
+	assert_eq!(
+		unsafe {
+			&(*(::std::ptr::null::<SteamInputActionEvent_t_DigitalAction_t>())).digitalActionData
+				as *const _ as usize
+		},
+		8usize,
+		concat!(
+			"Offset of field: ",
+			stringify!(SteamInputActionEvent_t_DigitalAction_t),
+			"::",
+			stringify!(digitalActionData)
+		)
+	);
+}
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub union SteamInputActionEvent_t__bindgen_ty_1 {
+	pub analogAction: SteamInputActionEvent_t_AnalogAction_t,
+	pub digitalAction: SteamInputActionEvent_t_DigitalAction_t,
+}
+#[test]
+fn bindgen_test_layout_SteamInputActionEvent_t__bindgen_ty_1() {
+	assert_eq!(
+		::std::mem::size_of::<SteamInputActionEvent_t__bindgen_ty_1>(),
+		21usize,
+		concat!(
+			"Size of: ",
+			stringify!(SteamInputActionEvent_t__bindgen_ty_1)
+		)
+	);
+	assert_eq!(
+		::std::mem::align_of::<SteamInputActionEvent_t__bindgen_ty_1>(),
+		1usize,
+		concat!(
+			"Alignment of ",
+			stringify!(SteamInputActionEvent_t__bindgen_ty_1)
+		)
+	);
+	assert_eq!(
+		unsafe {
+			&(*(::std::ptr::null::<SteamInputActionEvent_t__bindgen_ty_1>())).analogAction
+				as *const _ as usize
+		},
+		0usize,
+		concat!(
+			"Offset of field: ",
+			stringify!(SteamInputActionEvent_t__bindgen_ty_1),
+			"::",
+			stringify!(analogAction)
+		)
+	);
+	assert_eq!(
+		unsafe {
+			&(*(::std::ptr::null::<SteamInputActionEvent_t__bindgen_ty_1>())).digitalAction
+				as *const _ as usize
+		},
+		0usize,
+		concat!(
+			"Offset of field: ",
+			stringify!(SteamInputActionEvent_t__bindgen_ty_1),
+			"::",
+			stringify!(digitalAction)
+		)
+	);
+}
+#[test]
+fn bindgen_test_layout_SteamInputActionEvent_t() {
+	assert_eq!(
+		::std::mem::size_of::<SteamInputActionEvent_t>(),
+		33usize,
+		concat!("Size of: ", stringify!(SteamInputActionEvent_t))
+	);
+	assert_eq!(
+		::std::mem::align_of::<SteamInputActionEvent_t>(),
+		1usize,
+		concat!("Alignment of ", stringify!(SteamInputActionEvent_t))
+	);
+	assert_eq!(
+		unsafe {
+			&(*(::std::ptr::null::<SteamInputActionEvent_t>())).controllerHandle as *const _
+				as usize
+		},
+		0usize,
+		concat!(
+			"Offset of field: ",
+			stringify!(SteamInputActionEvent_t),
+			"::",
+			stringify!(controllerHandle)
+		)
+	);
+	assert_eq!(
+		unsafe {
+			&(*(::std::ptr::null::<SteamInputActionEvent_t>())).eEventType as *const _ as usize
+		},
+		8usize,
+		concat!(
+			"Offset of field: ",
+			stringify!(SteamInputActionEvent_t),
+			"::",
+			stringify!(eEventType)
+		)
+	);
+}
+pub type SteamInputActionEventCallbackPointer =
+	::std::option::Option<unsafe extern "C" fn(arg1: *mut SteamInputActionEvent_t)>;
 #[repr(C)]
 pub struct ISteamInput__bindgen_vtable(::std::os::raw::c_void);
 #[repr(C)]
@@ -14729,6 +14585,208 @@ fn bindgen_test_layout_ISteamInput() {
 		::std::mem::align_of::<ISteamInput>(),
 		4usize,
 		concat!("Alignment of ", stringify!(ISteamInput))
+	);
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct SteamInputDeviceConnected_t {
+	pub m_ulConnectedDeviceHandle: InputHandle_t,
+}
+pub const SteamInputDeviceConnected_t_k_iCallback: SteamInputDeviceConnected_t__bindgen_ty_1 =
+	SteamInputDeviceConnected_t__bindgen_ty_1::k_iCallback;
+#[repr(i32)]
+#[non_exhaustive]
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub enum SteamInputDeviceConnected_t__bindgen_ty_1 {
+	k_iCallback = 2801,
+}
+#[test]
+fn bindgen_test_layout_SteamInputDeviceConnected_t() {
+	assert_eq!(
+		::std::mem::size_of::<SteamInputDeviceConnected_t>(),
+		8usize,
+		concat!("Size of: ", stringify!(SteamInputDeviceConnected_t))
+	);
+	assert_eq!(
+		::std::mem::align_of::<SteamInputDeviceConnected_t>(),
+		8usize,
+		concat!("Alignment of ", stringify!(SteamInputDeviceConnected_t))
+	);
+	assert_eq!(
+		unsafe {
+			&(*(::std::ptr::null::<SteamInputDeviceConnected_t>())).m_ulConnectedDeviceHandle
+				as *const _ as usize
+		},
+		0usize,
+		concat!(
+			"Offset of field: ",
+			stringify!(SteamInputDeviceConnected_t),
+			"::",
+			stringify!(m_ulConnectedDeviceHandle)
+		)
+	);
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct SteamInputDeviceDisconnected_t {
+	pub m_ulDisconnectedDeviceHandle: InputHandle_t,
+}
+pub const SteamInputDeviceDisconnected_t_k_iCallback: SteamInputDeviceDisconnected_t__bindgen_ty_1 =
+	SteamInputDeviceDisconnected_t__bindgen_ty_1::k_iCallback;
+#[repr(i32)]
+#[non_exhaustive]
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub enum SteamInputDeviceDisconnected_t__bindgen_ty_1 {
+	k_iCallback = 2802,
+}
+#[test]
+fn bindgen_test_layout_SteamInputDeviceDisconnected_t() {
+	assert_eq!(
+		::std::mem::size_of::<SteamInputDeviceDisconnected_t>(),
+		8usize,
+		concat!("Size of: ", stringify!(SteamInputDeviceDisconnected_t))
+	);
+	assert_eq!(
+		::std::mem::align_of::<SteamInputDeviceDisconnected_t>(),
+		8usize,
+		concat!("Alignment of ", stringify!(SteamInputDeviceDisconnected_t))
+	);
+	assert_eq!(
+		unsafe {
+			&(*(::std::ptr::null::<SteamInputDeviceDisconnected_t>())).m_ulDisconnectedDeviceHandle
+				as *const _ as usize
+		},
+		0usize,
+		concat!(
+			"Offset of field: ",
+			stringify!(SteamInputDeviceDisconnected_t),
+			"::",
+			stringify!(m_ulDisconnectedDeviceHandle)
+		)
+	);
+}
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub struct SteamInputConfigurationLoaded_t {
+	pub m_unAppID: AppId_t,
+	pub m_ulDeviceHandle: InputHandle_t,
+	pub m_ulMappingCreator: CSteamID,
+	pub m_unMajorRevision: uint32,
+	pub m_unMinorRevision: uint32,
+	pub m_bUsesSteamInputAPI: bool,
+	pub m_bUsesGamepadAPI: bool,
+}
+pub const SteamInputConfigurationLoaded_t_k_iCallback:
+	SteamInputConfigurationLoaded_t__bindgen_ty_1 =
+	SteamInputConfigurationLoaded_t__bindgen_ty_1::k_iCallback;
+#[repr(i32)]
+#[non_exhaustive]
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub enum SteamInputConfigurationLoaded_t__bindgen_ty_1 {
+	k_iCallback = 2803,
+}
+#[test]
+fn bindgen_test_layout_SteamInputConfigurationLoaded_t() {
+	assert_eq!(
+		::std::mem::size_of::<SteamInputConfigurationLoaded_t>(),
+		40usize,
+		concat!("Size of: ", stringify!(SteamInputConfigurationLoaded_t))
+	);
+	assert_eq!(
+		::std::mem::align_of::<SteamInputConfigurationLoaded_t>(),
+		8usize,
+		concat!("Alignment of ", stringify!(SteamInputConfigurationLoaded_t))
+	);
+	assert_eq!(
+		unsafe {
+			&(*(::std::ptr::null::<SteamInputConfigurationLoaded_t>())).m_unAppID as *const _
+				as usize
+		},
+		0usize,
+		concat!(
+			"Offset of field: ",
+			stringify!(SteamInputConfigurationLoaded_t),
+			"::",
+			stringify!(m_unAppID)
+		)
+	);
+	assert_eq!(
+		unsafe {
+			&(*(::std::ptr::null::<SteamInputConfigurationLoaded_t>())).m_ulDeviceHandle as *const _
+				as usize
+		},
+		8usize,
+		concat!(
+			"Offset of field: ",
+			stringify!(SteamInputConfigurationLoaded_t),
+			"::",
+			stringify!(m_ulDeviceHandle)
+		)
+	);
+	assert_eq!(
+		unsafe {
+			&(*(::std::ptr::null::<SteamInputConfigurationLoaded_t>())).m_ulMappingCreator
+				as *const _ as usize
+		},
+		16usize,
+		concat!(
+			"Offset of field: ",
+			stringify!(SteamInputConfigurationLoaded_t),
+			"::",
+			stringify!(m_ulMappingCreator)
+		)
+	);
+	assert_eq!(
+		unsafe {
+			&(*(::std::ptr::null::<SteamInputConfigurationLoaded_t>())).m_unMajorRevision
+				as *const _ as usize
+		},
+		24usize,
+		concat!(
+			"Offset of field: ",
+			stringify!(SteamInputConfigurationLoaded_t),
+			"::",
+			stringify!(m_unMajorRevision)
+		)
+	);
+	assert_eq!(
+		unsafe {
+			&(*(::std::ptr::null::<SteamInputConfigurationLoaded_t>())).m_unMinorRevision
+				as *const _ as usize
+		},
+		28usize,
+		concat!(
+			"Offset of field: ",
+			stringify!(SteamInputConfigurationLoaded_t),
+			"::",
+			stringify!(m_unMinorRevision)
+		)
+	);
+	assert_eq!(
+		unsafe {
+			&(*(::std::ptr::null::<SteamInputConfigurationLoaded_t>())).m_bUsesSteamInputAPI
+				as *const _ as usize
+		},
+		32usize,
+		concat!(
+			"Offset of field: ",
+			stringify!(SteamInputConfigurationLoaded_t),
+			"::",
+			stringify!(m_bUsesSteamInputAPI)
+		)
+	);
+	assert_eq!(
+		unsafe {
+			&(*(::std::ptr::null::<SteamInputConfigurationLoaded_t>())).m_bUsesGamepadAPI
+				as *const _ as usize
+		},
+		33usize,
+		concat!(
+			"Offset of field: ",
+			stringify!(SteamInputConfigurationLoaded_t),
+			"::",
+			stringify!(m_bUsesGamepadAPI)
+		)
 	);
 }
 #[repr(i32)]
@@ -14980,7 +15038,140 @@ pub enum EControllerActionOrigin {
 	k_EControllerActionOrigin_XBoxOne_DPad_Move = 242,
 	k_EControllerActionOrigin_XBox360_DPad_Move = 243,
 	k_EControllerActionOrigin_Switch_DPad_Move = 244,
-	k_EControllerActionOrigin_Count = 245,
+	k_EControllerActionOrigin_PS5_X = 245,
+	k_EControllerActionOrigin_PS5_Circle = 246,
+	k_EControllerActionOrigin_PS5_Triangle = 247,
+	k_EControllerActionOrigin_PS5_Square = 248,
+	k_EControllerActionOrigin_PS5_LeftBumper = 249,
+	k_EControllerActionOrigin_PS5_RightBumper = 250,
+	k_EControllerActionOrigin_PS5_Option = 251,
+	k_EControllerActionOrigin_PS5_Create = 252,
+	k_EControllerActionOrigin_PS5_Mute = 253,
+	k_EControllerActionOrigin_PS5_LeftPad_Touch = 254,
+	k_EControllerActionOrigin_PS5_LeftPad_Swipe = 255,
+	k_EControllerActionOrigin_PS5_LeftPad_Click = 256,
+	k_EControllerActionOrigin_PS5_LeftPad_DPadNorth = 257,
+	k_EControllerActionOrigin_PS5_LeftPad_DPadSouth = 258,
+	k_EControllerActionOrigin_PS5_LeftPad_DPadWest = 259,
+	k_EControllerActionOrigin_PS5_LeftPad_DPadEast = 260,
+	k_EControllerActionOrigin_PS5_RightPad_Touch = 261,
+	k_EControllerActionOrigin_PS5_RightPad_Swipe = 262,
+	k_EControllerActionOrigin_PS5_RightPad_Click = 263,
+	k_EControllerActionOrigin_PS5_RightPad_DPadNorth = 264,
+	k_EControllerActionOrigin_PS5_RightPad_DPadSouth = 265,
+	k_EControllerActionOrigin_PS5_RightPad_DPadWest = 266,
+	k_EControllerActionOrigin_PS5_RightPad_DPadEast = 267,
+	k_EControllerActionOrigin_PS5_CenterPad_Touch = 268,
+	k_EControllerActionOrigin_PS5_CenterPad_Swipe = 269,
+	k_EControllerActionOrigin_PS5_CenterPad_Click = 270,
+	k_EControllerActionOrigin_PS5_CenterPad_DPadNorth = 271,
+	k_EControllerActionOrigin_PS5_CenterPad_DPadSouth = 272,
+	k_EControllerActionOrigin_PS5_CenterPad_DPadWest = 273,
+	k_EControllerActionOrigin_PS5_CenterPad_DPadEast = 274,
+	k_EControllerActionOrigin_PS5_LeftTrigger_Pull = 275,
+	k_EControllerActionOrigin_PS5_LeftTrigger_Click = 276,
+	k_EControllerActionOrigin_PS5_RightTrigger_Pull = 277,
+	k_EControllerActionOrigin_PS5_RightTrigger_Click = 278,
+	k_EControllerActionOrigin_PS5_LeftStick_Move = 279,
+	k_EControllerActionOrigin_PS5_LeftStick_Click = 280,
+	k_EControllerActionOrigin_PS5_LeftStick_DPadNorth = 281,
+	k_EControllerActionOrigin_PS5_LeftStick_DPadSouth = 282,
+	k_EControllerActionOrigin_PS5_LeftStick_DPadWest = 283,
+	k_EControllerActionOrigin_PS5_LeftStick_DPadEast = 284,
+	k_EControllerActionOrigin_PS5_RightStick_Move = 285,
+	k_EControllerActionOrigin_PS5_RightStick_Click = 286,
+	k_EControllerActionOrigin_PS5_RightStick_DPadNorth = 287,
+	k_EControllerActionOrigin_PS5_RightStick_DPadSouth = 288,
+	k_EControllerActionOrigin_PS5_RightStick_DPadWest = 289,
+	k_EControllerActionOrigin_PS5_RightStick_DPadEast = 290,
+	k_EControllerActionOrigin_PS5_DPad_Move = 291,
+	k_EControllerActionOrigin_PS5_DPad_North = 292,
+	k_EControllerActionOrigin_PS5_DPad_South = 293,
+	k_EControllerActionOrigin_PS5_DPad_West = 294,
+	k_EControllerActionOrigin_PS5_DPad_East = 295,
+	k_EControllerActionOrigin_PS5_Gyro_Move = 296,
+	k_EControllerActionOrigin_PS5_Gyro_Pitch = 297,
+	k_EControllerActionOrigin_PS5_Gyro_Yaw = 298,
+	k_EControllerActionOrigin_PS5_Gyro_Roll = 299,
+	k_EControllerActionOrigin_XBoxOne_LeftGrip_Lower = 300,
+	k_EControllerActionOrigin_XBoxOne_LeftGrip_Upper = 301,
+	k_EControllerActionOrigin_XBoxOne_RightGrip_Lower = 302,
+	k_EControllerActionOrigin_XBoxOne_RightGrip_Upper = 303,
+	k_EControllerActionOrigin_XBoxOne_Share = 304,
+	k_EControllerActionOrigin_SteamDeck_A = 305,
+	k_EControllerActionOrigin_SteamDeck_B = 306,
+	k_EControllerActionOrigin_SteamDeck_X = 307,
+	k_EControllerActionOrigin_SteamDeck_Y = 308,
+	k_EControllerActionOrigin_SteamDeck_L1 = 309,
+	k_EControllerActionOrigin_SteamDeck_R1 = 310,
+	k_EControllerActionOrigin_SteamDeck_Menu = 311,
+	k_EControllerActionOrigin_SteamDeck_View = 312,
+	k_EControllerActionOrigin_SteamDeck_LeftPad_Touch = 313,
+	k_EControllerActionOrigin_SteamDeck_LeftPad_Swipe = 314,
+	k_EControllerActionOrigin_SteamDeck_LeftPad_Click = 315,
+	k_EControllerActionOrigin_SteamDeck_LeftPad_DPadNorth = 316,
+	k_EControllerActionOrigin_SteamDeck_LeftPad_DPadSouth = 317,
+	k_EControllerActionOrigin_SteamDeck_LeftPad_DPadWest = 318,
+	k_EControllerActionOrigin_SteamDeck_LeftPad_DPadEast = 319,
+	k_EControllerActionOrigin_SteamDeck_RightPad_Touch = 320,
+	k_EControllerActionOrigin_SteamDeck_RightPad_Swipe = 321,
+	k_EControllerActionOrigin_SteamDeck_RightPad_Click = 322,
+	k_EControllerActionOrigin_SteamDeck_RightPad_DPadNorth = 323,
+	k_EControllerActionOrigin_SteamDeck_RightPad_DPadSouth = 324,
+	k_EControllerActionOrigin_SteamDeck_RightPad_DPadWest = 325,
+	k_EControllerActionOrigin_SteamDeck_RightPad_DPadEast = 326,
+	k_EControllerActionOrigin_SteamDeck_L2_SoftPull = 327,
+	k_EControllerActionOrigin_SteamDeck_L2 = 328,
+	k_EControllerActionOrigin_SteamDeck_R2_SoftPull = 329,
+	k_EControllerActionOrigin_SteamDeck_R2 = 330,
+	k_EControllerActionOrigin_SteamDeck_LeftStick_Move = 331,
+	k_EControllerActionOrigin_SteamDeck_L3 = 332,
+	k_EControllerActionOrigin_SteamDeck_LeftStick_DPadNorth = 333,
+	k_EControllerActionOrigin_SteamDeck_LeftStick_DPadSouth = 334,
+	k_EControllerActionOrigin_SteamDeck_LeftStick_DPadWest = 335,
+	k_EControllerActionOrigin_SteamDeck_LeftStick_DPadEast = 336,
+	k_EControllerActionOrigin_SteamDeck_LeftStick_Touch = 337,
+	k_EControllerActionOrigin_SteamDeck_RightStick_Move = 338,
+	k_EControllerActionOrigin_SteamDeck_R3 = 339,
+	k_EControllerActionOrigin_SteamDeck_RightStick_DPadNorth = 340,
+	k_EControllerActionOrigin_SteamDeck_RightStick_DPadSouth = 341,
+	k_EControllerActionOrigin_SteamDeck_RightStick_DPadWest = 342,
+	k_EControllerActionOrigin_SteamDeck_RightStick_DPadEast = 343,
+	k_EControllerActionOrigin_SteamDeck_RightStick_Touch = 344,
+	k_EControllerActionOrigin_SteamDeck_L4 = 345,
+	k_EControllerActionOrigin_SteamDeck_R4 = 346,
+	k_EControllerActionOrigin_SteamDeck_L5 = 347,
+	k_EControllerActionOrigin_SteamDeck_R5 = 348,
+	k_EControllerActionOrigin_SteamDeck_DPad_Move = 349,
+	k_EControllerActionOrigin_SteamDeck_DPad_North = 350,
+	k_EControllerActionOrigin_SteamDeck_DPad_South = 351,
+	k_EControllerActionOrigin_SteamDeck_DPad_West = 352,
+	k_EControllerActionOrigin_SteamDeck_DPad_East = 353,
+	k_EControllerActionOrigin_SteamDeck_Gyro_Move = 354,
+	k_EControllerActionOrigin_SteamDeck_Gyro_Pitch = 355,
+	k_EControllerActionOrigin_SteamDeck_Gyro_Yaw = 356,
+	k_EControllerActionOrigin_SteamDeck_Gyro_Roll = 357,
+	k_EControllerActionOrigin_SteamDeck_Reserved1 = 358,
+	k_EControllerActionOrigin_SteamDeck_Reserved2 = 359,
+	k_EControllerActionOrigin_SteamDeck_Reserved3 = 360,
+	k_EControllerActionOrigin_SteamDeck_Reserved4 = 361,
+	k_EControllerActionOrigin_SteamDeck_Reserved5 = 362,
+	k_EControllerActionOrigin_SteamDeck_Reserved6 = 363,
+	k_EControllerActionOrigin_SteamDeck_Reserved7 = 364,
+	k_EControllerActionOrigin_SteamDeck_Reserved8 = 365,
+	k_EControllerActionOrigin_SteamDeck_Reserved9 = 366,
+	k_EControllerActionOrigin_SteamDeck_Reserved10 = 367,
+	k_EControllerActionOrigin_SteamDeck_Reserved11 = 368,
+	k_EControllerActionOrigin_SteamDeck_Reserved12 = 369,
+	k_EControllerActionOrigin_SteamDeck_Reserved13 = 370,
+	k_EControllerActionOrigin_SteamDeck_Reserved14 = 371,
+	k_EControllerActionOrigin_SteamDeck_Reserved15 = 372,
+	k_EControllerActionOrigin_SteamDeck_Reserved16 = 373,
+	k_EControllerActionOrigin_SteamDeck_Reserved17 = 374,
+	k_EControllerActionOrigin_SteamDeck_Reserved18 = 375,
+	k_EControllerActionOrigin_SteamDeck_Reserved19 = 376,
+	k_EControllerActionOrigin_SteamDeck_Reserved20 = 377,
+	k_EControllerActionOrigin_Count = 378,
 	k_EControllerActionOrigin_MaximumPossibleValue = 32767,
 }
 #[repr(i32)]
@@ -15086,6 +15277,7 @@ pub enum EUGCQuery {
 	k_EUGCQuery_RankedByLifetimeAveragePlaytime = 16,
 	k_EUGCQuery_RankedByPlaytimeSessionsTrend = 17,
 	k_EUGCQuery_RankedByLifetimePlaytimeSessions = 18,
+	k_EUGCQuery_RankedByLastUpdatedDate = 19,
 }
 #[repr(i32)]
 #[non_exhaustive]
@@ -16596,6 +16788,146 @@ fn bindgen_test_layout_DeleteItemResult_t() {
 	);
 }
 #[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct UserSubscribedItemsListChanged_t {
+	pub m_nAppID: AppId_t,
+}
+pub const UserSubscribedItemsListChanged_t_k_iCallback:
+	UserSubscribedItemsListChanged_t__bindgen_ty_1 =
+	UserSubscribedItemsListChanged_t__bindgen_ty_1::k_iCallback;
+#[repr(i32)]
+#[non_exhaustive]
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub enum UserSubscribedItemsListChanged_t__bindgen_ty_1 {
+	k_iCallback = 3418,
+}
+#[test]
+fn bindgen_test_layout_UserSubscribedItemsListChanged_t() {
+	assert_eq!(
+		::std::mem::size_of::<UserSubscribedItemsListChanged_t>(),
+		4usize,
+		concat!("Size of: ", stringify!(UserSubscribedItemsListChanged_t))
+	);
+	assert_eq!(
+		::std::mem::align_of::<UserSubscribedItemsListChanged_t>(),
+		4usize,
+		concat!(
+			"Alignment of ",
+			stringify!(UserSubscribedItemsListChanged_t)
+		)
+	);
+	assert_eq!(
+		unsafe {
+			&(*(::std::ptr::null::<UserSubscribedItemsListChanged_t>())).m_nAppID as *const _
+				as usize
+		},
+		0usize,
+		concat!(
+			"Offset of field: ",
+			stringify!(UserSubscribedItemsListChanged_t),
+			"::",
+			stringify!(m_nAppID)
+		)
+	);
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct WorkshopEULAStatus_t {
+	pub m_eResult: EResult,
+	pub m_nAppID: AppId_t,
+	pub m_unVersion: uint32,
+	pub m_rtAction: RTime32,
+	pub m_bAccepted: bool,
+	pub m_bNeedsAction: bool,
+}
+pub const WorkshopEULAStatus_t_k_iCallback: WorkshopEULAStatus_t__bindgen_ty_1 =
+	WorkshopEULAStatus_t__bindgen_ty_1::k_iCallback;
+#[repr(i32)]
+#[non_exhaustive]
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub enum WorkshopEULAStatus_t__bindgen_ty_1 {
+	k_iCallback = 3420,
+}
+#[test]
+fn bindgen_test_layout_WorkshopEULAStatus_t() {
+	assert_eq!(
+		::std::mem::size_of::<WorkshopEULAStatus_t>(),
+		20usize,
+		concat!("Size of: ", stringify!(WorkshopEULAStatus_t))
+	);
+	assert_eq!(
+		::std::mem::align_of::<WorkshopEULAStatus_t>(),
+		4usize,
+		concat!("Alignment of ", stringify!(WorkshopEULAStatus_t))
+	);
+	assert_eq!(
+		unsafe { &(*(::std::ptr::null::<WorkshopEULAStatus_t>())).m_eResult as *const _ as usize },
+		0usize,
+		concat!(
+			"Offset of field: ",
+			stringify!(WorkshopEULAStatus_t),
+			"::",
+			stringify!(m_eResult)
+		)
+	);
+	assert_eq!(
+		unsafe { &(*(::std::ptr::null::<WorkshopEULAStatus_t>())).m_nAppID as *const _ as usize },
+		4usize,
+		concat!(
+			"Offset of field: ",
+			stringify!(WorkshopEULAStatus_t),
+			"::",
+			stringify!(m_nAppID)
+		)
+	);
+	assert_eq!(
+		unsafe {
+			&(*(::std::ptr::null::<WorkshopEULAStatus_t>())).m_unVersion as *const _ as usize
+		},
+		8usize,
+		concat!(
+			"Offset of field: ",
+			stringify!(WorkshopEULAStatus_t),
+			"::",
+			stringify!(m_unVersion)
+		)
+	);
+	assert_eq!(
+		unsafe { &(*(::std::ptr::null::<WorkshopEULAStatus_t>())).m_rtAction as *const _ as usize },
+		12usize,
+		concat!(
+			"Offset of field: ",
+			stringify!(WorkshopEULAStatus_t),
+			"::",
+			stringify!(m_rtAction)
+		)
+	);
+	assert_eq!(
+		unsafe {
+			&(*(::std::ptr::null::<WorkshopEULAStatus_t>())).m_bAccepted as *const _ as usize
+		},
+		16usize,
+		concat!(
+			"Offset of field: ",
+			stringify!(WorkshopEULAStatus_t),
+			"::",
+			stringify!(m_bAccepted)
+		)
+	);
+	assert_eq!(
+		unsafe {
+			&(*(::std::ptr::null::<WorkshopEULAStatus_t>())).m_bNeedsAction as *const _ as usize
+		},
+		17usize,
+		concat!(
+			"Offset of field: ",
+			stringify!(WorkshopEULAStatus_t),
+			"::",
+			stringify!(m_bNeedsAction)
+		)
+	);
+}
+#[repr(C)]
 pub struct ISteamAppList__bindgen_vtable(::std::os::raw::c_void);
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
@@ -16619,6 +16951,7 @@ fn bindgen_test_layout_ISteamAppList() {
 #[derive(Debug, Copy, Clone)]
 pub struct SteamAppInstalled_t {
 	pub m_nAppID: AppId_t,
+	pub m_iInstallFolderIndex: ::std::os::raw::c_int,
 }
 pub const SteamAppInstalled_t_k_iCallback: SteamAppInstalled_t__bindgen_ty_1 =
 	SteamAppInstalled_t__bindgen_ty_1::k_iCallback;
@@ -16632,7 +16965,7 @@ pub enum SteamAppInstalled_t__bindgen_ty_1 {
 fn bindgen_test_layout_SteamAppInstalled_t() {
 	assert_eq!(
 		::std::mem::size_of::<SteamAppInstalled_t>(),
-		4usize,
+		8usize,
 		concat!("Size of: ", stringify!(SteamAppInstalled_t))
 	);
 	assert_eq!(
@@ -16650,11 +16983,25 @@ fn bindgen_test_layout_SteamAppInstalled_t() {
 			stringify!(m_nAppID)
 		)
 	);
+	assert_eq!(
+		unsafe {
+			&(*(::std::ptr::null::<SteamAppInstalled_t>())).m_iInstallFolderIndex as *const _
+				as usize
+		},
+		4usize,
+		concat!(
+			"Offset of field: ",
+			stringify!(SteamAppInstalled_t),
+			"::",
+			stringify!(m_iInstallFolderIndex)
+		)
+	);
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
 pub struct SteamAppUninstalled_t {
 	pub m_nAppID: AppId_t,
+	pub m_iInstallFolderIndex: ::std::os::raw::c_int,
 }
 pub const SteamAppUninstalled_t_k_iCallback: SteamAppUninstalled_t__bindgen_ty_1 =
 	SteamAppUninstalled_t__bindgen_ty_1::k_iCallback;
@@ -16668,7 +17015,7 @@ pub enum SteamAppUninstalled_t__bindgen_ty_1 {
 fn bindgen_test_layout_SteamAppUninstalled_t() {
 	assert_eq!(
 		::std::mem::size_of::<SteamAppUninstalled_t>(),
-		4usize,
+		8usize,
 		concat!("Size of: ", stringify!(SteamAppUninstalled_t))
 	);
 	assert_eq!(
@@ -16684,6 +17031,19 @@ fn bindgen_test_layout_SteamAppUninstalled_t() {
 			stringify!(SteamAppUninstalled_t),
 			"::",
 			stringify!(m_nAppID)
+		)
+	);
+	assert_eq!(
+		unsafe {
+			&(*(::std::ptr::null::<SteamAppUninstalled_t>())).m_iInstallFolderIndex as *const _
+				as usize
+		},
+		4usize,
+		concat!(
+			"Offset of field: ",
+			stringify!(SteamAppUninstalled_t),
+			"::",
+			stringify!(m_iInstallFolderIndex)
 		)
 	);
 }
@@ -19106,6 +19466,11 @@ pub struct SteamDatagramHostedAddress {
 pub struct SteamDatagramGameCoordinatorServerLogin {
 	_unused: [u8; 0],
 }
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct SteamNetworkingFakeIPResult_t {
+	_unused: [u8; 0],
+}
 pub type FnSteamNetConnectionStatusChanged = ::std::option::Option<
 	unsafe extern "C" fn(arg1: *mut SteamNetConnectionStatusChangedCallback_t),
 >;
@@ -19117,6 +19482,8 @@ pub type FnSteamNetworkingMessagesSessionRequest =
 	::std::option::Option<unsafe extern "C" fn(arg1: *mut SteamNetworkingMessagesSessionRequest_t)>;
 pub type FnSteamNetworkingMessagesSessionFailed =
 	::std::option::Option<unsafe extern "C" fn(arg1: *mut SteamNetworkingMessagesSessionFailed_t)>;
+pub type FnSteamNetworkingFakeIPResult =
+	::std::option::Option<unsafe extern "C" fn(arg1: *mut SteamNetworkingFakeIPResult_t)>;
 #[doc = " Handle used to identify a connection to a remote host."]
 pub type HSteamNetConnection = uint32;
 pub const k_HSteamNetConnection_Invalid: HSteamNetConnection = 0;
@@ -19172,6 +19539,18 @@ pub enum ESteamNetworkingIdentityType {
 	k_ESteamNetworkingIdentityType_UnknownType = 4,
 	k_ESteamNetworkingIdentityType__Force32bit = 2147483647,
 }
+#[repr(i32)]
+#[non_exhaustive]
+#[doc = " \"Fake IPs\" are assigned to hosts, to make it easier to interface with"]
+#[doc = " older code that assumed all hosts will have an IPv4 address"]
+#[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
+pub enum ESteamNetworkingFakeIPType {
+	k_ESteamNetworkingFakeIPType_Invalid = 0,
+	k_ESteamNetworkingFakeIPType_NotFake = 1,
+	k_ESteamNetworkingFakeIPType_GlobalIPv4 = 2,
+	k_ESteamNetworkingFakeIPType_LocalIPv4 = 3,
+	k_ESteamNetworkingFakeIPType__Force32Bit = 2147483647,
+}
 #[doc = " Store an IP and port.  IPv6 is always used; IPv4 is represented using"]
 #[doc = " \"IPv4-mapped\" addresses: IPv4 aa.bb.cc.dd => IPv6 ::ffff:aabb:ccdd"]
 #[doc = " (RFC 4291 section 2.5.5.2.)"]
@@ -19189,90 +19568,91 @@ pub const SteamNetworkingIPAddr_k_cchMaxString: SteamNetworkingIPAddr__bindgen_t
 pub enum SteamNetworkingIPAddr__bindgen_ty_1 {
 	k_cchMaxString = 48,
 }
-#[repr(C)]
-#[derive(Copy, Clone)]
-pub union SteamNetworkingIPAddr__bindgen_ty_2 {
-	pub m_ipv6: [uint8; 16usize],
-	pub m_ipv4: SteamNetworkingIPAddr__bindgen_ty_2__bindgen_ty_1,
-}
+#[doc = " RFC4038, section 4.2"]
 #[repr(C, packed)]
 #[derive(Debug, Copy, Clone)]
-pub struct SteamNetworkingIPAddr__bindgen_ty_2__bindgen_ty_1 {
+pub struct SteamNetworkingIPAddr_IPv4MappedAddress {
 	pub m_8zeros: uint64,
 	pub m_0000: uint16,
 	pub m_ffff: uint16,
 	pub m_ip: [uint8; 4usize],
 }
 #[test]
-fn bindgen_test_layout_SteamNetworkingIPAddr__bindgen_ty_2__bindgen_ty_1() {
+fn bindgen_test_layout_SteamNetworkingIPAddr_IPv4MappedAddress() {
 	assert_eq!(
-		::std::mem::size_of::<SteamNetworkingIPAddr__bindgen_ty_2__bindgen_ty_1>(),
+		::std::mem::size_of::<SteamNetworkingIPAddr_IPv4MappedAddress>(),
 		16usize,
 		concat!(
 			"Size of: ",
-			stringify!(SteamNetworkingIPAddr__bindgen_ty_2__bindgen_ty_1)
+			stringify!(SteamNetworkingIPAddr_IPv4MappedAddress)
 		)
 	);
 	assert_eq!(
-		::std::mem::align_of::<SteamNetworkingIPAddr__bindgen_ty_2__bindgen_ty_1>(),
+		::std::mem::align_of::<SteamNetworkingIPAddr_IPv4MappedAddress>(),
 		1usize,
 		concat!(
 			"Alignment of ",
-			stringify!(SteamNetworkingIPAddr__bindgen_ty_2__bindgen_ty_1)
+			stringify!(SteamNetworkingIPAddr_IPv4MappedAddress)
 		)
 	);
 	assert_eq!(
 		unsafe {
-			&(*(::std::ptr::null::<SteamNetworkingIPAddr__bindgen_ty_2__bindgen_ty_1>())).m_8zeros
-				as *const _ as usize
+			&(*(::std::ptr::null::<SteamNetworkingIPAddr_IPv4MappedAddress>())).m_8zeros as *const _
+				as usize
 		},
 		0usize,
 		concat!(
 			"Offset of field: ",
-			stringify!(SteamNetworkingIPAddr__bindgen_ty_2__bindgen_ty_1),
+			stringify!(SteamNetworkingIPAddr_IPv4MappedAddress),
 			"::",
 			stringify!(m_8zeros)
 		)
 	);
 	assert_eq!(
 		unsafe {
-			&(*(::std::ptr::null::<SteamNetworkingIPAddr__bindgen_ty_2__bindgen_ty_1>())).m_0000
-				as *const _ as usize
+			&(*(::std::ptr::null::<SteamNetworkingIPAddr_IPv4MappedAddress>())).m_0000 as *const _
+				as usize
 		},
 		8usize,
 		concat!(
 			"Offset of field: ",
-			stringify!(SteamNetworkingIPAddr__bindgen_ty_2__bindgen_ty_1),
+			stringify!(SteamNetworkingIPAddr_IPv4MappedAddress),
 			"::",
 			stringify!(m_0000)
 		)
 	);
 	assert_eq!(
 		unsafe {
-			&(*(::std::ptr::null::<SteamNetworkingIPAddr__bindgen_ty_2__bindgen_ty_1>())).m_ffff
-				as *const _ as usize
+			&(*(::std::ptr::null::<SteamNetworkingIPAddr_IPv4MappedAddress>())).m_ffff as *const _
+				as usize
 		},
 		10usize,
 		concat!(
 			"Offset of field: ",
-			stringify!(SteamNetworkingIPAddr__bindgen_ty_2__bindgen_ty_1),
+			stringify!(SteamNetworkingIPAddr_IPv4MappedAddress),
 			"::",
 			stringify!(m_ffff)
 		)
 	);
 	assert_eq!(
 		unsafe {
-			&(*(::std::ptr::null::<SteamNetworkingIPAddr__bindgen_ty_2__bindgen_ty_1>())).m_ip
-				as *const _ as usize
+			&(*(::std::ptr::null::<SteamNetworkingIPAddr_IPv4MappedAddress>())).m_ip as *const _
+				as usize
 		},
 		12usize,
 		concat!(
 			"Offset of field: ",
-			stringify!(SteamNetworkingIPAddr__bindgen_ty_2__bindgen_ty_1),
+			stringify!(SteamNetworkingIPAddr_IPv4MappedAddress),
 			"::",
 			stringify!(m_ip)
 		)
 	);
+}
+#[repr(C)]
+#[derive(Copy, Clone)]
+pub union SteamNetworkingIPAddr__bindgen_ty_2 {
+	pub m_ipv6: [uint8; 16usize],
+	pub m_ipv4: SteamNetworkingIPAddr_IPv4MappedAddress,
 }
 #[test]
 fn bindgen_test_layout_SteamNetworkingIPAddr__bindgen_ty_2() {
@@ -19630,8 +20010,6 @@ pub enum ESteamNetConnectionEnd {
 	k_ESteamNetConnectionEnd_Remote_Timeout = 4001,
 	k_ESteamNetConnectionEnd_Remote_BadCrypt = 4002,
 	k_ESteamNetConnectionEnd_Remote_BadCert = 4003,
-	k_ESteamNetConnectionEnd_Remote_NotLoggedIn = 4004,
-	k_ESteamNetConnectionEnd_Remote_NotRunningApp = 4005,
 	k_ESteamNetConnectionEnd_Remote_BadProtocolVersion = 4006,
 	k_ESteamNetConnectionEnd_Remote_P2P_ICE_NoPublicAddresses = 4007,
 	k_ESteamNetConnectionEnd_Remote_Max = 4999,
@@ -19639,7 +20017,6 @@ pub enum ESteamNetConnectionEnd {
 	k_ESteamNetConnectionEnd_Misc_Generic = 5001,
 	k_ESteamNetConnectionEnd_Misc_InternalError = 5002,
 	k_ESteamNetConnectionEnd_Misc_Timeout = 5003,
-	k_ESteamNetConnectionEnd_Misc_RelayConnectivity = 5004,
 	k_ESteamNetConnectionEnd_Misc_SteamConnectivity = 5005,
 	k_ESteamNetConnectionEnd_Misc_NoRelaySessionsToClient = 5006,
 	k_ESteamNetConnectionEnd_Misc_P2P_Rendezvous = 5008,
@@ -19654,6 +20031,14 @@ pub const k_cchSteamNetworkingMaxConnectionCloseReason: ::std::os::raw::c_int = 
 #[doc = " Max length, in bytes (include null terminator) of debug description"]
 #[doc = " of a connection."]
 pub const k_cchSteamNetworkingMaxConnectionDescription: ::std::os::raw::c_int = 128;
+#[doc = " Max length of the app's part of the description"]
+pub const k_cchSteamNetworkingMaxConnectionAppName: ::std::os::raw::c_int = 32;
+pub const k_nSteamNetworkConnectionInfoFlags_Unauthenticated: ::std::os::raw::c_int = 1;
+pub const k_nSteamNetworkConnectionInfoFlags_Unencrypted: ::std::os::raw::c_int = 2;
+pub const k_nSteamNetworkConnectionInfoFlags_LoopbackBuffers: ::std::os::raw::c_int = 4;
+pub const k_nSteamNetworkConnectionInfoFlags_Fast: ::std::os::raw::c_int = 8;
+pub const k_nSteamNetworkConnectionInfoFlags_Relayed: ::std::os::raw::c_int = 16;
+pub const k_nSteamNetworkConnectionInfoFlags_DualWifi: ::std::os::raw::c_int = 32;
 #[doc = " Describe the state of a connection."]
 #[repr(C)]
 #[derive(Copy, Clone)]
@@ -19687,9 +20072,14 @@ pub struct SteamNetConnectionInfo_t {
 	#[doc = " connection type (and peer information), and any name"]
 	#[doc = " given to the connection by the app.  This string is used in various"]
 	#[doc = " internal logging messages."]
+	#[doc = ""]
+	#[doc = " Note that the connection ID *usually* matches the HSteamNetConnection"]
+	#[doc = " handle, but in certain cases with symmetric connections it might not."]
 	pub m_szConnectionDescription: [::std::os::raw::c_char; 128usize],
+	#[doc = " Misc flags.  Bitmask of k_nSteamNetworkConnectionInfoFlags_Xxxx"]
+	pub m_nFlags: ::std::os::raw::c_int,
 	#[doc = " Internal stuff, room to change API easily"]
-	pub reserved: [uint32; 64usize],
+	pub reserved: [uint32; 63usize],
 }
 #[test]
 fn bindgen_test_layout_SteamNetConnectionInfo_t() {
@@ -19840,9 +20230,21 @@ fn bindgen_test_layout_SteamNetConnectionInfo_t() {
 	);
 	assert_eq!(
 		unsafe {
-			&(*(::std::ptr::null::<SteamNetConnectionInfo_t>())).reserved as *const _ as usize
+			&(*(::std::ptr::null::<SteamNetConnectionInfo_t>())).m_nFlags as *const _ as usize
 		},
 		440usize,
+		concat!(
+			"Offset of field: ",
+			stringify!(SteamNetConnectionInfo_t),
+			"::",
+			stringify!(m_nFlags)
+		)
+	);
+	assert_eq!(
+		unsafe {
+			&(*(::std::ptr::null::<SteamNetConnectionInfo_t>())).reserved as *const _ as usize
+		},
+		444usize,
 		concat!(
 			"Offset of field: ",
 			stringify!(SteamNetConnectionInfo_t),
@@ -19855,7 +20257,7 @@ fn bindgen_test_layout_SteamNetConnectionInfo_t() {
 #[doc = " more frequently without it being too big of a perf hit."]
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
-pub struct SteamNetworkingQuickConnectionStatus {
+pub struct SteamNetConnectionRealTimeStatus_t {
 	#[doc = " High level state of the connection"]
 	pub m_eState: ESteamNetworkingConnectionState,
 	#[doc = " Current ping (ms)"]
@@ -19888,17 +20290,16 @@ pub struct SteamNetworkingQuickConnectionStatus {
 	#[doc = " for which we have not yet received an acknowledgment, and thus we may"]
 	#[doc = " have to re-transmit."]
 	pub m_cbSentUnackedReliable: ::std::os::raw::c_int,
-	#[doc = " If you asked us to send a message right now, how long would that message"]
-	#[doc = " sit in the queue before we actually started putting packets on the wire?"]
-	#[doc = " (And assuming Nagle does not cause any packets to be delayed.)"]
+	#[doc = " If you queued a message right now, approximately how long would that message"]
+	#[doc = " wait in the queue before we actually started putting its data on the wire in"]
+	#[doc = " a packet?"]
 	#[doc = ""]
-	#[doc = " In general, data that is sent by the application is limited by the"]
-	#[doc = " bandwidth of the channel.  If you send data faster than this, it must"]
-	#[doc = " be queued and put on the wire at a metered rate.  Even sending a small amount"]
-	#[doc = " of data (e.g. a few MTU, say ~3k) will require some of the data to be delayed"]
-	#[doc = " a bit."]
+	#[doc = " In general, data that is sent by the application is limited by the bandwidth"]
+	#[doc = " of the channel.  If you send data faster than this, it must be queued and"]
+	#[doc = " put on the wire at a metered rate.  Even sending a small amount of data (e.g."]
+	#[doc = " a few MTU, say ~3k) will require some of the data to be delayed a bit."]
 	#[doc = ""]
-	#[doc = " In general, the estimated delay will be approximately equal to"]
+	#[doc = " Ignoring multiple lanes, the estimated delay will be approximately equal to"]
 	#[doc = ""]
 	#[doc = "\t\t( m_cbPendingUnreliable+m_cbPendingReliable ) / m_nSendRateBytesPerSecond"]
 	#[doc = ""]
@@ -19907,209 +20308,322 @@ pub struct SteamNetworkingQuickConnectionStatus {
 	#[doc = " and the last packet placed on the wire, and we are exactly up against the send"]
 	#[doc = " rate limit.  In that case we might need to wait for one packet's worth of time to"]
 	#[doc = " elapse before we can send again.  On the other extreme, the queue might have data"]
-	#[doc = " in it waiting for Nagle.  (This will always be less than one packet, because as soon"]
-	#[doc = " as we have a complete packet we would send it.)  In that case, we might be ready"]
-	#[doc = " to send data now, and this value will be 0."]
+	#[doc = " in it waiting for Nagle.  (This will always be less than one packet, because as"]
+	#[doc = " soon as we have a complete packet we would send it.)  In that case, we might be"]
+	#[doc = " ready to send data now, and this value will be 0."]
+	#[doc = ""]
+	#[doc = " This value is only valid if multiple lanes are not used.  If multiple lanes are"]
+	#[doc = " in use, then the queue time will be different for each lane, and you must use"]
+	#[doc = " the value in SteamNetConnectionRealTimeLaneStatus_t."]
+	#[doc = ""]
+	#[doc = " Nagle delay is ignored for the purposes of this calculation."]
 	pub m_usecQueueTime: SteamNetworkingMicroseconds,
-	#[doc = " Internal stuff, room to change API easily"]
 	pub reserved: [uint32; 16usize],
 }
 #[test]
-fn bindgen_test_layout_SteamNetworkingQuickConnectionStatus() {
+fn bindgen_test_layout_SteamNetConnectionRealTimeStatus_t() {
 	assert_eq!(
-		::std::mem::size_of::<SteamNetworkingQuickConnectionStatus>(),
+		::std::mem::size_of::<SteamNetConnectionRealTimeStatus_t>(),
 		120usize,
-		concat!(
-			"Size of: ",
-			stringify!(SteamNetworkingQuickConnectionStatus)
-		)
+		concat!("Size of: ", stringify!(SteamNetConnectionRealTimeStatus_t))
 	);
 	assert_eq!(
-		::std::mem::align_of::<SteamNetworkingQuickConnectionStatus>(),
+		::std::mem::align_of::<SteamNetConnectionRealTimeStatus_t>(),
 		8usize,
 		concat!(
 			"Alignment of ",
-			stringify!(SteamNetworkingQuickConnectionStatus)
+			stringify!(SteamNetConnectionRealTimeStatus_t)
 		)
 	);
 	assert_eq!(
 		unsafe {
-			&(*(::std::ptr::null::<SteamNetworkingQuickConnectionStatus>())).m_eState as *const _
+			&(*(::std::ptr::null::<SteamNetConnectionRealTimeStatus_t>())).m_eState as *const _
 				as usize
 		},
 		0usize,
 		concat!(
 			"Offset of field: ",
-			stringify!(SteamNetworkingQuickConnectionStatus),
+			stringify!(SteamNetConnectionRealTimeStatus_t),
 			"::",
 			stringify!(m_eState)
 		)
 	);
 	assert_eq!(
 		unsafe {
-			&(*(::std::ptr::null::<SteamNetworkingQuickConnectionStatus>())).m_nPing as *const _
+			&(*(::std::ptr::null::<SteamNetConnectionRealTimeStatus_t>())).m_nPing as *const _
 				as usize
 		},
 		4usize,
 		concat!(
 			"Offset of field: ",
-			stringify!(SteamNetworkingQuickConnectionStatus),
+			stringify!(SteamNetConnectionRealTimeStatus_t),
 			"::",
 			stringify!(m_nPing)
 		)
 	);
 	assert_eq!(
 		unsafe {
-			&(*(::std::ptr::null::<SteamNetworkingQuickConnectionStatus>()))
+			&(*(::std::ptr::null::<SteamNetConnectionRealTimeStatus_t>()))
 				.m_flConnectionQualityLocal as *const _ as usize
 		},
 		8usize,
 		concat!(
 			"Offset of field: ",
-			stringify!(SteamNetworkingQuickConnectionStatus),
+			stringify!(SteamNetConnectionRealTimeStatus_t),
 			"::",
 			stringify!(m_flConnectionQualityLocal)
 		)
 	);
 	assert_eq!(
 		unsafe {
-			&(*(::std::ptr::null::<SteamNetworkingQuickConnectionStatus>()))
+			&(*(::std::ptr::null::<SteamNetConnectionRealTimeStatus_t>()))
 				.m_flConnectionQualityRemote as *const _ as usize
 		},
 		12usize,
 		concat!(
 			"Offset of field: ",
-			stringify!(SteamNetworkingQuickConnectionStatus),
+			stringify!(SteamNetConnectionRealTimeStatus_t),
 			"::",
 			stringify!(m_flConnectionQualityRemote)
 		)
 	);
 	assert_eq!(
 		unsafe {
-			&(*(::std::ptr::null::<SteamNetworkingQuickConnectionStatus>())).m_flOutPacketsPerSec
+			&(*(::std::ptr::null::<SteamNetConnectionRealTimeStatus_t>())).m_flOutPacketsPerSec
 				as *const _ as usize
 		},
 		16usize,
 		concat!(
 			"Offset of field: ",
-			stringify!(SteamNetworkingQuickConnectionStatus),
+			stringify!(SteamNetConnectionRealTimeStatus_t),
 			"::",
 			stringify!(m_flOutPacketsPerSec)
 		)
 	);
 	assert_eq!(
 		unsafe {
-			&(*(::std::ptr::null::<SteamNetworkingQuickConnectionStatus>())).m_flOutBytesPerSec
+			&(*(::std::ptr::null::<SteamNetConnectionRealTimeStatus_t>())).m_flOutBytesPerSec
 				as *const _ as usize
 		},
 		20usize,
 		concat!(
 			"Offset of field: ",
-			stringify!(SteamNetworkingQuickConnectionStatus),
+			stringify!(SteamNetConnectionRealTimeStatus_t),
 			"::",
 			stringify!(m_flOutBytesPerSec)
 		)
 	);
 	assert_eq!(
 		unsafe {
-			&(*(::std::ptr::null::<SteamNetworkingQuickConnectionStatus>())).m_flInPacketsPerSec
+			&(*(::std::ptr::null::<SteamNetConnectionRealTimeStatus_t>())).m_flInPacketsPerSec
 				as *const _ as usize
 		},
 		24usize,
 		concat!(
 			"Offset of field: ",
-			stringify!(SteamNetworkingQuickConnectionStatus),
+			stringify!(SteamNetConnectionRealTimeStatus_t),
 			"::",
 			stringify!(m_flInPacketsPerSec)
 		)
 	);
 	assert_eq!(
 		unsafe {
-			&(*(::std::ptr::null::<SteamNetworkingQuickConnectionStatus>())).m_flInBytesPerSec
+			&(*(::std::ptr::null::<SteamNetConnectionRealTimeStatus_t>())).m_flInBytesPerSec
 				as *const _ as usize
 		},
 		28usize,
 		concat!(
 			"Offset of field: ",
-			stringify!(SteamNetworkingQuickConnectionStatus),
+			stringify!(SteamNetConnectionRealTimeStatus_t),
 			"::",
 			stringify!(m_flInBytesPerSec)
 		)
 	);
 	assert_eq!(
 		unsafe {
-			&(*(::std::ptr::null::<SteamNetworkingQuickConnectionStatus>()))
-				.m_nSendRateBytesPerSecond as *const _ as usize
+			&(*(::std::ptr::null::<SteamNetConnectionRealTimeStatus_t>())).m_nSendRateBytesPerSecond
+				as *const _ as usize
 		},
 		32usize,
 		concat!(
 			"Offset of field: ",
-			stringify!(SteamNetworkingQuickConnectionStatus),
+			stringify!(SteamNetConnectionRealTimeStatus_t),
 			"::",
 			stringify!(m_nSendRateBytesPerSecond)
 		)
 	);
 	assert_eq!(
 		unsafe {
-			&(*(::std::ptr::null::<SteamNetworkingQuickConnectionStatus>())).m_cbPendingUnreliable
+			&(*(::std::ptr::null::<SteamNetConnectionRealTimeStatus_t>())).m_cbPendingUnreliable
 				as *const _ as usize
 		},
 		36usize,
 		concat!(
 			"Offset of field: ",
-			stringify!(SteamNetworkingQuickConnectionStatus),
+			stringify!(SteamNetConnectionRealTimeStatus_t),
 			"::",
 			stringify!(m_cbPendingUnreliable)
 		)
 	);
 	assert_eq!(
 		unsafe {
-			&(*(::std::ptr::null::<SteamNetworkingQuickConnectionStatus>())).m_cbPendingReliable
+			&(*(::std::ptr::null::<SteamNetConnectionRealTimeStatus_t>())).m_cbPendingReliable
 				as *const _ as usize
 		},
 		40usize,
 		concat!(
 			"Offset of field: ",
-			stringify!(SteamNetworkingQuickConnectionStatus),
+			stringify!(SteamNetConnectionRealTimeStatus_t),
 			"::",
 			stringify!(m_cbPendingReliable)
 		)
 	);
 	assert_eq!(
 		unsafe {
-			&(*(::std::ptr::null::<SteamNetworkingQuickConnectionStatus>())).m_cbSentUnackedReliable
+			&(*(::std::ptr::null::<SteamNetConnectionRealTimeStatus_t>())).m_cbSentUnackedReliable
 				as *const _ as usize
 		},
 		44usize,
 		concat!(
 			"Offset of field: ",
-			stringify!(SteamNetworkingQuickConnectionStatus),
+			stringify!(SteamNetConnectionRealTimeStatus_t),
 			"::",
 			stringify!(m_cbSentUnackedReliable)
 		)
 	);
 	assert_eq!(
 		unsafe {
-			&(*(::std::ptr::null::<SteamNetworkingQuickConnectionStatus>())).m_usecQueueTime
+			&(*(::std::ptr::null::<SteamNetConnectionRealTimeStatus_t>())).m_usecQueueTime
 				as *const _ as usize
 		},
 		48usize,
 		concat!(
 			"Offset of field: ",
-			stringify!(SteamNetworkingQuickConnectionStatus),
+			stringify!(SteamNetConnectionRealTimeStatus_t),
 			"::",
 			stringify!(m_usecQueueTime)
 		)
 	);
 	assert_eq!(
 		unsafe {
-			&(*(::std::ptr::null::<SteamNetworkingQuickConnectionStatus>())).reserved as *const _
+			&(*(::std::ptr::null::<SteamNetConnectionRealTimeStatus_t>())).reserved as *const _
 				as usize
 		},
 		56usize,
 		concat!(
 			"Offset of field: ",
-			stringify!(SteamNetworkingQuickConnectionStatus),
+			stringify!(SteamNetConnectionRealTimeStatus_t),
+			"::",
+			stringify!(reserved)
+		)
+	);
+}
+#[doc = " Quick status of a particular lane"]
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct SteamNetConnectionRealTimeLaneStatus_t {
+	pub m_cbPendingUnreliable: ::std::os::raw::c_int,
+	pub m_cbPendingReliable: ::std::os::raw::c_int,
+	pub m_cbSentUnackedReliable: ::std::os::raw::c_int,
+	pub _reservePad1: ::std::os::raw::c_int,
+	#[doc = " Lane-specific queue time.  This value takes into consideration lane priorities"]
+	#[doc = " and weights, and how much data is queued in each lane, and attempts to predict"]
+	#[doc = " how any data currently queued will be sent out."]
+	pub m_usecQueueTime: SteamNetworkingMicroseconds,
+	pub reserved: [uint32; 10usize],
+}
+#[test]
+fn bindgen_test_layout_SteamNetConnectionRealTimeLaneStatus_t() {
+	assert_eq!(
+		::std::mem::size_of::<SteamNetConnectionRealTimeLaneStatus_t>(),
+		64usize,
+		concat!(
+			"Size of: ",
+			stringify!(SteamNetConnectionRealTimeLaneStatus_t)
+		)
+	);
+	assert_eq!(
+		::std::mem::align_of::<SteamNetConnectionRealTimeLaneStatus_t>(),
+		8usize,
+		concat!(
+			"Alignment of ",
+			stringify!(SteamNetConnectionRealTimeLaneStatus_t)
+		)
+	);
+	assert_eq!(
+		unsafe {
+			&(*(::std::ptr::null::<SteamNetConnectionRealTimeLaneStatus_t>())).m_cbPendingUnreliable
+				as *const _ as usize
+		},
+		0usize,
+		concat!(
+			"Offset of field: ",
+			stringify!(SteamNetConnectionRealTimeLaneStatus_t),
+			"::",
+			stringify!(m_cbPendingUnreliable)
+		)
+	);
+	assert_eq!(
+		unsafe {
+			&(*(::std::ptr::null::<SteamNetConnectionRealTimeLaneStatus_t>())).m_cbPendingReliable
+				as *const _ as usize
+		},
+		4usize,
+		concat!(
+			"Offset of field: ",
+			stringify!(SteamNetConnectionRealTimeLaneStatus_t),
+			"::",
+			stringify!(m_cbPendingReliable)
+		)
+	);
+	assert_eq!(
+		unsafe {
+			&(*(::std::ptr::null::<SteamNetConnectionRealTimeLaneStatus_t>()))
+				.m_cbSentUnackedReliable as *const _ as usize
+		},
+		8usize,
+		concat!(
+			"Offset of field: ",
+			stringify!(SteamNetConnectionRealTimeLaneStatus_t),
+			"::",
+			stringify!(m_cbSentUnackedReliable)
+		)
+	);
+	assert_eq!(
+		unsafe {
+			&(*(::std::ptr::null::<SteamNetConnectionRealTimeLaneStatus_t>()))._reservePad1
+				as *const _ as usize
+		},
+		12usize,
+		concat!(
+			"Offset of field: ",
+			stringify!(SteamNetConnectionRealTimeLaneStatus_t),
+			"::",
+			stringify!(_reservePad1)
+		)
+	);
+	assert_eq!(
+		unsafe {
+			&(*(::std::ptr::null::<SteamNetConnectionRealTimeLaneStatus_t>())).m_usecQueueTime
+				as *const _ as usize
+		},
+		16usize,
+		concat!(
+			"Offset of field: ",
+			stringify!(SteamNetConnectionRealTimeLaneStatus_t),
+			"::",
+			stringify!(m_usecQueueTime)
+		)
+	);
+	assert_eq!(
+		unsafe {
+			&(*(::std::ptr::null::<SteamNetConnectionRealTimeLaneStatus_t>())).reserved as *const _
+				as usize
+		},
+		24usize,
+		concat!(
+			"Offset of field: ",
+			stringify!(SteamNetConnectionRealTimeLaneStatus_t),
 			"::",
 			stringify!(reserved)
 		)
@@ -20149,13 +20663,15 @@ pub struct SteamNetworkingMessage_t {
 	#[doc = " - You might have closed the connection, so fetching the user data"]
 	#[doc = "   would not be possible."]
 	#[doc = ""]
-	#[doc = " Not used when sending messages,"]
+	#[doc = " Not used when sending messages."]
 	pub m_nConnUserData: int64,
 	#[doc = " Local timestamp when the message was received"]
 	#[doc = " Not used for outbound messages."]
 	pub m_usecTimeReceived: SteamNetworkingMicroseconds,
-	#[doc = " Message number assigned by the sender."]
-	#[doc = " This is not used for outbound messages"]
+	#[doc = " Message number assigned by the sender.  This is not used for outbound"]
+	#[doc = " messages.  Note that if multiple lanes are used, each lane has its own"]
+	#[doc = " message numbers, which are assigned sequentially, so messages from"]
+	#[doc = " different lanes will share the same numbers."]
 	pub m_nMessageNumber: int64,
 	#[doc = " Function used to free up m_pData.  This mechanism exists so that"]
 	#[doc = " apps can create messages with buffers allocated from their own"]
@@ -20183,12 +20699,16 @@ pub struct SteamNetworkingMessage_t {
 	#[doc = ""]
 	#[doc = " Not used for received messages."]
 	pub m_nUserData: int64,
+	#[doc = " For outbound messages, which lane to use?  See ISteamNetworkingSockets::ConfigureConnectionLanes."]
+	#[doc = " For inbound messages, what lane was the message received on?"]
+	pub m_idxLane: uint16,
+	pub _pad1__: uint16,
 }
 #[test]
 fn bindgen_test_layout_SteamNetworkingMessage_t() {
 	assert_eq!(
 		::std::mem::size_of::<SteamNetworkingMessage_t>(),
-		200usize,
+		208usize,
 		concat!("Size of: ", stringify!(SteamNetworkingMessage_t))
 	);
 	assert_eq!(
@@ -20341,6 +20861,30 @@ fn bindgen_test_layout_SteamNetworkingMessage_t() {
 			stringify!(m_nUserData)
 		)
 	);
+	assert_eq!(
+		unsafe {
+			&(*(::std::ptr::null::<SteamNetworkingMessage_t>())).m_idxLane as *const _ as usize
+		},
+		200usize,
+		concat!(
+			"Offset of field: ",
+			stringify!(SteamNetworkingMessage_t),
+			"::",
+			stringify!(m_idxLane)
+		)
+	);
+	assert_eq!(
+		unsafe {
+			&(*(::std::ptr::null::<SteamNetworkingMessage_t>()))._pad1__ as *const _ as usize
+		},
+		202usize,
+		concat!(
+			"Offset of field: ",
+			stringify!(SteamNetworkingMessage_t),
+			"::",
+			stringify!(_pad1__)
+		)
+	);
 }
 pub const k_nSteamNetworkingSend_Unreliable: ::std::os::raw::c_int = 0;
 pub const k_nSteamNetworkingSend_NoNagle: ::std::os::raw::c_int = 1;
@@ -20445,33 +20989,6 @@ pub enum ESteamNetworkingConfigDataType {
 #[derive(Debug, Copy, Clone, Hash, PartialEq, Eq)]
 pub enum ESteamNetworkingConfigValue {
 	k_ESteamNetworkingConfig_Invalid = 0,
-	#[doc = " [global float, 0--100] Randomly discard N pct of packets instead of sending/recv"]
-	#[doc = " This is a global option only, since it is applied at a low level"]
-	#[doc = " where we don't have much context"]
-	k_ESteamNetworkingConfig_FakePacketLoss_Send = 2,
-	#[doc = " [global float, 0--100] Randomly discard N pct of packets instead of sending/recv"]
-	#[doc = " This is a global option only, since it is applied at a low level"]
-	#[doc = " where we don't have much context"]
-	k_ESteamNetworkingConfig_FakePacketLoss_Recv = 3,
-	#[doc = " [global int32].  Delay all outbound/inbound packets by N ms"]
-	k_ESteamNetworkingConfig_FakePacketLag_Send = 4,
-	#[doc = " [global int32].  Delay all outbound/inbound packets by N ms"]
-	k_ESteamNetworkingConfig_FakePacketLag_Recv = 5,
-	#[doc = " [global float] 0-100 Percentage of packets we will add additional delay"]
-	#[doc = " to (causing them to be reordered)"]
-	k_ESteamNetworkingConfig_FakePacketReorder_Send = 6,
-	#[doc = " [global float] 0-100 Percentage of packets we will add additional delay"]
-	#[doc = " to (causing them to be reordered)"]
-	k_ESteamNetworkingConfig_FakePacketReorder_Recv = 7,
-	#[doc = " [global int32] Extra delay, in ms, to apply to reordered packets."]
-	k_ESteamNetworkingConfig_FakePacketReorder_Time = 8,
-	#[doc = " [global float 0--100] Globally duplicate some percentage of packets we send"]
-	k_ESteamNetworkingConfig_FakePacketDup_Send = 26,
-	#[doc = " [global float 0--100] Globally duplicate some percentage of packets we send"]
-	k_ESteamNetworkingConfig_FakePacketDup_Recv = 27,
-	#[doc = " [global int32] Amount of delay, in ms, to delay duplicated packets."]
-	#[doc = " (We chose a random delay between 0 and this value)"]
-	k_ESteamNetworkingConfig_FakePacketDup_TimeMax = 28,
 	#[doc = " [connection int32] Timeout value (in ms) to use when first connecting"]
 	k_ESteamNetworkingConfig_TimeoutInitial = 24,
 	#[doc = " [connection int32] Timeout value (in ms) to use after connection is established"]
@@ -20480,6 +20997,39 @@ pub enum ESteamNetworkingConfigValue {
 	#[doc = " if this is reached SendMessage will return k_EResultLimitExceeded"]
 	#[doc = " Default is 512k (524288 bytes)"]
 	k_ESteamNetworkingConfig_SendBufferSize = 9,
+	#[doc = " [connection int64] Get/set userdata as a configuration option."]
+	#[doc = " The default value is -1.   You may want to set the user data as"]
+	#[doc = " a config value, instead of using ISteamNetworkingSockets::SetConnectionUserData"]
+	#[doc = " in two specific instances:"]
+	#[doc = ""]
+	#[doc = " - You wish to set the userdata atomically when creating"]
+	#[doc = "   an outbound connection, so that the userdata is filled in properly"]
+	#[doc = "   for any callbacks that happen.  However, note that this trick"]
+	#[doc = "   only works for connections initiated locally!  For incoming"]
+	#[doc = "   connections, multiple state transitions may happen and"]
+	#[doc = "   callbacks be queued, before you are able to service the first"]
+	#[doc = "   callback!  Be careful!"]
+	#[doc = ""]
+	#[doc = " - You can set the default userdata for all newly created connections"]
+	#[doc = "   by setting this value at a higher level (e.g. on the listen"]
+	#[doc = "   socket or at the global level.)  Then this default"]
+	#[doc = "   value will be inherited when the connection is created."]
+	#[doc = "   This is useful in case -1 is a valid userdata value, and you"]
+	#[doc = "   wish to use something else as the default value so you can"]
+	#[doc = "   tell if it has been set or not."]
+	#[doc = ""]
+	#[doc = "   HOWEVER: once a connection is created, the effective value is"]
+	#[doc = "   then bound to the connection.  Unlike other connection options,"]
+	#[doc = "   if you change it again at a higher level, the new value will not"]
+	#[doc = "   be inherited by connections."]
+	#[doc = ""]
+	#[doc = " Using the userdata field in callback structs is not advised because"]
+	#[doc = " of tricky race conditions.  Instead, you might try one of these methods:"]
+	#[doc = ""]
+	#[doc = " - Use a separate map with the HSteamNetConnection as the key."]
+	#[doc = " - Fetch the userdata from the connection in your callback"]
+	#[doc = "   using ISteamNetworkingSockets::GetConnectionUserData, to"]
+	k_ESteamNetworkingConfig_ConnectionUserData = 40,
 	#[doc = " [connection int32] Minimum/maximum send rate clamp, 0 is no limit."]
 	#[doc = " This value will control the min/max allowed sending rate that"]
 	#[doc = " bandwidth estimation is allowed to reach.  Default is 0 (no-limit)"]
@@ -20522,18 +21072,6 @@ pub enum ESteamNetworkingConfigValue {
 	#[doc = " You should not let users modify it in production.  (But note that it requires"]
 	#[doc = " the peer to also modify their value in order for encryption to be disabled.)"]
 	k_ESteamNetworkingConfig_Unencrypted = 34,
-	#[doc = " [global int32] 0 or 1.  Some variables are \"dev\" variables.  They are useful"]
-	#[doc = " for debugging, but should not be adjusted in production.  When this flag is false (the default),"]
-	#[doc = " such variables will not be enumerated by the ISteamnetworkingUtils::GetFirstConfigValue"]
-	#[doc = " ISteamNetworkingUtils::GetConfigValueInfo functions.  The idea here is that you"]
-	#[doc = " can use those functions to provide a generic mechanism to set any configuration"]
-	#[doc = " value from a console or configuration file, looking up the variable by name.  Depending"]
-	#[doc = " on your game, modifying other configuration values may also have negative effects, and"]
-	#[doc = " you may wish to further lock down which variables are allowed to be modified by the user."]
-	#[doc = " (Maybe no variables!)  Or maybe you use a whitelist or blacklist approach."]
-	#[doc = ""]
-	#[doc = " (This flag is itself a dev variable.)"]
-	k_ESteamNetworkingConfig_EnumerateDevVars = 35,
 	#[doc = " [connection int32] Set this to 1 on outbound connections and listen sockets,"]
 	#[doc = " to enable \"symmetric connect mode\", which is useful in the following"]
 	#[doc = " common peer-to-peer use case:"]
@@ -20633,6 +21171,46 @@ pub enum ESteamNetworkingConfigValue {
 	#[doc = ""]
 	#[doc = " This value should not be read or written in any other context."]
 	k_ESteamNetworkingConfig_LocalVirtualPort = 38,
+	#[doc = " [connection int32] Enable Dual wifi band support for this connection"]
+	#[doc = " 0 = no, 1 = yes, 2 = simulate it for debugging, even if dual wifi not available"]
+	k_ESteamNetworkingConfig_DualWifi_Enable = 39,
+	#[doc = " [connection int32] True to enable diagnostics reporting through"]
+	#[doc = " generic platform UI.  (Only available on Steam.)"]
+	k_ESteamNetworkingConfig_EnableDiagnosticsUI = 46,
+	#[doc = " [global float, 0--100] Randomly discard N pct of packets instead of sending/recv"]
+	#[doc = " This is a global option only, since it is applied at a low level"]
+	#[doc = " where we don't have much context"]
+	k_ESteamNetworkingConfig_FakePacketLoss_Send = 2,
+	#[doc = " [global float, 0--100] Randomly discard N pct of packets instead of sending/recv"]
+	#[doc = " This is a global option only, since it is applied at a low level"]
+	#[doc = " where we don't have much context"]
+	k_ESteamNetworkingConfig_FakePacketLoss_Recv = 3,
+	#[doc = " [global int32].  Delay all outbound/inbound packets by N ms"]
+	k_ESteamNetworkingConfig_FakePacketLag_Send = 4,
+	#[doc = " [global int32].  Delay all outbound/inbound packets by N ms"]
+	k_ESteamNetworkingConfig_FakePacketLag_Recv = 5,
+	#[doc = " [global float] 0-100 Percentage of packets we will add additional delay"]
+	#[doc = " to (causing them to be reordered)"]
+	k_ESteamNetworkingConfig_FakePacketReorder_Send = 6,
+	#[doc = " [global float] 0-100 Percentage of packets we will add additional delay"]
+	#[doc = " to (causing them to be reordered)"]
+	k_ESteamNetworkingConfig_FakePacketReorder_Recv = 7,
+	#[doc = " [global int32] Extra delay, in ms, to apply to reordered packets."]
+	k_ESteamNetworkingConfig_FakePacketReorder_Time = 8,
+	#[doc = " [global float 0--100] Globally duplicate some percentage of packets we send"]
+	k_ESteamNetworkingConfig_FakePacketDup_Send = 26,
+	#[doc = " [global float 0--100] Globally duplicate some percentage of packets we send"]
+	k_ESteamNetworkingConfig_FakePacketDup_Recv = 27,
+	#[doc = " [global int32] Amount of delay, in ms, to delay duplicated packets."]
+	#[doc = " (We chose a random delay between 0 and this value)"]
+	k_ESteamNetworkingConfig_FakePacketDup_TimeMax = 28,
+	#[doc = " [global int32] Trace every UDP packet, similar to Wireshark or tcpdump."]
+	#[doc = " Value is max number of bytes to dump.  -1 disables tracing."]
+	k_ESteamNetworkingConfig_PacketTraceMaxBytes = 41,
+	k_ESteamNetworkingConfig_FakeRateLimit_Send_Rate = 42,
+	k_ESteamNetworkingConfig_FakeRateLimit_Send_Burst = 43,
+	k_ESteamNetworkingConfig_FakeRateLimit_Recv_Rate = 44,
+	k_ESteamNetworkingConfig_FakeRateLimit_Recv_Burst = 45,
 	#[doc = " [connection FnSteamNetConnectionStatusChanged] Callback that will be invoked"]
 	#[doc = " when the state of a connection changes."]
 	#[doc = ""]
@@ -20678,6 +21256,15 @@ pub enum ESteamNetworkingConfigValue {
 	#[doc = " connection in some unexpected way."]
 	#[doc = " See: ISteamNetworkingUtils::SetGlobalCallback_MessagesSessionFailed"]
 	k_ESteamNetworkingConfig_Callback_MessagesSessionFailed = 205,
+	#[doc = " [global FnSteamNetworkingSocketsCreateConnectionSignaling] Callback that will"]
+	#[doc = " be invoked when we need to create a signaling object for a connection"]
+	#[doc = " initiated locally.  See: ISteamNetworkingSockets::ConnectP2P,"]
+	#[doc = " ISteamNetworkingMessages."]
+	k_ESteamNetworkingConfig_Callback_CreateConnectionSignaling = 206,
+	#[doc = " [global FnSteamNetworkingFakeIPResult] Callback that's invoked when"]
+	#[doc = " a FakeIP allocation finishes.  See: ISteamNetworkingSockets::BeginAsyncRequestFakeIP,"]
+	#[doc = " ISteamNetworkingUtils::SetGlobalCallback_FakeIPResult"]
+	k_ESteamNetworkingConfig_Callback_FakeIPResult = 207,
 	#[doc = " [connection string] Comma-separated list of STUN servers that can be used"]
 	#[doc = " for NAT piercing.  If you set this to an empty string, NAT piercing will"]
 	#[doc = " not be attempted.  Also if \"public\" candidates are not allowed for"]
@@ -20769,6 +21356,12 @@ pub enum ESteamNetworkingConfigValue {
 	#[doc = " This is a dev configuration value, you probably should not let users modify it"]
 	#[doc = " in production."]
 	k_ESteamNetworkingConfig_LogLevel_SDRRelayPings = 18,
+	#[doc = " [global string] For debugging.  Force ping times to clusters to be the specified"]
+	#[doc = " values.  A comma separated list of <cluster>=<ms> values.  E.g. \"sto=32,iad=100\""]
+	#[doc = ""]
+	#[doc = " This is a dev configuration value, you probably should not let users modify it"]
+	#[doc = " in production."]
+	k_ESteamNetworkingConfig_DELETED_EnumerateDevVars = 35,
 	#[doc = " [global string] For debugging.  Force ping times to clusters to be the specified"]
 	#[doc = " values.  A comma separated list of <cluster>=<ms> values.  E.g. \"sto=32,iad=100\""]
 	#[doc = ""]
@@ -21170,12 +21763,17 @@ fn bindgen_test_layout_SteamNetworkingMessagesSessionFailed_t() {
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
-pub struct ISteamNetworkingConnectionCustomSignaling {
+pub struct ISteamNetworkingConnectionSignaling {
 	_unused: [u8; 0],
 }
 #[repr(C)]
 #[derive(Debug, Copy, Clone)]
-pub struct ISteamNetworkingCustomSignalingRecvContext {
+pub struct ISteamNetworkingSignalingRecvContext {
+	_unused: [u8; 0],
+}
+#[repr(C)]
+#[derive(Debug, Copy, Clone)]
+pub struct ISteamNetworkingFakeUDPPort {
 	_unused: [u8; 0],
 }
 #[repr(C)]
@@ -21183,10 +21781,13 @@ pub struct ISteamNetworkingSockets__bindgen_vtable(::std::os::raw::c_void);
 #[doc = " Lower level networking API."]
 #[doc = ""]
 #[doc = " - Connection-oriented API (like TCP, not UDP).  When sending and receiving"]
-#[doc = "   messages, a connection handle is used.  (For a UDP-style interface, see"]
-#[doc = "   ISteamNetworkingMessages.)  In this TCP-style interface, the \"server\" will"]
-#[doc = "   \"listen\" on a \"listen socket.\"  A \"client\" will \"connect\" to the server,"]
-#[doc = "   and the server will \"accept\" the connection."]
+#[doc = "   messages, a connection handle is used.  (For a UDP-style interface, where"]
+#[doc = "   the peer is identified by their address with each send/recv call, see"]
+#[doc = "   ISteamNetworkingMessages.)  The typical pattern is for a \"server\" to \"listen\""]
+#[doc = "   on a \"listen socket.\"  A \"client\" will \"connect\" to the server, and the"]
+#[doc = "   server will \"accept\" the connection.  If you have a symmetric situation"]
+#[doc = "   where either peer may initiate the connection and server/client roles are"]
+#[doc = "   not clearly defined, check out k_ESteamNetworkingConfig_SymmetricConnect."]
 #[doc = " - But unlike TCP, it's message-oriented, not stream-oriented."]
 #[doc = " - Mix of reliable and unreliable messages"]
 #[doc = " - Fragmentation and reassembly"]
@@ -21676,13 +22277,6 @@ fn bindgen_test_layout_ISteamGameServer() {
 		concat!("Alignment of ", stringify!(ISteamGameServer))
 	);
 }
-pub const k_unServerFlagNone: uint32 = 0;
-pub const k_unServerFlagActive: uint32 = 1;
-pub const k_unServerFlagSecure: uint32 = 2;
-pub const k_unServerFlagDedicated: uint32 = 4;
-pub const k_unServerFlagLinux: uint32 = 8;
-pub const k_unServerFlagPassworded: uint32 = 16;
-pub const k_unServerFlagPrivate: uint32 = 32;
 #[repr(C)]
 #[derive(Copy, Clone)]
 pub struct GSClientApprove_t {
@@ -22761,7 +23355,7 @@ extern "C" {
 	pub fn SteamAPI_ISteamUser_GetSteamID(self_: *mut ISteamUser) -> uint64_steamid;
 }
 extern "C" {
-	pub fn SteamAPI_ISteamUser_InitiateGameConnection(
+	pub fn SteamAPI_ISteamUser_InitiateGameConnection_DEPRECATED(
 		self_: *mut ISteamUser,
 		pAuthBlob: *mut ::std::os::raw::c_void,
 		cbMaxAuthBlob: ::std::os::raw::c_int,
@@ -22772,7 +23366,7 @@ extern "C" {
 	) -> ::std::os::raw::c_int;
 }
 extern "C" {
-	pub fn SteamAPI_ISteamUser_TerminateGameConnection(
+	pub fn SteamAPI_ISteamUser_TerminateGameConnection_DEPRECATED(
 		self_: *mut ISteamUser,
 		unIPServer: uint32,
 		usPortServer: uint16,
@@ -23404,6 +23998,12 @@ extern "C" {
 	) -> bool;
 }
 extern "C" {
+	pub fn SteamAPI_ISteamFriends_ActivateGameOverlayInviteDialogConnectString(
+		self_: *mut ISteamFriends,
+		pchConnectString: *const ::std::os::raw::c_char,
+	);
+}
+extern "C" {
 	pub fn SteamAPI_SteamUtils_v010() -> *mut ISteamUtils;
 }
 extern "C" {
@@ -23440,13 +24040,6 @@ extern "C" {
 		iImage: ::std::os::raw::c_int,
 		pubDest: *mut uint8,
 		nDestBufferSize: ::std::os::raw::c_int,
-	) -> bool;
-}
-extern "C" {
-	pub fn SteamAPI_ISteamUtils_GetCSERIPPort(
-		self_: *mut ISteamUtils,
-		unIP: *mut uint32,
-		usPort: *mut uint16,
 	) -> bool;
 }
 extern "C" {
@@ -23579,6 +24172,25 @@ extern "C" {
 		self_: *mut ISteamUtils,
 		eProtocol: ESteamIPv6ConnectivityProtocol,
 	) -> ESteamIPv6ConnectivityState;
+}
+extern "C" {
+	pub fn SteamAPI_ISteamUtils_IsSteamRunningOnSteamDeck(self_: *mut ISteamUtils) -> bool;
+}
+extern "C" {
+	pub fn SteamAPI_ISteamUtils_ShowFloatingGamepadTextInput(
+		self_: *mut ISteamUtils,
+		eKeyboardMode: EFloatingGamepadTextInputMode,
+		nTextFieldXPosition: ::std::os::raw::c_int,
+		nTextFieldYPosition: ::std::os::raw::c_int,
+		nTextFieldWidth: ::std::os::raw::c_int,
+		nTextFieldHeight: ::std::os::raw::c_int,
+	) -> bool;
+}
+extern "C" {
+	pub fn SteamAPI_ISteamUtils_SetGameLauncherMode(self_: *mut ISteamUtils, bLauncherMode: bool);
+}
+extern "C" {
+	pub fn SteamAPI_ISteamUtils_DismissFloatingGamepadTextInput(self_: *mut ISteamUtils) -> bool;
 }
 extern "C" {
 	pub fn SteamAPI_SteamMatchmaking_v009() -> *mut ISteamMatchmaking;
@@ -24241,7 +24853,7 @@ extern "C" {
 	) -> bool;
 }
 extern "C" {
-	pub fn SteamAPI_SteamRemoteStorage_v014() -> *mut ISteamRemoteStorage;
+	pub fn SteamAPI_SteamRemoteStorage_v016() -> *mut ISteamRemoteStorage;
 }
 extern "C" {
 	pub fn SteamAPI_ISteamRemoteStorage_FileWrite(
@@ -24629,6 +25241,27 @@ extern "C" {
 	) -> SteamAPICall_t;
 }
 extern "C" {
+	pub fn SteamAPI_ISteamRemoteStorage_GetLocalFileChangeCount(
+		self_: *mut ISteamRemoteStorage,
+	) -> int32;
+}
+extern "C" {
+	pub fn SteamAPI_ISteamRemoteStorage_GetLocalFileChange(
+		self_: *mut ISteamRemoteStorage,
+		iFile: ::std::os::raw::c_int,
+		pEChangeType: *mut ERemoteStorageLocalFileChange,
+		pEFilePathType: *mut ERemoteStorageFilePathType,
+	) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+	pub fn SteamAPI_ISteamRemoteStorage_BeginFileWriteBatch(
+		self_: *mut ISteamRemoteStorage,
+	) -> bool;
+}
+extern "C" {
+	pub fn SteamAPI_ISteamRemoteStorage_EndFileWriteBatch(self_: *mut ISteamRemoteStorage) -> bool;
+}
+extern "C" {
 	pub fn SteamAPI_SteamUserStats_v012() -> *mut ISteamUserStats;
 }
 extern "C" {
@@ -24947,9 +25580,6 @@ extern "C" {
 }
 extern "C" {
 	pub fn SteamAPI_SteamApps_v008() -> *mut ISteamApps;
-}
-extern "C" {
-	pub fn SteamAPI_SteamGameServerApps_v008() -> *mut ISteamApps;
 }
 extern "C" {
 	pub fn SteamAPI_ISteamApps_BIsSubscribed(self_: *mut ISteamApps) -> bool;
@@ -25721,22 +26351,50 @@ extern "C" {
 	) -> bool;
 }
 extern "C" {
-	pub fn SteamAPI_SteamInput_v001() -> *mut ISteamInput;
+	pub fn SteamAPI_SteamInput_v006() -> *mut ISteamInput;
 }
 extern "C" {
-	pub fn SteamAPI_ISteamInput_Init(self_: *mut ISteamInput) -> bool;
+	pub fn SteamAPI_ISteamInput_Init(
+		self_: *mut ISteamInput,
+		bExplicitlyCallRunFrame: bool,
+	) -> bool;
 }
 extern "C" {
 	pub fn SteamAPI_ISteamInput_Shutdown(self_: *mut ISteamInput) -> bool;
 }
 extern "C" {
-	pub fn SteamAPI_ISteamInput_RunFrame(self_: *mut ISteamInput);
+	pub fn SteamAPI_ISteamInput_SetInputActionManifestFilePath(
+		self_: *mut ISteamInput,
+		pchInputActionManifestAbsolutePath: *const ::std::os::raw::c_char,
+	) -> bool;
+}
+extern "C" {
+	pub fn SteamAPI_ISteamInput_RunFrame(self_: *mut ISteamInput, bReservedValue: bool);
+}
+extern "C" {
+	pub fn SteamAPI_ISteamInput_BWaitForData(
+		self_: *mut ISteamInput,
+		bWaitForever: bool,
+		unTimeout: uint32,
+	) -> bool;
+}
+extern "C" {
+	pub fn SteamAPI_ISteamInput_BNewDataAvailable(self_: *mut ISteamInput) -> bool;
 }
 extern "C" {
 	pub fn SteamAPI_ISteamInput_GetConnectedControllers(
 		self_: *mut ISteamInput,
 		handlesOut: *mut InputHandle_t,
 	) -> ::std::os::raw::c_int;
+}
+extern "C" {
+	pub fn SteamAPI_ISteamInput_EnableDeviceCallbacks(self_: *mut ISteamInput);
+}
+extern "C" {
+	pub fn SteamAPI_ISteamInput_EnableActionEventCallbacks(
+		self_: *mut ISteamInput,
+		pCallback: SteamInputActionEventCallbackPointer,
+	);
 }
 extern "C" {
 	pub fn SteamAPI_ISteamInput_GetActionSetHandle(
@@ -25807,6 +26465,12 @@ extern "C" {
 	) -> ::std::os::raw::c_int;
 }
 extern "C" {
+	pub fn SteamAPI_ISteamInput_GetStringForDigitalActionName(
+		self_: *mut ISteamInput,
+		eActionHandle: InputDigitalActionHandle_t,
+	) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
 	pub fn SteamAPI_ISteamInput_GetAnalogActionHandle(
 		self_: *mut ISteamInput,
 		pszActionName: *const ::std::os::raw::c_char,
@@ -25829,7 +26493,22 @@ extern "C" {
 	) -> ::std::os::raw::c_int;
 }
 extern "C" {
-	pub fn SteamAPI_ISteamInput_GetGlyphForActionOrigin(
+	pub fn SteamAPI_ISteamInput_GetGlyphPNGForActionOrigin(
+		self_: *mut ISteamInput,
+		eOrigin: EInputActionOrigin,
+		eSize: ESteamInputGlyphSize,
+		unFlags: uint32,
+	) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+	pub fn SteamAPI_ISteamInput_GetGlyphSVGForActionOrigin(
+		self_: *mut ISteamInput,
+		eOrigin: EInputActionOrigin,
+		unFlags: uint32,
+	) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+	pub fn SteamAPI_ISteamInput_GetGlyphForActionOrigin_Legacy(
 		self_: *mut ISteamInput,
 		eOrigin: EInputActionOrigin,
 	) -> *const ::std::os::raw::c_char;
@@ -25838,6 +26517,12 @@ extern "C" {
 	pub fn SteamAPI_ISteamInput_GetStringForActionOrigin(
 		self_: *mut ISteamInput,
 		eOrigin: EInputActionOrigin,
+	) -> *const ::std::os::raw::c_char;
+}
+extern "C" {
+	pub fn SteamAPI_ISteamInput_GetStringForAnalogActionName(
+		self_: *mut ISteamInput,
+		eActionHandle: InputAnalogActionHandle_t,
 	) -> *const ::std::os::raw::c_char;
 }
 extern "C" {
@@ -25862,6 +26547,27 @@ extern "C" {
 	);
 }
 extern "C" {
+	pub fn SteamAPI_ISteamInput_TriggerVibrationExtended(
+		self_: *mut ISteamInput,
+		inputHandle: InputHandle_t,
+		usLeftSpeed: ::std::os::raw::c_ushort,
+		usRightSpeed: ::std::os::raw::c_ushort,
+		usLeftTriggerSpeed: ::std::os::raw::c_ushort,
+		usRightTriggerSpeed: ::std::os::raw::c_ushort,
+	);
+}
+extern "C" {
+	pub fn SteamAPI_ISteamInput_TriggerSimpleHapticEvent(
+		self_: *mut ISteamInput,
+		inputHandle: InputHandle_t,
+		eHapticLocation: EControllerHapticLocation,
+		nIntensity: uint8,
+		nGainDB: ::std::os::raw::c_char,
+		nOtherIntensity: uint8,
+		nOtherGainDB: ::std::os::raw::c_char,
+	);
+}
+extern "C" {
 	pub fn SteamAPI_ISteamInput_SetLEDColor(
 		self_: *mut ISteamInput,
 		inputHandle: InputHandle_t,
@@ -25872,7 +26578,7 @@ extern "C" {
 	);
 }
 extern "C" {
-	pub fn SteamAPI_ISteamInput_TriggerHapticPulse(
+	pub fn SteamAPI_ISteamInput_Legacy_TriggerHapticPulse(
 		self_: *mut ISteamInput,
 		inputHandle: InputHandle_t,
 		eTargetPad: ESteamControllerPad,
@@ -25880,7 +26586,7 @@ extern "C" {
 	);
 }
 extern "C" {
-	pub fn SteamAPI_ISteamInput_TriggerRepeatedHapticPulse(
+	pub fn SteamAPI_ISteamInput_Legacy_TriggerRepeatedHapticPulse(
 		self_: *mut ISteamInput,
 		inputHandle: InputHandle_t,
 		eTargetPad: ESteamControllerPad,
@@ -25955,7 +26661,12 @@ extern "C" {
 	) -> uint32;
 }
 extern "C" {
-	pub fn SteamAPI_SteamController_v007() -> *mut ISteamController;
+	pub fn SteamAPI_ISteamInput_GetSessionInputConfigurationSettings(
+		self_: *mut ISteamInput,
+	) -> uint16;
+}
+extern "C" {
+	pub fn SteamAPI_SteamController_v008() -> *mut ISteamController;
 }
 extern "C" {
 	pub fn SteamAPI_ISteamController_Init(self_: *mut ISteamController) -> bool;
@@ -26183,10 +26894,10 @@ extern "C" {
 	) -> bool;
 }
 extern "C" {
-	pub fn SteamAPI_SteamUGC_v014() -> *mut ISteamUGC;
+	pub fn SteamAPI_SteamUGC_v016() -> *mut ISteamUGC;
 }
 extern "C" {
-	pub fn SteamAPI_SteamGameServerUGC_v014() -> *mut ISteamUGC;
+	pub fn SteamAPI_SteamGameServerUGC_v016() -> *mut ISteamUGC;
 }
 extern "C" {
 	pub fn SteamAPI_ISteamUGC_CreateQueryUserUGCRequest(
@@ -26239,6 +26950,33 @@ extern "C" {
 		handle: UGCQueryHandle_t,
 		index: uint32,
 		pDetails: *mut SteamUGCDetails_t,
+	) -> bool;
+}
+extern "C" {
+	pub fn SteamAPI_ISteamUGC_GetQueryUGCNumTags(
+		self_: *mut ISteamUGC,
+		handle: UGCQueryHandle_t,
+		index: uint32,
+	) -> uint32;
+}
+extern "C" {
+	pub fn SteamAPI_ISteamUGC_GetQueryUGCTag(
+		self_: *mut ISteamUGC,
+		handle: UGCQueryHandle_t,
+		index: uint32,
+		indexTag: uint32,
+		pchValue: *mut ::std::os::raw::c_char,
+		cchValueSize: uint32,
+	) -> bool;
+}
+extern "C" {
+	pub fn SteamAPI_ISteamUGC_GetQueryUGCTagDisplayName(
+		self_: *mut ISteamUGC,
+		handle: UGCQueryHandle_t,
+		index: uint32,
+		indexTag: uint32,
+		pchValue: *mut ::std::os::raw::c_char,
+		cchValueSize: uint32,
 	) -> bool;
 }
 extern "C" {
@@ -26449,6 +27187,22 @@ extern "C" {
 		self_: *mut ISteamUGC,
 		handle: UGCQueryHandle_t,
 		unDays: uint32,
+	) -> bool;
+}
+extern "C" {
+	pub fn SteamAPI_ISteamUGC_SetTimeCreatedDateRange(
+		self_: *mut ISteamUGC,
+		handle: UGCQueryHandle_t,
+		rtStart: RTime32,
+		rtEnd: RTime32,
+	) -> bool;
+}
+extern "C" {
+	pub fn SteamAPI_ISteamUGC_SetTimeUpdatedDateRange(
+		self_: *mut ISteamUGC,
+		handle: UGCQueryHandle_t,
+		rtStart: RTime32,
+		rtEnd: RTime32,
 	) -> bool;
 }
 extern "C" {
@@ -26765,6 +27519,12 @@ extern "C" {
 		self_: *mut ISteamUGC,
 		nPublishedFileID: PublishedFileId_t,
 	) -> SteamAPICall_t;
+}
+extern "C" {
+	pub fn SteamAPI_ISteamUGC_ShowWorkshopEULA(self_: *mut ISteamUGC) -> bool;
+}
+extern "C" {
+	pub fn SteamAPI_ISteamUGC_GetWorkshopEULAStatus(self_: *mut ISteamUGC) -> SteamAPICall_t;
 }
 extern "C" {
 	pub fn SteamAPI_SteamAppList_v001() -> *mut ISteamAppList;
@@ -27457,10 +28217,11 @@ extern "C" {
 	) -> bool;
 }
 extern "C" {
-	pub fn SteamAPI_SteamNetworkingMessages_v002() -> *mut ISteamNetworkingMessages;
+	pub fn SteamAPI_SteamNetworkingMessages_SteamAPI_v002() -> *mut ISteamNetworkingMessages;
 }
 extern "C" {
-	pub fn SteamAPI_SteamGameServerNetworkingMessages_v002() -> *mut ISteamNetworkingMessages;
+	pub fn SteamAPI_SteamGameServerNetworkingMessages_SteamAPI_v002(
+	) -> *mut ISteamNetworkingMessages;
 }
 extern "C" {
 	pub fn SteamAPI_ISteamNetworkingMessages_SendMessageToUser(
@@ -27504,14 +28265,14 @@ extern "C" {
 		self_: *mut ISteamNetworkingMessages,
 		identityRemote: *const SteamNetworkingIdentity,
 		pConnectionInfo: *mut SteamNetConnectionInfo_t,
-		pQuickStatus: *mut SteamNetworkingQuickConnectionStatus,
+		pQuickStatus: *mut SteamNetConnectionRealTimeStatus_t,
 	) -> ESteamNetworkingConnectionState;
 }
 extern "C" {
-	pub fn SteamAPI_SteamNetworkingSockets_v009() -> *mut ISteamNetworkingSockets;
+	pub fn SteamAPI_SteamNetworkingSockets_SteamAPI_v012() -> *mut ISteamNetworkingSockets;
 }
 extern "C" {
-	pub fn SteamAPI_SteamGameServerNetworkingSockets_v009() -> *mut ISteamNetworkingSockets;
+	pub fn SteamAPI_SteamGameServerNetworkingSockets_SteamAPI_v012() -> *mut ISteamNetworkingSockets;
 }
 extern "C" {
 	pub fn SteamAPI_ISteamNetworkingSockets_CreateListenSocketIP(
@@ -27635,11 +28396,13 @@ extern "C" {
 	) -> bool;
 }
 extern "C" {
-	pub fn SteamAPI_ISteamNetworkingSockets_GetQuickConnectionStatus(
+	pub fn SteamAPI_ISteamNetworkingSockets_GetConnectionRealTimeStatus(
 		self_: *mut ISteamNetworkingSockets,
 		hConn: HSteamNetConnection,
-		pStats: *mut SteamNetworkingQuickConnectionStatus,
-	) -> bool;
+		pStatus: *mut SteamNetConnectionRealTimeStatus_t,
+		nLanes: ::std::os::raw::c_int,
+		pLanes: *mut SteamNetConnectionRealTimeLaneStatus_t,
+	) -> EResult;
 }
 extern "C" {
 	pub fn SteamAPI_ISteamNetworkingSockets_GetDetailedConnectionStatus(
@@ -27665,6 +28428,15 @@ extern "C" {
 		pIdentity1: *const SteamNetworkingIdentity,
 		pIdentity2: *const SteamNetworkingIdentity,
 	) -> bool;
+}
+extern "C" {
+	pub fn SteamAPI_ISteamNetworkingSockets_ConfigureConnectionLanes(
+		self_: *mut ISteamNetworkingSockets,
+		hConn: HSteamNetConnection,
+		nNumLanes: ::std::os::raw::c_int,
+		pLanePriorities: *const ::std::os::raw::c_int,
+		pLaneWeights: *const uint16,
+	) -> EResult;
 }
 extern "C" {
 	pub fn SteamAPI_ISteamNetworkingSockets_GetIdentity(
@@ -27769,7 +28541,7 @@ extern "C" {
 extern "C" {
 	pub fn SteamAPI_ISteamNetworkingSockets_ConnectP2PCustomSignaling(
 		self_: *mut ISteamNetworkingSockets,
-		pSignaling: *mut ISteamNetworkingConnectionCustomSignaling,
+		pSignaling: *mut ISteamNetworkingConnectionSignaling,
 		pPeerIdentity: *const SteamNetworkingIdentity,
 		nRemoteVirtualPort: ::std::os::raw::c_int,
 		nOptions: ::std::os::raw::c_int,
@@ -27781,7 +28553,7 @@ extern "C" {
 		self_: *mut ISteamNetworkingSockets,
 		pMsg: *const ::std::os::raw::c_void,
 		cbMsg: ::std::os::raw::c_int,
-		pContext: *mut ISteamNetworkingCustomSignalingRecvContext,
+		pContext: *mut ISteamNetworkingSignalingRecvContext,
 	) -> bool;
 }
 extern "C" {
@@ -27801,10 +28573,50 @@ extern "C" {
 	) -> bool;
 }
 extern "C" {
+	pub fn SteamAPI_ISteamNetworkingSockets_ResetIdentity(
+		self_: *mut ISteamNetworkingSockets,
+		pIdentity: *const SteamNetworkingIdentity,
+	);
+}
+extern "C" {
 	pub fn SteamAPI_ISteamNetworkingSockets_RunCallbacks(self_: *mut ISteamNetworkingSockets);
 }
 extern "C" {
-	pub fn SteamAPI_SteamNetworkingUtils_v003() -> *mut ISteamNetworkingUtils;
+	pub fn SteamAPI_ISteamNetworkingSockets_BeginAsyncRequestFakeIP(
+		self_: *mut ISteamNetworkingSockets,
+		nNumPorts: ::std::os::raw::c_int,
+	) -> bool;
+}
+extern "C" {
+	pub fn SteamAPI_ISteamNetworkingSockets_GetFakeIP(
+		self_: *mut ISteamNetworkingSockets,
+		idxFirstPort: ::std::os::raw::c_int,
+		pInfo: *mut SteamNetworkingFakeIPResult_t,
+	);
+}
+extern "C" {
+	pub fn SteamAPI_ISteamNetworkingSockets_CreateListenSocketP2PFakeIP(
+		self_: *mut ISteamNetworkingSockets,
+		idxFakePort: ::std::os::raw::c_int,
+		nOptions: ::std::os::raw::c_int,
+		pOptions: *const SteamNetworkingConfigValue_t,
+	) -> HSteamListenSocket;
+}
+extern "C" {
+	pub fn SteamAPI_ISteamNetworkingSockets_GetRemoteFakeIPForConnection(
+		self_: *mut ISteamNetworkingSockets,
+		hConn: HSteamNetConnection,
+		pOutAddr: *mut SteamNetworkingIPAddr,
+	) -> EResult;
+}
+extern "C" {
+	pub fn SteamAPI_ISteamNetworkingSockets_CreateFakeUDPPort(
+		self_: *mut ISteamNetworkingSockets,
+		idxFakeServerPort: ::std::os::raw::c_int,
+	) -> *mut ISteamNetworkingFakeUDPPort;
+}
+extern "C" {
+	pub fn SteamAPI_SteamNetworkingUtils_SteamAPI_v004() -> *mut ISteamNetworkingUtils;
 }
 extern "C" {
 	pub fn SteamAPI_ISteamNetworkingUtils_AllocateMessage(
@@ -27899,6 +28711,25 @@ extern "C" {
 	);
 }
 extern "C" {
+	pub fn SteamAPI_ISteamNetworkingUtils_IsFakeIPv4(
+		self_: *mut ISteamNetworkingUtils,
+		nIPv4: uint32,
+	) -> bool;
+}
+extern "C" {
+	pub fn SteamAPI_ISteamNetworkingUtils_GetIPv4FakeIPType(
+		self_: *mut ISteamNetworkingUtils,
+		nIPv4: uint32,
+	) -> ESteamNetworkingFakeIPType;
+}
+extern "C" {
+	pub fn SteamAPI_ISteamNetworkingUtils_GetRealIdentityForFakeIP(
+		self_: *mut ISteamNetworkingUtils,
+		fakeIP: *const SteamNetworkingIPAddr,
+		pOutRealIdentity: *mut SteamNetworkingIdentity,
+	) -> EResult;
+}
+extern "C" {
 	pub fn SteamAPI_ISteamNetworkingUtils_SetGlobalConfigValueInt32(
 		self_: *mut ISteamNetworkingUtils,
 		eValue: ESteamNetworkingConfigValue,
@@ -27969,6 +28800,12 @@ extern "C" {
 	) -> bool;
 }
 extern "C" {
+	pub fn SteamAPI_ISteamNetworkingUtils_SetGlobalCallback_FakeIPResult(
+		self_: *mut ISteamNetworkingUtils,
+		fnCallback: FnSteamNetworkingFakeIPResult,
+	) -> bool;
+}
+extern "C" {
 	pub fn SteamAPI_ISteamNetworkingUtils_SetGlobalCallback_MessagesSessionRequest(
 		self_: *mut ISteamNetworkingUtils,
 		fnCallback: FnSteamNetworkingMessagesSessionRequest,
@@ -28013,15 +28850,15 @@ extern "C" {
 	pub fn SteamAPI_ISteamNetworkingUtils_GetConfigValueInfo(
 		self_: *mut ISteamNetworkingUtils,
 		eValue: ESteamNetworkingConfigValue,
-		pOutName: *mut *const ::std::os::raw::c_char,
 		pOutDataType: *mut ESteamNetworkingConfigDataType,
 		pOutScope: *mut ESteamNetworkingConfigScope,
-		pOutNextValue: *mut ESteamNetworkingConfigValue,
-	) -> bool;
+	) -> *const ::std::os::raw::c_char;
 }
 extern "C" {
-	pub fn SteamAPI_ISteamNetworkingUtils_GetFirstConfigValue(
+	pub fn SteamAPI_ISteamNetworkingUtils_IterateGenericEditableConfigValues(
 		self_: *mut ISteamNetworkingUtils,
+		eCurrent: ESteamNetworkingConfigValue,
+		bEnumerateDevVars: bool,
 	) -> ESteamNetworkingConfigValue;
 }
 extern "C" {
@@ -28041,6 +28878,12 @@ extern "C" {
 	) -> bool;
 }
 extern "C" {
+	pub fn SteamAPI_ISteamNetworkingUtils_SteamNetworkingIPAddr_GetFakeIPType(
+		self_: *mut ISteamNetworkingUtils,
+		addr: *const SteamNetworkingIPAddr,
+	) -> ESteamNetworkingFakeIPType;
+}
+extern "C" {
 	pub fn SteamAPI_ISteamNetworkingUtils_SteamNetworkingIdentity_ToString(
 		self_: *mut ISteamNetworkingUtils,
 		identity: *const SteamNetworkingIdentity,
@@ -28056,7 +28899,7 @@ extern "C" {
 	) -> bool;
 }
 extern "C" {
-	pub fn SteamAPI_SteamGameServer_v013() -> *mut ISteamGameServer;
+	pub fn SteamAPI_SteamGameServer_v014() -> *mut ISteamGameServer;
 }
 extern "C" {
 	pub fn SteamAPI_ISteamGameServer_SetProduct(
@@ -28177,32 +29020,10 @@ extern "C" {
 	);
 }
 extern "C" {
-	pub fn SteamAPI_ISteamGameServer_SendUserConnectAndAuthenticate(
+	pub fn SteamAPI_ISteamGameServer_SetAdvertiseServerActive(
 		self_: *mut ISteamGameServer,
-		unIPClient: uint32,
-		pvAuthBlob: *const ::std::os::raw::c_void,
-		cubAuthBlobSize: uint32,
-		pSteamIDUser: *mut CSteamID,
-	) -> bool;
-}
-extern "C" {
-	pub fn SteamAPI_ISteamGameServer_CreateUnauthenticatedUserConnection(
-		self_: *mut ISteamGameServer,
-	) -> uint64_steamid;
-}
-extern "C" {
-	pub fn SteamAPI_ISteamGameServer_SendUserDisconnect(
-		self_: *mut ISteamGameServer,
-		steamIDUser: uint64_steamid,
+		bActive: bool,
 	);
-}
-extern "C" {
-	pub fn SteamAPI_ISteamGameServer_BUpdateUserData(
-		self_: *mut ISteamGameServer,
-		steamIDUser: uint64_steamid,
-		pchPlayerName: *const ::std::os::raw::c_char,
-		uScore: uint32,
-	) -> bool;
 }
 extern "C" {
 	pub fn SteamAPI_ISteamGameServer_GetAuthSessionTicket(
@@ -28276,18 +29097,6 @@ extern "C" {
 	) -> ::std::os::raw::c_int;
 }
 extern "C" {
-	pub fn SteamAPI_ISteamGameServer_EnableHeartbeats(self_: *mut ISteamGameServer, bActive: bool);
-}
-extern "C" {
-	pub fn SteamAPI_ISteamGameServer_SetHeartbeatInterval(
-		self_: *mut ISteamGameServer,
-		iHeartbeatInterval: ::std::os::raw::c_int,
-	);
-}
-extern "C" {
-	pub fn SteamAPI_ISteamGameServer_ForceHeartbeat(self_: *mut ISteamGameServer);
-}
-extern "C" {
 	pub fn SteamAPI_ISteamGameServer_AssociateWithClan(
 		self_: *mut ISteamGameServer,
 		steamIDClan: uint64_steamid,
@@ -28298,6 +29107,34 @@ extern "C" {
 		self_: *mut ISteamGameServer,
 		steamIDNewPlayer: uint64_steamid,
 	) -> SteamAPICall_t;
+}
+extern "C" {
+	pub fn SteamAPI_ISteamGameServer_SendUserConnectAndAuthenticate_DEPRECATED(
+		self_: *mut ISteamGameServer,
+		unIPClient: uint32,
+		pvAuthBlob: *const ::std::os::raw::c_void,
+		cubAuthBlobSize: uint32,
+		pSteamIDUser: *mut CSteamID,
+	) -> bool;
+}
+extern "C" {
+	pub fn SteamAPI_ISteamGameServer_CreateUnauthenticatedUserConnection(
+		self_: *mut ISteamGameServer,
+	) -> uint64_steamid;
+}
+extern "C" {
+	pub fn SteamAPI_ISteamGameServer_SendUserDisconnect_DEPRECATED(
+		self_: *mut ISteamGameServer,
+		steamIDUser: uint64_steamid,
+	);
+}
+extern "C" {
+	pub fn SteamAPI_ISteamGameServer_BUpdateUserData(
+		self_: *mut ISteamGameServer,
+		steamIDUser: uint64_steamid,
+		pchPlayerName: *const ::std::os::raw::c_char,
+		uScore: uint32,
+	) -> bool;
 }
 extern "C" {
 	pub fn SteamAPI_SteamGameServerStats_v001() -> *mut ISteamGameServerStats;
@@ -28376,6 +29213,33 @@ extern "C" {
 		self_: *mut ISteamGameServerStats,
 		steamIDUser: uint64_steamid,
 	) -> SteamAPICall_t;
+}
+extern "C" {
+	pub fn SteamAPI_ISteamNetworkingFakeUDPPort_DestroyFakeUDPPort(
+		self_: *mut ISteamNetworkingFakeUDPPort,
+	);
+}
+extern "C" {
+	pub fn SteamAPI_ISteamNetworkingFakeUDPPort_SendMessageToFakeIP(
+		self_: *mut ISteamNetworkingFakeUDPPort,
+		remoteAddress: *const SteamNetworkingIPAddr,
+		pData: *const ::std::os::raw::c_void,
+		cbData: uint32,
+		nSendFlags: ::std::os::raw::c_int,
+	) -> EResult;
+}
+extern "C" {
+	pub fn SteamAPI_ISteamNetworkingFakeUDPPort_ReceiveMessages(
+		self_: *mut ISteamNetworkingFakeUDPPort,
+		ppOutMessages: *mut *mut SteamNetworkingMessage_t,
+		nMaxMessages: ::std::os::raw::c_int,
+	) -> ::std::os::raw::c_int;
+}
+extern "C" {
+	pub fn SteamAPI_ISteamNetworkingFakeUDPPort_ScheduleCleanup(
+		self_: *mut ISteamNetworkingFakeUDPPort,
+		remoteAddress: *const SteamNetworkingIPAddr,
+	);
 }
 extern "C" {
 	pub fn SteamAPI_SteamIPAddress_t_IsSet(self_: *mut SteamIPAddress_t) -> bool;
@@ -28502,6 +29366,14 @@ extern "C" {
 	) -> bool;
 }
 extern "C" {
+	pub fn SteamAPI_SteamNetworkingIPAddr_GetFakeIPType(
+		self_: *mut SteamNetworkingIPAddr,
+	) -> ESteamNetworkingFakeIPType;
+}
+extern "C" {
+	pub fn SteamAPI_SteamNetworkingIPAddr_IsFakeIP(self_: *mut SteamNetworkingIPAddr) -> bool;
+}
+extern "C" {
 	pub fn SteamAPI_SteamNetworkingIdentity_Clear(self_: *mut SteamNetworkingIdentity);
 }
 extern "C" {
@@ -28541,6 +29413,27 @@ extern "C" {
 	) -> *const ::std::os::raw::c_char;
 }
 extern "C" {
+	pub fn SteamAPI_SteamNetworkingIdentity_SetPSNID(
+		self_: *mut SteamNetworkingIdentity,
+		id: uint64,
+	);
+}
+extern "C" {
+	pub fn SteamAPI_SteamNetworkingIdentity_GetPSNID(self_: *mut SteamNetworkingIdentity)
+		-> uint64;
+}
+extern "C" {
+	pub fn SteamAPI_SteamNetworkingIdentity_SetStadiaID(
+		self_: *mut SteamNetworkingIdentity,
+		id: uint64,
+	);
+}
+extern "C" {
+	pub fn SteamAPI_SteamNetworkingIdentity_GetStadiaID(
+		self_: *mut SteamNetworkingIdentity,
+	) -> uint64;
+}
+extern "C" {
 	pub fn SteamAPI_SteamNetworkingIdentity_SetIPAddr(
 		self_: *mut SteamNetworkingIdentity,
 		addr: *const SteamNetworkingIPAddr,
@@ -28550,6 +29443,24 @@ extern "C" {
 	pub fn SteamAPI_SteamNetworkingIdentity_GetIPAddr(
 		self_: *mut SteamNetworkingIdentity,
 	) -> *const SteamNetworkingIPAddr;
+}
+extern "C" {
+	pub fn SteamAPI_SteamNetworkingIdentity_SetIPv4Addr(
+		self_: *mut SteamNetworkingIdentity,
+		nIPv4: uint32,
+		nPort: uint16,
+	);
+}
+extern "C" {
+	pub fn SteamAPI_SteamNetworkingIdentity_GetIPv4(self_: *mut SteamNetworkingIdentity) -> uint32;
+}
+extern "C" {
+	pub fn SteamAPI_SteamNetworkingIdentity_GetFakeIPType(
+		self_: *mut SteamNetworkingIdentity,
+	) -> ESteamNetworkingFakeIPType;
+}
+extern "C" {
+	pub fn SteamAPI_SteamNetworkingIdentity_IsFakeIP(self_: *mut SteamNetworkingIdentity) -> bool;
 }
 extern "C" {
 	pub fn SteamAPI_SteamNetworkingIdentity_SetLocalHost(self_: *mut SteamNetworkingIdentity);
@@ -28641,21 +29552,6 @@ extern "C" {
 	);
 }
 extern "C" {
-	pub fn SteamAPI_SteamNetworkingPOPIDRender_c_str(
-		self_: *mut SteamNetworkingPOPIDRender,
-	) -> *const ::std::os::raw::c_char;
-}
-extern "C" {
-	pub fn SteamAPI_SteamNetworkingIdentityRender_c_str(
-		self_: *mut SteamNetworkingIdentityRender,
-	) -> *const ::std::os::raw::c_char;
-}
-extern "C" {
-	pub fn SteamAPI_SteamNetworkingIPAddrRender_c_str(
-		self_: *mut SteamNetworkingIPAddrRender,
-	) -> *const ::std::os::raw::c_char;
-}
-extern "C" {
 	pub fn SteamAPI_SteamDatagramHostedAddress_Clear(self_: *mut SteamDatagramHostedAddress);
 }
 extern "C" {
@@ -28680,6 +29576,12 @@ pub enum EServerMode {
 	eServerModeAuthentication = 2,
 	eServerModeAuthenticationAndSecure = 3,
 }
+#[doc = " Pass to SteamGameServer_Init to indicate that the same UDP port will be used for game traffic"]
+#[doc = " UDP queries for server browser pings and LAN discovery.  In this case, Steam will not open up a"]
+#[doc = " socket to handle server browser queries, and you must use ISteamGameServer::HandleIncomingPacket"]
+#[doc = " and ISteamGameServer::GetNextOutgoingPacket to handle packets related to server discovery on your socket."]
+pub const STEAMGAMESERVER_QUERY_PORT_SHARED: uint16 = 65535;
+pub const MASTERSERVERUPDATERPORT_USEGAMESOCKETSHARE: uint16 = 65535;
 extern "C" {
 	pub fn SteamGameServer_Shutdown();
 }
@@ -28692,7 +29594,7 @@ extern "C" {
 extern "C" {
 	pub fn SteamInternal_GameServer_Init(
 		unIP: uint32,
-		usPort: uint16,
+		usLegacySteamPort: uint16,
 		usGamePort: uint16,
 		usQueryPort: uint16,
 		eServerMode: EServerMode,

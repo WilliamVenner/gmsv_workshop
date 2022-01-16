@@ -17,7 +17,7 @@ lto = "thin"
 opt-level = "s"
 
 [features]
-refresh-bindgen = []
+refresh-bindgen = ["steamworks/refresh-bindgen"]
 
 [dependencies]
 gmod = { version = "11.1.1", default-features = false }

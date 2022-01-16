@@ -1,5 +1,5 @@
-// lua_run require("workshop") steamworks.DownloadUGC(2711867367, function(path, f) PrintTable({path, f}) PrintTable({game.MountGMA(path)}) end)
-// lua_run require("workshop") steamworks.FileInfo(2711867367, function(...) PrintTable({...}) end)
+// lua_run require("workshop") steamworks.DownloadUGC("2718124784", function(path, f) PrintTable({path, f}) PrintTable({game.MountGMA(path)}) end)
+// lua_run require("workshop") steamworks.FileInfo("2711867367", function(...) PrintTable({...}) end)
 
 #![feature(c_unwind)]
 #![feature(hash_drain_filter)]
@@ -26,18 +26,19 @@ pub fn lua() -> gmod::lua::State {
 }
 
 unsafe extern "C-unwind" fn download(lua: gmod::lua::State) -> i32 {
-	let workshop_id = lua.to_integer(1);
-
-	if workshop_id <= 0 {
-		if !lua.is_nil(2) {
+	let workshop_id = match lua.check_string(1).parse::<u64>() {
+		Ok(workshop_id) => workshop_id,
+		Err(_) => {
 			lua.check_function(2);
 			lua.push_value(2);
 			lua.push_nil();
 			lua.push_nil();
 			lua.pcall_ignore(2, 0);
+			return 0;
 		}
-		return 0;
-	}
+	};
+
+	lua.check_function(2);
 
 	let callback = if !lua.is_nil(2) {
 		lua.check_function(2);
@@ -56,16 +57,19 @@ unsafe extern "C-unwind" fn download(lua: gmod::lua::State) -> i32 {
 }
 
 unsafe extern "C-unwind" fn file_info(lua: gmod::lua::State) -> i32 {
-	let workshop_id = lua.to_integer(1);
-	lua.check_function(2);
+	let workshop_id = match lua.check_string(1).parse::<u64>() {
+		Ok(workshop_id) => workshop_id,
+		Err(_) => {
+			lua.check_function(2);
+			lua.push_value(2);
+			lua.push_nil();
+			lua.push_nil();
+			lua.pcall_ignore(2, 0);
+			return 0;
+		}
+	};
 
-	if workshop_id <= 0 {
-		lua.push_value(2);
-		lua.push_nil();
-		lua.push_nil();
-		lua.pcall_ignore(2, 0);
-		return 0;
-	}
+	lua.check_function(2);
 
 	let callback = {
 		lua.push_value(2);
@@ -74,7 +78,7 @@ unsafe extern "C-unwind" fn file_info(lua: gmod::lua::State) -> i32 {
 
 	STEAM.with(|steam| {
 		let steam = steam.get_mut();
-		steam.file_info(steamworks::PublishedFileId(workshop_id as _), callback);
+		steam.file_info(steamworks::PublishedFileId(workshop_id), callback);
 	});
 
 	0
