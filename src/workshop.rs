@@ -38,7 +38,7 @@ pub mod downloads {
 						lua.call(3, 1);
 						lua.remove(lua.get_top() - 1);
 					} else {
-						eprintln!("[gmsv_downloadugc] Failed to find relative path for {}, please let me know here: https://github.com/WilliamVenner/gmsv_downloadugc/issues/new", gma.display());
+						eprintln!("[gmsv_workshop] Failed to find relative path for {}, please let me know here: https://github.com/WilliamVenner/gmsv_workshop/issues/new", gma.display());
 						lua.push_nil();
 					}
 				} else {
@@ -65,7 +65,7 @@ pub mod downloads {
 					lua.get_global(lua_string!("hook"));
 					lua.get_field(-1, lua_string!("Add"));
 					lua.push_string("Think");
-					lua.push_string("gmsv_downloadugc_queued");
+					lua.push_string("gmsv_workshop_queued");
 					lua.push_function(Self::process_queued);
 					lua.call(3, 0);
 					lua.pop();
@@ -73,7 +73,7 @@ pub mod downloads {
 
 				self.queued.insert(workshop_id, callback);
 
-				println!("[gmsv_downloadugc] Queued {}", workshop_id);
+				println!("[gmsv_workshop] Queued {}", workshop_id);
 				return;
 			}
 
@@ -83,7 +83,7 @@ pub mod downloads {
 			};
 			if !success {
 				eprintln!(
-					"[gmsv_downloadugc] Item ID {} is invalid or the server is not logged onto Steam",
+					"[gmsv_workshop] Item ID {} is invalid or the server is not logged onto Steam",
 					workshop_id
 				);
 				return self::callback(lua, callback, None);
@@ -93,7 +93,7 @@ pub mod downloads {
 				return self::callback(lua, callback, Some(folder));
 			}
 
-			println!("[gmsv_downloadugc] Downloading {}", workshop_id);
+			println!("[gmsv_workshop] Downloading {}", workshop_id);
 
 			if let Some(callback) = callback {
 				self.pending.insert(workshop_id, callback);
@@ -102,7 +102,7 @@ pub mod downloads {
 			unsafe {
 				lua.get_global(lua_string!("timer"));
 				lua.get_field(-1, lua_string!("Create"));
-				lua.push_string("gmsv_downloadugc");
+				lua.push_string("gmsv_workshop");
 				lua.push_integer(1);
 				lua.push_integer(0);
 				lua.push_function(Self::poll);
@@ -127,7 +127,7 @@ pub mod downloads {
 					lua.get_global(lua_string!("hook"));
 					lua.get_field(-1, lua_string!("Remove"));
 					lua.push_string("Think");
-					lua.push_string("gmsv_downloadugc_queued");
+					lua.push_string("gmsv_workshop_queued");
 					lua.call(2, 0);
 					lua.pop();
 				}
