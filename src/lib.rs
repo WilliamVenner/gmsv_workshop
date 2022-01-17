@@ -1,8 +1,11 @@
-// lua_run require("workshop") steamworks.DownloadUGC("2718124784", function(path, f) PrintTable({path, f}) PrintTable({game.MountGMA(path)}) end)
-// lua_run require("workshop") steamworks.FileInfo("2711867367", function(...) PrintTable({...}) end)
+// lua_run require("workshop") steamworks.DownloadUGC("104533079", function(path, f) PrintTable({path, f}) PrintTable({game.MountGMA(path)}) end)
+// lua_run require("workshop") steamworks.FileInfo("104533079", function(...) PrintTable({...}) end)
+
+// TODO fixed queued
 
 #![feature(c_unwind)]
 #![feature(hash_drain_filter)]
+#![feature(core_intrinsics)]
 
 #[macro_use] extern crate gmod;
 

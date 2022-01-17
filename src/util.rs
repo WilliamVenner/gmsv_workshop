@@ -1,25 +1,4 @@
-use std::{path::{Path, PathBuf}, cell::UnsafeCell};
-
-/// Find a GMA file in a directory
-pub fn find_gma<P: AsRef<Path>>(path: P) -> Result<Option<PathBuf>, std::io::Error> {
-	Ok(path
-		.as_ref()
-		.read_dir()?
-		.filter_map(|entry| entry.ok())
-		.filter_map(|entry| {
-			if entry.file_type().ok()?.is_file() {
-				Some(entry.path())
-			} else {
-				None
-			}
-		})
-		.filter(|path| {
-			path.extension()
-				.map(|str| str.eq_ignore_ascii_case("gma"))
-				.unwrap_or(false)
-		})
-		.next())
-}
+use std::{path::Path, cell::UnsafeCell};
 
 /// Strips a path to make it relative to Gmod's BASE_PATH
 pub fn base_path_relative<'a>(path: &'a Path) -> Option<&'a Path> {

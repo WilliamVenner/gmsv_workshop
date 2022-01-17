@@ -1,14 +1,14 @@
 use gmod::lua::LuaReference;
-use std::{collections::HashMap, mem::ManuallyDrop};
+use std::{collections::HashMap, mem::ManuallyDrop, path::PathBuf};
 use steamworks::PublishedFileId;
 
 use crate::util;
 
 macro_rules! check_installed {
 	($ugc:ident, $workshop_id:expr) => {
-		if let (Some(info), steamworks::ItemState::INSTALLED) = (
+		if let (Some(info), true) = (
 			$ugc.item_install_info($workshop_id),
-			$ugc.item_state($workshop_id),
+			$ugc.item_state($workshop_id).contains(steamworks::ItemState::INSTALLED),
 		) {
 			Some(info.folder)
 		} else {
@@ -20,13 +20,83 @@ macro_rules! check_installed {
 pub mod downloads {
 	use super::*;
 
+	/// Find a GMA file in a directory, **will decompress if needed**
+	fn get_gma<P: Into<PathBuf>>(path: P) -> Result<Option<PathBuf>, std::io::Error> {
+		let path = path.into();
+		let mut compressed = None;
+
+		if path.is_dir() {
+			let candidates = path
+				.read_dir()?
+				.filter_map(|entry| entry.ok())
+				.filter_map(|entry| {
+					if entry.file_type().ok()?.is_file() {
+						Some(entry.path())
+					} else {
+						None
+					}
+				})
+				.filter_map(|entry| {
+					entry.extension().map(|ext| ext.to_owned()).map(|ext| (entry, ext))
+				});
+
+			for (path, ext) in candidates {
+				let (path, ext) = dbg!((path, ext));
+
+				if std::intrinsics::likely(ext.eq_ignore_ascii_case("gma")) {
+					// We have a GMA!
+					return Ok(Some(path));
+				}
+
+				if std::intrinsics::likely(ext.eq_ignore_ascii_case("bin")) {
+					// We'll need to decompress this
+					compressed = Some(path);
+					break;
+				}
+
+				if std::intrinsics::unlikely(compressed.replace(path).is_some()) {
+					// Panic!!!
+					return Ok(None);
+				}
+			}
+		} else {
+			if path.extension().map(|ext| ext.eq_ignore_ascii_case("gma")).unwrap_or(false) {
+				// We have a GMA!
+				return Ok(Some(path));
+			}
+
+			// Let's try decompressing this
+			compressed = Some(path);
+		}
+
+		let compressed = match compressed {
+			Some(compressed) => compressed,
+			None => return Ok(None)
+		};
+
+		let decompressed = compressed.with_extension("gma");
+		if decompressed.is_file() {
+			return Ok(Some(decompressed));
+		}
+
+		std::fs::write(&decompressed, {
+			let decompressed = gmod_lzma::decompress(&std::fs::read(compressed)?).map_err(|_| std::io::Error::from(std::io::ErrorKind::InvalidData))?;
+			if !decompressed.starts_with(b"GMAD") {
+				return Err(std::io::ErrorKind::InvalidData.into());
+			}
+			decompressed
+		})?;
+
+		Ok(Some(decompressed))
+	}
+
 	fn callback(lua: gmod::lua::State, callback: Option<LuaReference>, folder: Option<String>) {
 		if let Some(callback) = callback {
 			unsafe {
 				lua.from_reference(callback);
 				lua.dereference(callback);
 
-				if let Some(gma) = folder.map(util::find_gma).and_then(|res| res.ok().flatten()) {
+				if let Some(Ok(Some(gma))) = folder.map(get_gma) {
 					lua.push_string(gma.to_string_lossy().as_ref());
 
 					if let Some(relative_path) = util::base_path_relative(&gma) {
@@ -142,7 +212,7 @@ pub mod downloads {
 				let ugc = steam.server.ugc();
 
 				steam.pending.drain_filter(|workshop_id, callback| {
-					if let Some(folder) = check_installed!(ugc, *workshop_id) {
+					if let Some(folder) = dbg!(check_installed!(ugc, *workshop_id)) {
 						self::callback(lua, Some(*callback), Some(folder));
 						true
 					} else {

@@ -92,6 +92,12 @@ dependencies = [
 ]
 
 [[package]]
+name = "cc"
+version = "1.0.72"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "22a9137b95ea06864e018375b72adfb7db6e6f68cfc8df5a04d00288050485ee"
+
+[[package]]
 name = "cexpr"
 version = "0.6.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -199,6 +205,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "gmod-lzma"
+version = "1.0.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "3e590328bd705f5faada9f515853c4cb9b03f60e7b3a76f38791cb83a35fa11f"
+dependencies = [
+ "cc",
+ "num_cpus",
+]
+
+[[package]]
 name = "gmod-macros"
 version = "1.0.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -214,6 +230,7 @@ name = "gmsv_workshop"
 version = "2.0.0"
 dependencies = [
  "gmod",
+ "gmod-lzma",
  "steamworks",
 ]
 
@@ -308,6 +325,16 @@ dependencies = [
  "memchr",
  "minimal-lexical",
  "version_check",
+]
+
+[[package]]
+name = "num_cpus"
+version = "1.13.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "19e64526ebdee182341572e50e9ad03965aa510cd94427a4549448f285e957a1"
+dependencies = [
+ "hermit-abi",
+ "libc",
 ]
 
 [[package]]
