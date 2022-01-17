@@ -187,7 +187,7 @@ pub mod downloads {
 
 				if !steam.server.is_logged_in() {
 					return 0;
-				};
+				}
 
 				for (workshop_id, callback) in std::mem::take(&mut steam.queued) {
 					steam.download(workshop_id, callback);
