@@ -41,8 +41,6 @@ pub mod downloads {
 				});
 
 			for (path, ext) in candidates {
-				let (path, ext) = dbg!((path, ext));
-
 				if std::intrinsics::likely(ext.eq_ignore_ascii_case("gma")) {
 					// We have a GMA!
 					return Ok(Some(path));
@@ -212,7 +210,7 @@ pub mod downloads {
 				let ugc = steam.server.ugc();
 
 				steam.pending.drain_filter(|workshop_id, callback| {
-					if let Some(folder) = dbg!(check_installed!(ugc, *workshop_id)) {
+					if let Some(folder) = check_installed!(ugc, *workshop_id) {
 						self::callback(lua, Some(*callback), Some(folder));
 						true
 					} else {
