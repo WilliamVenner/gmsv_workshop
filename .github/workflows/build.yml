@@ -1,3 +1,5 @@
+# git reset HEAD~1 && git add . && git commit -m "Fix centos build" && git tag -d v2.0.1 && git tag v2.0.1 && git push origin master --force && git push origin v2.0.1 --force
+
 name: build
 
 on:
@@ -15,7 +17,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Install build dependencies
-      run: yum -y install glibc-devel.i686 libgcc.i686
+      run: yum -y install glibc-devel.i686 libgcc.i686 libstdc++-devel.i686
     - name: Install nightly toolchain
       uses: actions-rs/toolchain@v1
       with:
@@ -25,7 +27,7 @@ jobs:
     - name: Add targets
       run: rustup target add x86_64-unknown-linux-gnu && rustup target add i686-unknown-linux-gnu
     - name: Build 32-bit
-      run: cargo build --release --target i686-unknown-linux-gnu
+      run: export CC=$(which gcc) && cargo build --release --target i686-unknown-linux-gnu
     - name: Build 64-bit
       run: cargo build --release --target x86_64-unknown-linux-gnu
     - name: Strip debug symbols
