@@ -2,8 +2,6 @@ use gmod::lua::LuaReference;
 use std::{collections::HashMap, mem::ManuallyDrop, path::PathBuf};
 use steamworks::PublishedFileId;
 
-use crate::util;
-
 macro_rules! check_installed {
 	($ugc:ident, $workshop_id:expr) => {
 		if let (Some(info), true) = (
@@ -20,9 +18,14 @@ macro_rules! check_installed {
 pub mod downloads {
 	use super::*;
 
-	/// Find a GMA file in a directory, **will decompress if needed**
-	fn get_gma<P: Into<PathBuf>>(path: P) -> Result<Option<PathBuf>, std::io::Error> {
+	fn cache_gma<P: Into<PathBuf>>(workshop_id: PublishedFileId, path: P) -> Result<Option<()>, std::io::Error> {
 		let path = path.into();
+
+		let cache_path = PathBuf::from(format!("garrysmod/cache/srcds/{}.gma", workshop_id));
+		if path == cache_path {
+			return Ok(Some(()));
+		}
+
 		let mut compressed = None;
 
 		if path.is_dir() {
@@ -43,7 +46,8 @@ pub mod downloads {
 			for (path, ext) in candidates {
 				if std::intrinsics::likely(ext.eq_ignore_ascii_case("gma")) {
 					// We have a GMA!
-					return Ok(Some(path));
+					std::fs::copy(&path, cache_path)?;
+					return Ok(Some(()));
 				}
 
 				if std::intrinsics::likely(ext.eq_ignore_ascii_case("bin")) {
@@ -60,7 +64,8 @@ pub mod downloads {
 		} else {
 			if path.extension().map(|ext| ext.eq_ignore_ascii_case("gma")).unwrap_or(false) {
 				// We have a GMA!
-				return Ok(Some(path));
+				std::fs::copy(path, cache_path)?;
+				return Ok(Some(()));
 			}
 
 			// Let's try decompressing this
@@ -72,12 +77,7 @@ pub mod downloads {
 			None => return Ok(None)
 		};
 
-		let decompressed = compressed.with_extension("gma");
-		if decompressed.is_file() {
-			return Ok(Some(decompressed));
-		}
-
-		std::fs::write(&decompressed, {
+		std::fs::write(&cache_path, {
 			let decompressed = gmod_lzma::decompress(&std::fs::read(compressed)?).map_err(|_| std::io::Error::from(std::io::ErrorKind::InvalidData))?;
 			if !decompressed.starts_with(b"GMAD") {
 				return Err(std::io::ErrorKind::InvalidData.into());
@@ -85,33 +85,40 @@ pub mod downloads {
 			decompressed
 		})?;
 
-		Ok(Some(decompressed))
+		Ok(Some(()))
 	}
 
-	fn callback(lua: gmod::lua::State, callback: Option<LuaReference>, folder: Option<String>) {
+	fn callback(lua: gmod::lua::State, callback: Option<LuaReference>, workshop_id: PublishedFileId, folder: Option<String>) {
 		if let Some(callback) = callback {
 			unsafe {
 				lua.from_reference(callback);
 				lua.dereference(callback);
 
-				if let Some(Ok(Some(gma))) = folder.map(get_gma) {
-					lua.push_string(gma.to_string_lossy().as_ref());
+				match folder.map(|folder| cache_gma(workshop_id, folder)) {
+					Some(Ok(Some(_))) => {
+						let gma = format!("cache/srcds/{}.gma", workshop_id);
 
-					if let Some(relative_path) = util::base_path_relative(&gma) {
+						lua.push_string(&gma);
+
 						lua.get_global(lua_string!("file"));
 						lua.get_field(-1, lua_string!("Open"));
-						lua.push_string(relative_path.to_string_lossy().as_ref());
+						lua.push_string(&gma);
 						lua.push_string("rb");
-						lua.push_string("BASE_PATH");
+						lua.push_string("GAME");
 						lua.call(3, 1);
 						lua.remove(lua.get_top() - 1);
-					} else {
-						eprintln!("[gmsv_workshop] Failed to find relative path for {}, please let me know here: https://github.com/WilliamVenner/gmsv_workshop/issues/new", gma.display());
+					},
+
+					Some(Err(err)) => {
+						eprintln!("[gmsv_workshop] Failed to process download: {}", err);
+						lua.push_nil();
+						lua.push_nil();
+					},
+
+					_ => {
+						lua.push_nil();
 						lua.push_nil();
 					}
-				} else {
-					lua.push_nil();
-					lua.push_nil();
 				}
 
 				lua.pcall_ignore(2, 0);
@@ -124,8 +131,15 @@ pub mod downloads {
 			let lua = crate::lua();
 			let ugc = self.server.ugc();
 
+			{
+				let cache_path = format!("garrysmod/cache/srcds/{}.gma", workshop_id);
+				if PathBuf::from(&cache_path).is_file() {
+					return self::callback(lua, callback, workshop_id, Some(cache_path));
+				}
+			}
+
 			if let Some(folder) = check_installed!(ugc, workshop_id) {
-				return self::callback(lua, callback, Some(folder));
+				return self::callback(lua, callback, workshop_id, Some(folder));
 			}
 
 			if !self.server.is_logged_in() {
@@ -154,11 +168,11 @@ pub mod downloads {
 					"[gmsv_workshop] Item ID {} is invalid or the server is not logged onto Steam",
 					workshop_id
 				);
-				return self::callback(lua, callback, None);
+				return self::callback(lua, callback, workshop_id, None);
 			}
 
 			if let Some(folder) = check_installed!(ugc, workshop_id) {
-				return self::callback(lua, callback, Some(folder));
+				return self::callback(lua, callback, workshop_id, Some(folder));
 			}
 
 			println!("[gmsv_workshop] Downloading {}", workshop_id);
@@ -211,7 +225,7 @@ pub mod downloads {
 
 				steam.pending.drain_filter(|workshop_id, callback| {
 					if let Some(folder) = check_installed!(ugc, *workshop_id) {
-						self::callback(lua, Some(*callback), Some(folder));
+						self::callback(lua, Some(*callback), *workshop_id, Some(folder));
 						true
 					} else {
 						false

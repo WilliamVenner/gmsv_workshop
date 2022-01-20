@@ -1,14 +1,4 @@
-use std::{path::Path, cell::UnsafeCell};
-
-/// Strips a path to make it relative to Gmod's BASE_PATH
-pub fn base_path_relative<'a>(path: &'a Path) -> Option<&'a Path> {
-	thread_local! {
-		static BASE_PATH: std::path::PathBuf = std::env::current_exe().expect("Failed to get the path of the current executable...?").parent().expect("The current executable has no parent folder...?").to_path_buf();
-	}
-	BASE_PATH.with(|base_path| {
-		path.strip_prefix(base_path).ok()
-	})
-}
+use std::cell::UnsafeCell;
 
 pub struct ChadCell<T>(UnsafeCell<T>);
 impl<T> ChadCell<T> {
