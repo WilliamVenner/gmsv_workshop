@@ -77,6 +77,8 @@ pub mod downloads {
 			None => return Ok(None)
 		};
 
+		std::fs::create_dir_all("garrysmod/cache/srcds")?;
+
 		std::fs::write(&cache_path, {
 			let decompressed = gmod_lzma::decompress(&std::fs::read(compressed)?).map_err(|_| std::io::Error::from(std::io::ErrorKind::InvalidData))?;
 			if !decompressed.starts_with(b"GMAD") {

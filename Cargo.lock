@@ -194,9 +194,9 @@ checksum = "9b919933a397b79c37e33b77bb2aa3dc8eb6e165ad809e58ff75bc7db2e34574"
 
 [[package]]
 name = "gmod"
-version = "11.1.1"
+version = "14.0.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "57c5567374e966eb83570142446f0f57ffee5d6e1c37fa7f609193df1f018f29"
+checksum = "ee4e57a801e50b74f21b6ef6b4e2ede6791ab14287bb63bedc1f1866ee2a51d3"
 dependencies = [
  "cstr",
  "gmod-macros",
@@ -216,9 +216,9 @@ dependencies = [
 
 [[package]]
 name = "gmod-macros"
-version = "1.0.4"
+version = "2.0.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "3aa9dc910c8678e4e15170a33ea1971394914efd8f81a9e947b80ad550c828ec"
+checksum = "4f379e64e2b37dc89becb8ac4e1a67211a1a8989b866a71d8365dc16459224a8"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -227,7 +227,7 @@ dependencies = [
 
 [[package]]
 name = "gmsv_workshop"
-version = "2.1.0"
+version = "2.2.0"
 dependencies = [
  "gmod",
  "gmod-lzma",
