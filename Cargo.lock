@@ -227,7 +227,7 @@ dependencies = [
 
 [[package]]
 name = "gmsv_workshop"
-version = "2.2.0"
+version = "2.2.1"
 dependencies = [
  "gmod",
  "gmod-lzma",
