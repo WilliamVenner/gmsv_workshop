@@ -327,7 +327,7 @@ use super::*;
 				lua.set_field(-2, lua_string!("owner"));
 
 				lua.push_binary_string(cstr_to_bytes!(info.m_rgchTags));
-				lua.set_field(-2, lua_string!("owner"));
+				lua.set_field(-2, lua_string!("tags"));
 
 				lua.push_boolean(info.m_bBanned);
 				lua.set_field(-2, lua_string!("banned"));
