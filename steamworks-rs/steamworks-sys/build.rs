@@ -10,17 +10,17 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     let out_path = PathBuf::from(env::var("OUT_DIR").unwrap());
 
-	/*
     let sdk_loc = if build_cfg!(target_pointer_width = "32") {
-		"../../lib/steamworks_153a"
+		"../../lib/steamworks_152"
 	} else if build_cfg!(target_pointer_width = "64") {
 		"../../lib/steamworks_150"
 	} else {
 		unimplemented!()
 	};
-	*/
 
+	/*
     let sdk_loc = "../../lib/steamworks_150";
+	*/
 
     let sdk_loc = Path::new(&sdk_loc);
     println!("cargo:rerun-if-env-changed=STEAM_SDK_LOCATION");

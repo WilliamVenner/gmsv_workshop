@@ -1,7 +1,6 @@
 #![allow(unused)]
 #![feature(hash_drain_filter)]
 
-/*
 #[macro_export]
 #[cfg(target_pointer_width = "64")]
 macro_rules! sys_ugc {
@@ -17,7 +16,7 @@ macro_rules! sys_gameserver {
 #[macro_export]
 #[cfg(target_pointer_width = "32")]
 macro_rules! sys_ugc {
-	() => { $crate::sys::SteamAPI_SteamGameServerUGC_v016() }
+	() => { $crate::sys::SteamAPI_SteamGameServerUGC_v015() }
 }
 
 #[macro_export]
@@ -25,8 +24,8 @@ macro_rules! sys_ugc {
 macro_rules! sys_gameserver {
 	() => { $crate::sys::SteamAPI_SteamGameServer_v014() }
 }
-*/
 
+/*
 #[macro_export]
 macro_rules! sys_ugc {
 	() => { $crate::sys::SteamAPI_SteamGameServerUGC_v014() }
@@ -36,6 +35,7 @@ macro_rules! sys_ugc {
 macro_rules! sys_gameserver {
 	() => { $crate::sys::SteamAPI_SteamGameServer_v013() }
 }
+*/
 
 #[macro_use]
 extern crate thiserror;
