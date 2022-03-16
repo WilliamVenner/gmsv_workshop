@@ -6,7 +6,7 @@ authors = ["William Venner <william@venner.io>"]
 publish = false
 
 [workspace]
-members = ["steamworks-rs", "steamworks-rs/steamworks-sys"]
+members = ["steamworks-rs", "steamworks-rs/steamworks-sys", "steamworks-resolver"]
 
 [lib]
 crate-type = ["cdylib"]

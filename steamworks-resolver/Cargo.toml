@@ -1,0 +1,14 @@
+[package]
+name = "steamworks-resolver"
+version = "0.1.0"
+edition = "2021"
+authors = ["William Venner <william@venner.io>"]
+publish = false
+
+[dependencies]
+reqwest = { version = "0", features = ["rustls-tls-native-roots", "blocking"], default-features = false }
+regex = "1"
+open = "2"
+sha2 = "0"
+zip = "0"
+indexmap = "1"
