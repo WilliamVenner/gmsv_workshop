@@ -115,7 +115,7 @@ impl <Manager> Friends<Manager> {
             sys::SteamAPI_ISteamFriends_ActivateGameOverlayInviteDialog(self.friends, lobby.0);
         }
     }
-    
+
     /// Set rich presence for the user. Unsets the rich presence if `value` is None or empty.
     /// See [Steam API](https://partner.steamgames.com/doc/api/ISteamFriends#SetRichPresence)
     pub fn set_rich_presence(&self, key: &str, value: Option<&str>) -> bool {

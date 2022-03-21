@@ -76,7 +76,7 @@ impl Server {
                 return Err(SteamError::InitFailed);
             }
             sys::SteamAPI_ManualDispatch_Init();
-            let server_raw = sys_gameserver!();
+            let server_raw = sys::SteamAPI_SteamGameServer_v013();
             let server = Arc::new(Inner {
                 _manager: ServerManager { _priv: () },
                 callbacks: Mutex::new(Callbacks {
@@ -316,7 +316,7 @@ impl Server {
     /// **For this to work properly, you need to call `UGC::init_for_game_server()`!**
     pub fn ugc(&self) -> UGC<ServerManager> {
         unsafe {
-            let ugc = sys_ugc!();
+            let ugc = sys::SteamAPI_SteamGameServerUGC_v014();
             debug_assert!(!ugc.is_null());
             UGC {
                 ugc,

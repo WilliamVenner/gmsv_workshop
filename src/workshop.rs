@@ -394,7 +394,7 @@ pub struct Steam {
 impl Steam {
 	pub fn init() -> Steam {
 		let (server, callbacks) = unsafe {
-			steamworks::Server::from_raw(steamworks::sys_gameserver!())
+			steamworks::Server::from_raw(steamworks::sys::SteamAPI_SteamGameServer_v013())
 		};
 
 		let steam = Steam {

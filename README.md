@@ -16,9 +16,10 @@ Next, download the module from the [releases page](https://github.com/WilliamVen
 
 Finally, drop the DLL file in `garrysmod/lua/bin` in your server files. **If the `lua/bin` folder doesn't exist, create it.**
 
-# "Couldn't load module library!" error
+# "Couldn't load module library!" error or similar
 
 Either:
 
-1. **(Most likely)** Your server is running the x86-64 branch in 32-bit. If you start your x86-64 branch server using the `srcds_run` binary, this is the problem. Start it using `srcds_run_x64` to launch it in 64-bit.
-2. Garry's Mod updated the Steamworks version and this now needs to be recompiled against it, [open an issue](https://github.com/WilliamVenner/gmsv_workshop/issues) if this is the case.
+1. Your server is outdated
+2. **(Most likely)** Your server is running the x86-64 branch in 32-bit. If you start your x86-64 branch server using the `srcds_run` binary, this is the problem. Start it using `srcds_run_x64` to launch it in 64-bit.
+3. Garry's Mod updated the Steamworks version and this now needs to be recompiled against it, [open an issue](https://github.com/WilliamVenner/gmsv_workshop/issues) if this is the case.

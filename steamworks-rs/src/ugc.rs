@@ -851,7 +851,7 @@ impl <Manager> UserListQuery<Manager> {
 			register_call_result::<sys::SteamUGCQueryCompleted_t, _, _>(
 				&inner, api_call, CALLBACK_BASE_ID + 1,
 				move |v, io_error| {
-					let ugc = sys_ugc!();
+					let ugc = sys::SteamAPI_SteamGameServerUGC_v014();
 					if io_error {
 						sys::SteamAPI_ISteamUGC_ReleaseQueryUGCRequest(ugc, handle);
 						cb(Err(SteamError::IOFailure));
@@ -1011,7 +1011,7 @@ impl <Manager> ItemListDetailsQuery<Manager> {
 			register_call_result::<sys::SteamUGCQueryCompleted_t, _, _>(
 				&inner, api_call, CALLBACK_BASE_ID + 1,
 				move |v, io_error| {
-					let ugc = sys_ugc!();
+					let ugc = sys::SteamAPI_SteamGameServerUGC_v014();
 					if io_error {
 						sys::SteamAPI_ISteamUGC_ReleaseQueryUGCRequest(ugc, handle);
 						cb(Err(SteamError::IOFailure));
@@ -1140,7 +1140,7 @@ impl <Manager> ItemDetailsQuery<Manager> {
 			register_call_result::<sys::SteamUGCQueryCompleted_t, _, _>(
 				&inner, api_call, CALLBACK_BASE_ID + 1,
 				move |v, io_error| {
-					let ugc = sys_ugc!();
+					let ugc = sys::SteamAPI_SteamGameServerUGC_v014();
 					if io_error {
 						sys::SteamAPI_ISteamUGC_ReleaseQueryUGCRequest(ugc, handle);
 						cb(Err(SteamError::IOFailure));
