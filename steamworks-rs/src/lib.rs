@@ -1,6 +1,42 @@
 #![allow(unused)]
 #![feature(hash_drain_filter)]
 
+#[macro_export]
+#[cfg(target_pointer_width = "64")]
+macro_rules! sys_ugc {
+	() => { $crate::sys::SteamAPI_SteamGameServerUGC_v014() }
+}
+
+#[macro_export]
+#[cfg(target_pointer_width = "64")]
+macro_rules! sys_gameserver {
+	() => { $crate::sys::SteamAPI_SteamGameServer_v013() }
+}
+
+#[macro_export]
+#[cfg(target_pointer_width = "64")]
+macro_rules! sys_steamuser {
+	() => { $crate::sys::SteamAPI_SteamUser_v021() };
+}
+
+#[macro_export]
+#[cfg(target_pointer_width = "32")]
+macro_rules! sys_ugc {
+	() => { $crate::sys::SteamAPI_SteamGameServerUGC_v017() }
+}
+
+#[macro_export]
+#[cfg(target_pointer_width = "32")]
+macro_rules! sys_gameserver {
+	() => { $crate::sys::SteamAPI_SteamGameServer_v015() }
+}
+
+#[macro_export]
+#[cfg(target_pointer_width = "32")]
+macro_rules! sys_steamuser {
+	() => { $crate::sys::SteamAPI_SteamUser_v023() };
+}
+
 #[macro_use]
 extern crate thiserror;
 #[macro_use]
@@ -349,7 +385,7 @@ impl<Manager> Client<Manager> {
     /// Returns an accessor to the steam user interface
     pub fn user(&self) -> User<Manager> {
         unsafe {
-            let user = sys::SteamAPI_SteamUser_v021();
+            let user = sys_steamuser!();
             debug_assert!(!user.is_null());
             User {
                 user,

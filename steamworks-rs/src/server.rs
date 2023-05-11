@@ -76,7 +76,7 @@ impl Server {
                 return Err(SteamError::InitFailed);
             }
             sys::SteamAPI_ManualDispatch_Init();
-            let server_raw = sys::SteamAPI_SteamGameServer_v013();
+            let server_raw = sys_gameserver!();
             let server = Arc::new(Inner {
                 _manager: ServerManager { _priv: () },
                 callbacks: Mutex::new(Callbacks {
@@ -165,7 +165,7 @@ impl Server {
         unsafe {
             let mut ticket = vec![0; 1024];
             let mut ticket_len = 0;
-            let auth_ticket = sys::SteamAPI_ISteamGameServer_GetAuthSessionTicket(self.server, ticket.as_mut_ptr() as *mut _, 1024, &mut ticket_len);
+            let auth_ticket = sys::SteamAPI_ISteamGameServer_GetAuthSessionTicket(self.server, ticket.as_mut_ptr() as *mut _, 1024, &mut ticket_len, #[cfg(target_pointer_width = "32")] unimplemented!("not used in gmsv_workshop"));
             ticket.truncate(ticket_len as usize);
             (AuthTicket(auth_ticket), ticket)
         }
@@ -316,7 +316,7 @@ impl Server {
     /// **For this to work properly, you need to call `UGC::init_for_game_server()`!**
     pub fn ugc(&self) -> UGC<ServerManager> {
         unsafe {
-            let ugc = sys::SteamAPI_SteamGameServerUGC_v014();
+            let ugc = sys_ugc!();
             debug_assert!(!ugc.is_null());
             UGC {
                 ugc,
