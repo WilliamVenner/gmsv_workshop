@@ -165,7 +165,7 @@ impl Server {
         unsafe {
             let mut ticket = vec![0; 1024];
             let mut ticket_len = 0;
-            let auth_ticket = sys::SteamAPI_ISteamGameServer_GetAuthSessionTicket(self.server, ticket.as_mut_ptr() as *mut _, 1024, &mut ticket_len, #[cfg(target_pointer_width = "32")] unimplemented!("not used in gmsv_workshop"));
+            let auth_ticket = sys::SteamAPI_ISteamGameServer_GetAuthSessionTicket(self.server, ticket.as_mut_ptr() as *mut _, 1024, &mut ticket_len, unimplemented!("not used in gmsv_workshop"));
             ticket.truncate(ticket_len as usize);
             (AuthTicket(auth_ticket), ticket)
         }

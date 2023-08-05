@@ -1,22 +1,23 @@
 #![allow(unused)]
 #![feature(hash_drain_filter)]
+#![allow(clippy::if_same_then_else)]
 
 #[macro_export]
 #[cfg(target_pointer_width = "64")]
 macro_rules! sys_ugc {
-	() => { $crate::sys::SteamAPI_SteamGameServerUGC_v014() }
+	() => { $crate::sys::SteamAPI_SteamGameServerUGC_v017() }
 }
 
 #[macro_export]
 #[cfg(target_pointer_width = "64")]
 macro_rules! sys_gameserver {
-	() => { $crate::sys::SteamAPI_SteamGameServer_v013() }
+	() => { $crate::sys::SteamAPI_SteamGameServer_v015() }
 }
 
 #[macro_export]
 #[cfg(target_pointer_width = "64")]
 macro_rules! sys_steamuser {
-	() => { $crate::sys::SteamAPI_SteamUser_v021() };
+	() => { $crate::sys::SteamAPI_SteamUser_v023() }
 }
 
 #[macro_export]

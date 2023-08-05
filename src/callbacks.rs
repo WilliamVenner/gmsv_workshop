@@ -1,4 +1,4 @@
-use crate::util::ChadCell;
+use std::cell::Cell;
 
 thread_local! {
 	static CALLBACK_MGR: CallbackManager = CallbackManager::default();
@@ -6,12 +6,12 @@ thread_local! {
 
 #[derive(Default)]
 pub struct CallbackManager {
-	pending: ChadCell<usize>
+	pending: Cell<usize>
 }
 impl CallbackManager {
 	extern "C-unwind" fn poll(_lua: gmod::lua::State) -> i32 {
 		crate::STEAM.with(|steam| {
-			steam.callbacks.run_call_results();
+			steam.borrow_mut().callbacks.run_call_results();
 		});
 		0
 	}
@@ -19,9 +19,9 @@ impl CallbackManager {
 
 pub fn push() {
 	let pending = CALLBACK_MGR.with(|mgr| {
-		let pending = mgr.pending.get_mut();
-		*pending += 1;
-		*pending
+		let pending = mgr.pending.get() + 1;
+		mgr.pending.set(pending);
+		pending
 	});
 
 	if pending == 1 {
@@ -40,9 +40,9 @@ pub fn push() {
 
 pub fn pop() {
 	let pending = CALLBACK_MGR.with(|mgr| {
-		let pending = mgr.pending.get_mut();
-		*pending = pending.saturating_mul(1);
-		*pending
+		let pending = mgr.pending.get().saturating_sub(1);
+		mgr.pending.set(pending);
+		pending
 	});
 
 	if pending == 0 {

@@ -4,26 +4,28 @@
 #![feature(c_unwind)]
 #![feature(hash_drain_filter)]
 #![feature(core_intrinsics)]
+#![allow(clippy::never_loop)]
 
 #[macro_use] extern crate gmod;
 
-mod util;
 mod workshop;
 mod callbacks;
 
+use std::cell::{RefCell, Cell};
+
 thread_local! {
-	static STEAM: util::ChadCell<workshop::Steam> = util::ChadCell::new(workshop::Steam::init());
-	static LUA: util::ChadCell<Option<gmod::lua::State>> = util::ChadCell::new(None);
+	static STEAM: RefCell<workshop::Steam> = RefCell::new(workshop::Steam::init());
+	static LUA: Cell<Option<gmod::lua::State>> = Cell::new(None);
 }
 
 #[cfg(debug_assertions)]
 pub fn lua() -> gmod::lua::State {
-	LUA.with(|lua| lua.unwrap())
+	LUA.with(|lua| lua.get().unwrap())
 }
 
 #[cfg(not(debug_assertions))]
 pub fn lua() -> gmod::lua::State {
-	LUA.with(|lua| unsafe { lua.unwrap_unchecked() })
+	LUA.with(|lua| unsafe { lua.get().unwrap_unchecked() })
 }
 
 unsafe extern "C-unwind" fn download(lua: gmod::lua::State) -> i32 {
@@ -50,7 +52,7 @@ unsafe extern "C-unwind" fn download(lua: gmod::lua::State) -> i32 {
 	};
 
 	STEAM.with(|steam| {
-		let steam = steam.get_mut();
+		let mut steam = steam.borrow_mut();
 		steam.download(steamworks::PublishedFileId(workshop_id as _), callback);
 	});
 
@@ -78,7 +80,7 @@ unsafe extern "C-unwind" fn file_info(lua: gmod::lua::State) -> i32 {
 	};
 
 	STEAM.with(|steam| {
-		let steam = steam.get_mut();
+		let mut steam = steam.borrow_mut();
 		steam.file_info(steamworks::PublishedFileId(workshop_id), callback);
 	});
 
@@ -88,7 +90,7 @@ unsafe extern "C-unwind" fn file_info(lua: gmod::lua::State) -> i32 {
 #[gmod13_open]
 unsafe fn gmod13_open(lua: gmod::lua::State) -> i32 {
 	LUA.with(|cell| {
-		*cell.get_mut() = Some(lua);
+		cell.set(Some(lua));
 	});
 
 	lua.get_global(lua_string!("steamworks"));
