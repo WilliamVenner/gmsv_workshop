@@ -11,7 +11,7 @@ pub struct CallbackManager {
 impl CallbackManager {
 	extern "C-unwind" fn poll(_lua: gmod::lua::State) -> i32 {
 		crate::STEAM.with(|steam| {
-			steam.borrow_mut().callbacks.run_call_results();
+			steam.callbacks.run_call_results();
 		});
 		0
 	}

@@ -11,10 +11,10 @@
 mod workshop;
 mod callbacks;
 
-use std::cell::{RefCell, Cell};
+use std::cell::Cell;
 
 thread_local! {
-	static STEAM: RefCell<workshop::Steam> = RefCell::new(workshop::Steam::init());
+	static STEAM: workshop::Steam = workshop::Steam::init();
 	static LUA: Cell<Option<gmod::lua::State>> = Cell::new(None);
 }
 
@@ -52,7 +52,6 @@ unsafe extern "C-unwind" fn download(lua: gmod::lua::State) -> i32 {
 	};
 
 	STEAM.with(|steam| {
-		let mut steam = steam.borrow_mut();
 		steam.download(steamworks::PublishedFileId(workshop_id as _), callback);
 	});
 
@@ -80,7 +79,6 @@ unsafe extern "C-unwind" fn file_info(lua: gmod::lua::State) -> i32 {
 	};
 
 	STEAM.with(|steam| {
-		let mut steam = steam.borrow_mut();
 		steam.file_info(steamworks::PublishedFileId(workshop_id), callback);
 	});
 

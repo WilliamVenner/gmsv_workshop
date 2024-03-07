@@ -1,5 +1,5 @@
 use gmod::lua::LuaReference;
-use std::{collections::HashMap, mem::ManuallyDrop, path::PathBuf};
+use std::{cell::RefCell, collections::HashMap, mem::ManuallyDrop, path::PathBuf};
 use steamworks::PublishedFileId;
 
 macro_rules! check_installed {
@@ -129,7 +129,7 @@ pub mod downloads {
 	}
 
 	impl Steam {
-		pub fn download(&mut self, workshop_id: PublishedFileId, callback: Option<LuaReference>) {
+		pub fn download(&self, workshop_id: PublishedFileId, callback: Option<LuaReference>) {
 			let lua = crate::lua();
 			let ugc = self.server.ugc();
 
@@ -155,7 +155,7 @@ pub mod downloads {
 					lua.pop();
 				}
 
-				self.queued.insert(workshop_id, callback);
+				self.queued.borrow_mut().insert(workshop_id, callback);
 
 				println!("[gmsv_workshop] Queued {}", workshop_id);
 				return;
@@ -180,7 +180,7 @@ pub mod downloads {
 			println!("[gmsv_workshop] Downloading {}", workshop_id);
 
 			if let Some(callback) = callback {
-				self.pending.insert(workshop_id, callback);
+				self.pending.borrow_mut().insert(workshop_id, callback);
 			}
 
 			unsafe {
@@ -197,13 +197,11 @@ pub mod downloads {
 
 		extern "C-unwind" fn process_queued(lua: gmod::lua::State) -> i32 {
 			crate::STEAM.with(|steam| {
-				let mut steam = steam.borrow_mut();
-
 				if !steam.server.is_logged_in() {
 					return 0;
 				}
 
-				for (workshop_id, callback) in std::mem::take(&mut steam.queued) {
+				for (workshop_id, callback) in steam.queued.take() {
 					steam.download(workshop_id, callback);
 				}
 
@@ -221,19 +219,24 @@ pub mod downloads {
 		}
 
 		unsafe extern "C-unwind" fn poll(lua: gmod::lua::State) -> i32 {
+			let mut queue = Vec::new();
+
 			crate::STEAM.with(|steam| {
-				let mut steam = steam.borrow_mut();
 				let ugc = steam.server.ugc();
 
-				steam.pending.drain_filter(|workshop_id, callback| {
+				steam.pending.borrow_mut().drain_filter(|workshop_id, callback| {
 					if let Some(folder) = check_installed!(ugc, *workshop_id) {
-						self::callback(lua, Some(*callback), *workshop_id, Some(folder));
+						queue.push((*callback, *workshop_id, folder));
 						true
 					} else {
 						false
 					}
 				});
 			});
+
+			for (callback, workshop_id, folder) in queue {
+				self::callback(lua, Some(callback), workshop_id, Some(folder));
+			}
 
 			0
 		}
@@ -361,7 +364,7 @@ use super::*;
 	}
 
 	impl Steam {
-		pub fn file_info(&mut self, workshop_id: PublishedFileId, callback: LuaReference) {
+		pub fn file_info(&self, workshop_id: PublishedFileId, callback: LuaReference) {
 			let ugc = self.server.ugc();
 
 			#[cfg(debug_assertions)]
@@ -388,8 +391,8 @@ use super::*;
 pub struct Steam {
 	pub server: ManuallyDrop<steamworks::Server>,
 	pub callbacks: ManuallyDrop<steamworks::SingleClient<steamworks::ServerManager>>,
-	pub pending: HashMap<PublishedFileId, LuaReference>,
-	pub queued: HashMap<PublishedFileId, Option<LuaReference>>,
+	pub pending: RefCell<HashMap<PublishedFileId, LuaReference>>,
+	pub queued: RefCell<HashMap<PublishedFileId, Option<LuaReference>>>,
 }
 impl Steam {
 	pub fn init() -> Steam {
@@ -399,13 +402,11 @@ impl Steam {
 			})
 		};
 
-		let steam = Steam {
+		Steam {
 			pending: Default::default(),
 			queued: Default::default(),
 			server: ManuallyDrop::new(server),
 			callbacks: ManuallyDrop::new(callbacks)
-		};
-
-		steam
+		}
 	}
 }
