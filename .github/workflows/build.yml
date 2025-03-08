@@ -18,6 +18,7 @@ jobs:
     steps:
     - name: Checkout
       run: |
+        git config --global --add safe.directory .
         git clone --depth=1 https://github.com/${{ github.repository }}.git .
         git fetch --prune --depth=1 origin ${{ github.ref }}
         git checkout ${{ github.sha }}
