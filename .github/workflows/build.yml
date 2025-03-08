@@ -25,7 +25,10 @@ jobs:
     - name: Install build dependencies
       run: yum -y install glibc-devel.i686 libgcc.i686 libstdc++-devel.i686
     - name: Install nightly toolchain
-      run: curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain nightly-2025-03-08 --profile minimal
+      run: |
+        curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain nightly-2025-03-08 --profile minimal
+        echo "CARGO_HOME=\$HOME/.cargo" >> $GITHUB_ENV
+        echo "\$HOME/.cargo/bin" >> $GITHUB_PATH
     - name: Add targets
       run: rustup target add x86_64-unknown-linux-gnu && rustup target add i686-unknown-linux-gnu
     - name: Build 32-bit
