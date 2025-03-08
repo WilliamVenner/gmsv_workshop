@@ -25,11 +25,7 @@ jobs:
     - name: Install build dependencies
       run: yum -y install glibc-devel.i686 libgcc.i686 libstdc++-devel.i686
     - name: Install nightly toolchain
-      uses: actions-rs/toolchain@v1
-      with:
-        profile: minimal
-        toolchain: nightly-2025-03-08
-        override: true
+      run: curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain nightly-2025-03-08 --profile minimal
     - name: Add targets
       run: rustup target add x86_64-unknown-linux-gnu && rustup target add i686-unknown-linux-gnu
     - name: Build 32-bit
