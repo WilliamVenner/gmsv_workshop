@@ -224,12 +224,12 @@ pub mod downloads {
 			crate::STEAM.with(|steam| {
 				let ugc = steam.server.ugc();
 
-				steam.pending.borrow_mut().drain_filter(|workshop_id, callback| {
+				steam.pending.borrow_mut().retain(|workshop_id, callback| {
 					if let Some(folder) = check_installed!(ugc, *workshop_id) {
 						queue.push((*callback, *workshop_id, folder));
-						true
-					} else {
 						false
+					} else {
+						true
 					}
 				});
 			});

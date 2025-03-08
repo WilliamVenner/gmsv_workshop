@@ -1,5 +1,5 @@
 #![allow(unused)]
-#![feature(hash_drain_filter)]
+#![feature(hash_extract_if)]
 #![allow(clippy::if_same_then_else)]
 
 #[macro_export]
@@ -294,9 +294,8 @@ where
 			let steamutils = sys::SteamAPI_SteamGameServerUtils_v010();
 			debug_assert_ne!(steamutils, std::ptr::null_mut());
 			let call_results = &mut self.inner.callbacks.lock().unwrap().call_results;
-			for (api, mut callback) in call_results.drain_filter(|api, callback| {
-				let complete = sys::SteamAPI_ISteamUtils_IsAPICallCompleted(steamutils, *api, &mut callback.failed);
-				complete
+			for (api, mut callback) in call_results.extract_if(|api, callback| {
+				sys::SteamAPI_ISteamUtils_IsAPICallCompleted(steamutils, *api, &mut callback.failed)
 			}) {
 				let mut mem = vec![0u8; callback.size];
 				if sys::SteamAPI_ISteamUtils_GetAPICallResult(steamutils, api, mem.as_mut_ptr() as *mut _, callback.size as _, callback.callback_id, &mut callback.failed) {

@@ -2,7 +2,7 @@
 // lua_run require("workshop") steamworks.FileInfo("104533079", function(...) PrintTable({...}) end)
 
 #![feature(c_unwind)]
-#![feature(hash_drain_filter)]
+#![feature(hash_extract_if)]
 #![feature(core_intrinsics)]
 #![allow(clippy::never_loop)]
 
