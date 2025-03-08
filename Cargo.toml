@@ -1,6 +1,6 @@
 [package]
 name = "gmsv_workshop"
-version = "2.2.7"
+version = "2.3.0"
 edition = "2021"
 authors = ["William Venner <william@venner.io>"]
 publish = false
