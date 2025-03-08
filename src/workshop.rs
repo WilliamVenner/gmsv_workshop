@@ -321,7 +321,7 @@ use super::*;
 				lua.set_field(-2, lua_string!("description"));
 
 				// On Linux64 Valve packs and aligns the struct to 4 bytes, we need to do an unaligned read on some fields :(
-				if cfg!(all(target_os = "linux", target_pointer_width = "64")) {
+				#[cfg(all(target_os = "linux", target_pointer_width = "64"))] {
 					lua.push_string(&std::ptr::read_unaligned(std::ptr::addr_of!(info.m_ulSteamIDOwner)).to_string());
 					lua.set_field(-2, lua_string!("owner"));
 
@@ -330,7 +330,8 @@ use super::*;
 
 					lua.push_string(&std::ptr::read_unaligned(std::ptr::addr_of!(info.m_hFile)).to_string());
 					lua.set_field(-2, lua_string!("fileid"));
-				} else {
+				}
+				#[cfg(not(all(target_os = "linux", target_pointer_width = "64")))] {
 					lua.push_string(&info.m_ulSteamIDOwner.to_string());
 					lua.set_field(-2, lua_string!("owner"));
 
