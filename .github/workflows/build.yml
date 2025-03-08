@@ -49,17 +49,44 @@ jobs:
         TAG_NAME="${{ github.ref_name }}"
         AUTH_HEADER="Authorization: token ${{ secrets.GITHUB_TOKEN }}"
 
-        # Create the release and get the upload URL
-        RESPONSE=$(curl -s -X POST -H "$AUTH_HEADER" -H "Content-Type: application/json" \
-          -d '{"tag_name": "'"$TAG_NAME"'", "name": "'"$TAG_NAME"'", "body": "Release '"$TAG_NAME"'", "draft": false, "prerelease": false}' \
-          "$API_URL")
+        echo "Checking if release $TAG_NAME exists..."
 
-        UPLOAD_URL=$(echo "$RESPONSE" | jq -r .upload_url | sed 's/{?name,label}//')
+        # Check if the release already exists
+        RELEASE_RESPONSE=$(curl -s -H "$AUTH_HEADER" "$API_URL/tags/$TAG_NAME")
+
+        # Extract upload URL if release exists
+        UPLOAD_URL=$(echo "$RELEASE_RESPONSE" | jq -r .upload_url | sed 's/{?name,label}//')
+
+        if [ "$UPLOAD_URL" == "null" ] || [ -z "$UPLOAD_URL" ]; then
+          echo "Release not found. Creating a new one..."
+
+          # Create a new release
+          NEW_RELEASE_RESPONSE=$(curl -s -X POST -H "$AUTH_HEADER" -H "Content-Type: application/json" \
+            -d "{\"tag_name\": \"$TAG_NAME\", \"name\": \"$TAG_NAME\", \"body\": \"Release $TAG_NAME\", \"draft\": false, \"prerelease\": false}" \
+            "$API_URL")
+
+          UPLOAD_URL=$(echo "$NEW_RELEASE_RESPONSE" | jq -r .upload_url | sed 's/{?name,label}//')
+
+          if [ "$UPLOAD_URL" == "null" ] || [ -z "$UPLOAD_URL" ]; then
+            echo "Error: Failed to create release!"
+            echo "Response: $NEW_RELEASE_RESPONSE"
+            exit 1
+          fi
+        else
+          echo "Release already exists. Uploading files to existing release..."
+        fi
+
+        echo "Uploading assets to: $UPLOAD_URL"
 
         # Upload files
         for file in target/x86_64-unknown-linux-gnu/release/gmsv_workshop_linux64.dll target/i686-unknown-linux-gnu/release/gmsv_workshop_linux.dll; do
-          FILE_NAME=$(basename "$file")
-          curl -X POST -H "$AUTH_HEADER" -H "Content-Type: application/octet-stream" --data-binary @"$file" "$UPLOAD_URL?name=$FILE_NAME"
+          if [ -f "$file" ]; then
+            FILE_NAME=$(basename "$file")
+            echo "Uploading: $FILE_NAME"
+            curl -X POST -H "$AUTH_HEADER" -H "Content-Type: application/octet-stream" --data-binary @"$file" "$UPLOAD_URL?name=$FILE_NAME"
+          else
+            echo "Warning: File not found - $file"
+          fi
         done
 
   build_windows:
