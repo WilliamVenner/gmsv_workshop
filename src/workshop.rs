@@ -257,7 +257,7 @@ use super::*;
 
 			lua.new_table();
 
-			lua.push_integer(workshop_id.0 as _);
+			lua.push_string(&workshop_id.0.to_string());
 			lua.set_field(-2, lua_string!("id"));
 
 			loop {
@@ -335,34 +335,34 @@ use super::*;
 				lua.push_boolean(info.m_bBanned);
 				lua.set_field(-2, lua_string!("banned"));
 
-				lua.push_integer(info.m_rtimeCreated as _);
+				lua.push_number(info.m_rtimeCreated as _);
 				lua.set_field(-2, lua_string!("created"));
 
-				lua.push_integer(info.m_rtimeUpdated as _);
+				lua.push_number(info.m_rtimeUpdated as _);
 				lua.set_field(-2, lua_string!("updated"));
 
-				lua.push_integer(info.m_nFileSize as _);
+				lua.push_number(info.m_nFileSize as _);
 				lua.set_field(-2, lua_string!("size"));
 
 				lua.push_binary_string(cstr_to_bytes!(info.m_rgchURL));
 				lua.set_field(-2, lua_string!("previewurl"));
 
-				lua.push_integer(info.m_hPreviewFile as _);
+				lua.push_string(&info.m_hPreviewFile.to_string());
 				lua.set_field(-2, lua_string!("previewid"));
 
-				lua.push_integer(info.m_nPreviewFileSize as _);
+				lua.push_number(info.m_nPreviewFileSize as _);
 				lua.set_field(-2, lua_string!("previewsize"));
 
-				lua.push_integer(info.m_hFile as _);
+				lua.push_string(&info.m_hFile.to_string());
 				lua.set_field(-2, lua_string!("fileid"));
 
-				lua.push_integer(info.m_unVotesUp as _);
+				lua.push_number(info.m_unVotesUp as _);
 				lua.set_field(-2, lua_string!("up"));
 
-				lua.push_integer(info.m_unVotesDown as _);
+				lua.push_number(info.m_unVotesDown as _);
 				lua.set_field(-2, lua_string!("down"));
 
-				lua.push_integer((info.m_unVotesUp as u64 + info.m_unVotesDown as u64) as _);
+				lua.push_number((info.m_unVotesUp as u64 + info.m_unVotesDown as u64) as _);
 				lua.set_field(-2, lua_string!("total"));
 
 				lua.push_number(info.m_flScore as _);
@@ -370,7 +370,7 @@ use super::*;
 
 				lua.create_table(children.len() as _, 0);
 				for (i, child) in children.into_iter().enumerate() {
-					lua.push_integer(child.0 as _);
+					lua.push_string(&child.0.to_string());
 					lua.raw_seti(-2, (i + 1) as _);
 				}
 				lua.set_field(-2, lua_string!("children"));
