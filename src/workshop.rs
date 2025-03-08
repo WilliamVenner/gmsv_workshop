@@ -263,7 +263,7 @@ use super::*;
 			loop {
 				// NB: No idea where to put `-2 means Failed to send query`
 
-				let info = match info {
+				let (info, children) = match info {
 					Err(None) => {
 						// Failed to create query
 						lua.push_integer(-1);
@@ -289,7 +289,7 @@ use super::*;
 								break;
 							},
 
-							(Some(info), None) => info
+							(Some(details), None) => (details, info.get_children(0).unwrap_or_default()),
 						}
 					}
 				};
@@ -355,6 +355,13 @@ use super::*;
 
 				lua.push_integer(info.m_hFile as _);
 				lua.set_field(-2, lua_string!("fileid"));
+
+				lua.create_table(children.len() as _, 0);
+				for (i, child) in children.into_iter().enumerate() {
+					lua.push_integer(child.0 as _);
+					lua.raw_seti(-2, (i + 1) as _);
+				}
+				lua.set_field(-2, lua_string!("children"));
 
 				break;
 			}
