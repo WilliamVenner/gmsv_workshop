@@ -356,6 +356,18 @@ use super::*;
 				lua.push_integer(info.m_hFile as _);
 				lua.set_field(-2, lua_string!("fileid"));
 
+				lua.push_integer(info.m_unVotesUp as _);
+				lua.set_field(-2, lua_string!("up"));
+
+				lua.push_integer(info.m_unVotesDown as _);
+				lua.set_field(-2, lua_string!("down"));
+
+				lua.push_integer((info.m_unVotesUp as u64 + info.m_unVotesDown as u64) as _);
+				lua.set_field(-2, lua_string!("total"));
+
+				lua.push_number(info.m_flScore as _);
+				lua.set_field(-2, lua_string!("score"));
+
 				lua.create_table(children.len() as _, 0);
 				for (i, child) in children.into_iter().enumerate() {
 					lua.push_integer(child.0 as _);
