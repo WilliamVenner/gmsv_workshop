@@ -23,7 +23,7 @@ jobs:
         git fetch --prune --depth=1 origin ${{ github.ref }}
         git checkout ${{ github.sha }}
     - name: Install build dependencies
-      run: yum -y install glibc-devel.i686 libgcc.i686 libstdc++-devel.i686 yum
+      run: yum -y install glibc-devel.i686 libgcc.i686 libstdc++-devel.i686 jq
     - name: Install nightly toolchain
       run: |
         curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y --default-toolchain nightly-2025-03-08 --profile minimal
