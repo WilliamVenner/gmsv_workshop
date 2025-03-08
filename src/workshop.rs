@@ -320,14 +320,26 @@ use super::*;
 				lua.push_binary_string(cstr_to_bytes!(info.m_rgchDescription));
 				lua.set_field(-2, lua_string!("description"));
 
-				// On Linux64 Valve packs and aligns the struct to 4 bytes, we need to do an unaligned read on the SteamID64 :(
-				#[cfg(all(target_os = "linux", target_pointer_width = "64"))] {
+				// On Linux64 Valve packs and aligns the struct to 4 bytes, we need to do an unaligned read on some fields :(
+				if cfg!(all(target_os = "linux", target_pointer_width = "64")) {
 					lua.push_string(&std::ptr::read_unaligned(std::ptr::addr_of!(info.m_ulSteamIDOwner)).to_string());
-				}
-				#[cfg(not(all(target_os = "linux", target_pointer_width = "64")))] {
+					lua.set_field(-2, lua_string!("owner"));
+
+					lua.push_string(&std::ptr::read_unaligned(std::ptr::addr_of!(info.m_hPreviewFile)).to_string());
+					lua.set_field(-2, lua_string!("previewid"));
+
+					lua.push_string(&std::ptr::read_unaligned(std::ptr::addr_of!(info.m_hFile)).to_string());
+					lua.set_field(-2, lua_string!("fileid"));
+				} else {
 					lua.push_string(&info.m_ulSteamIDOwner.to_string());
+					lua.set_field(-2, lua_string!("owner"));
+
+					lua.push_string(&info.m_hPreviewFile.to_string());
+					lua.set_field(-2, lua_string!("previewid"));
+
+					lua.push_string(&info.m_hFile.to_string());
+					lua.set_field(-2, lua_string!("fileid"));
 				}
-				lua.set_field(-2, lua_string!("owner"));
 
 				lua.push_binary_string(cstr_to_bytes!(info.m_rgchTags));
 				lua.set_field(-2, lua_string!("tags"));
@@ -347,14 +359,8 @@ use super::*;
 				lua.push_binary_string(cstr_to_bytes!(info.m_rgchURL));
 				lua.set_field(-2, lua_string!("previewurl"));
 
-				lua.push_string(&info.m_hPreviewFile.to_string());
-				lua.set_field(-2, lua_string!("previewid"));
-
 				lua.push_number(info.m_nPreviewFileSize as _);
 				lua.set_field(-2, lua_string!("previewsize"));
-
-				lua.push_string(&info.m_hFile.to_string());
-				lua.set_field(-2, lua_string!("fileid"));
 
 				lua.push_number(info.m_unVotesUp as _);
 				lua.set_field(-2, lua_string!("up"));
