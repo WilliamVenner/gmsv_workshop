@@ -55,7 +55,7 @@ impl Server {
     /// * The user doesn't own a license for the game.
     /// * The app ID isn't completely set up.
     pub fn init(
-        ip: Ipv4Addr, steam_port: u16,
+        ip: Ipv4Addr,
         game_port: u16, query_port: u16,
         server_mode: ServerMode, version: &str,
     ) -> SResult<(Server, SingleClient<ServerManager>)> {
@@ -67,12 +67,29 @@ impl Server {
                 ServerMode::Authentication => sys::EServerMode::eServerModeAuthentication,
                 ServerMode::AuthenticationAndSecure => sys::EServerMode::eServerModeAuthenticationAndSecure,
             };
-            if !sys::SteamInternal_GameServer_Init(
-                raw_ip, steam_port,
+            // Mirrors SteamGameServer_InitEx in steam_gameserver.h: a list of
+            // NUL-terminated interface versions, terminated by an extra NUL.
+            let interface_versions: Vec<u8> = [
+                &sys::STEAMUTILS_INTERFACE_VERSION[..],
+                &sys::STEAMNETWORKINGUTILS_INTERFACE_VERSION[..],
+                &sys::STEAMGAMESERVER_INTERFACE_VERSION[..],
+                &sys::STEAMGAMESERVERSTATS_INTERFACE_VERSION[..],
+                &sys::STEAMHTTP_INTERFACE_VERSION[..],
+                &sys::STEAMINVENTORY_INTERFACE_VERSION[..],
+                &sys::STEAMNETWORKING_INTERFACE_VERSION[..],
+                &sys::STEAMNETWORKINGMESSAGES_INTERFACE_VERSION[..],
+                &sys::STEAMNETWORKINGSOCKETS_INTERFACE_VERSION[..],
+                &sys::STEAMUGC_INTERFACE_VERSION[..],
+                b"\0",
+            ].concat();
+            if sys::SteamInternal_GameServer_Init_V2(
+                raw_ip,
                 game_port, query_port,
                 server_mode,
                 version.as_ptr(),
-            ) {
+                interface_versions.as_ptr() as *const _,
+                std::ptr::null_mut(),
+            ) != sys::ESteamAPIInitResult::k_ESteamAPIInitResult_OK {
                 return Err(SteamError::InitFailed);
             }
             sys::SteamAPI_ManualDispatch_Init();
@@ -293,7 +310,7 @@ impl Server {
     /// Returns an accessor to the steam friends interface
     pub fn friends(&self) -> Friends<ServerManager> {
         unsafe {
-            let friends = sys::SteamAPI_SteamFriends_v017();
+            let friends = sys::SteamAPI_SteamFriends_v018();
             debug_assert!(!friends.is_null());
             Friends {
                 friends: friends,

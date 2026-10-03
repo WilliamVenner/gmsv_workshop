@@ -186,10 +186,10 @@ impl <Manager> UserStats<Manager> {
         }
     }
 
-    /// Triggers a [`UserStatsReceived`](./struct.UserStatsReceived.html) callback.
-    pub fn request_current_stats(&self) {
-        unsafe { sys::SteamAPI_ISteamUserStats_RequestCurrentStats(self.user_stats); }
-    }
+    /// No-op: the current user's stats are now requested
+    /// automatically by Steam on initialization.
+    #[deprecated(note = "removed from the Steamworks SDK; stats are fetched automatically")]
+    pub fn request_current_stats(&self) {}
 
     /// Send the changed stats and achievements data to the server for permanent storage.
     ///

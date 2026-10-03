@@ -10,7 +10,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 
     let out_path = PathBuf::from(env::var("OUT_DIR").unwrap());
 
-    let sdk_loc = "../../lib/steamworks_157";
+    let sdk_loc = "../../lib/steamworks_164";
     let sdk_loc = Path::new(&sdk_loc);
     println!("cargo:rerun-if-env-changed=STEAM_SDK_LOCATION");
 
@@ -71,7 +71,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
 			.clang_arg("-xc++")
 			.clang_arg("-std=c++11")
 			.clang_arg(format!("-I{}", sdk_loc.join("public").display()))
-			.rustfmt_bindings(true)
+			.formatter(bindgen::Formatter::Rustfmt)
+			// Interfaces are only ever used behind pointers. Opaque types keep their
+			// layout correct where the SDK packs them (pack(4) on linux64).
+			.opaque_type(r"ISteam\w+")
 			.default_enum_style(bindgen::EnumVariation::Rust {
 				non_exhaustive: true
 			})

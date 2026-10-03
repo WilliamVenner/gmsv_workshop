@@ -422,9 +422,9 @@ impl <Manager> UGC<Manager> {
 	/// Gets the publisher file IDs of all currently subscribed items.
 	pub fn subscribed_items(&self) -> Vec<PublishedFileId> {
 		unsafe {
-			let count = sys::SteamAPI_ISteamUGC_GetNumSubscribedItems(self.ugc);
+			let count = sys::SteamAPI_ISteamUGC_GetNumSubscribedItems(self.ugc, false);
 			let mut data: Vec<sys::PublishedFileId_t> = vec![0; count as usize];
-			let gotten_count = sys::SteamAPI_ISteamUGC_GetSubscribedItems(self.ugc, data.as_mut_ptr(), count);
+			let gotten_count = sys::SteamAPI_ISteamUGC_GetSubscribedItems(self.ugc, data.as_mut_ptr(), count, false);
 			debug_assert!(count == gotten_count);
 			data.into_iter()
 				.map(|v| PublishedFileId(v))
@@ -640,7 +640,7 @@ impl <Manager> UpdateHandle<Manager> {
 	pub fn tags<S: AsRef<str>>(self, tags: Vec<S>) -> Self {
 		unsafe {
 			let mut tags = SteamParamStringArray::new(&tags);
-			assert!(sys::SteamAPI_ISteamUGC_SetItemTags(self.ugc, self.handle, &tags.as_raw()));
+			assert!(sys::SteamAPI_ISteamUGC_SetItemTags(self.ugc, self.handle, &tags.as_raw(), false));
 		}
 		self
 	}
