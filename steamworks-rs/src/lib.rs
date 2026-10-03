@@ -5,7 +5,7 @@
 #[macro_export]
 #[cfg(target_pointer_width = "64")]
 macro_rules! sys_ugc {
-	() => { $crate::sys::SteamAPI_SteamGameServerUGC_v017() }
+	() => { $crate::sys::SteamAPI_SteamGameServerUGC_v021() }
 }
 
 #[macro_export]
@@ -23,7 +23,7 @@ macro_rules! sys_steamuser {
 #[macro_export]
 #[cfg(target_pointer_width = "32")]
 macro_rules! sys_ugc {
-	() => { $crate::sys::SteamAPI_SteamGameServerUGC_v017() }
+	() => { $crate::sys::SteamAPI_SteamGameServerUGC_v021() }
 }
 
 #[macro_export]
@@ -191,7 +191,7 @@ impl Client<ClientManager> {
         static_assert_sync::<Client<ClientManager>>();
         static_assert_send::<SingleClient<ClientManager>>();
         unsafe {
-            if !sys::SteamAPI_Init() {
+            if sys::SteamAPI_InitFlat(std::ptr::null_mut()) != sys::ESteamAPIInitResult::k_ESteamAPIInitResult_OK {
                 return Err(SteamError::InitFailed);
             }
             sys::SteamAPI_ManualDispatch_Init();
@@ -361,7 +361,7 @@ impl<Manager> Client<Manager> {
     /// Returns an accessor to the steam apps interface
     pub fn apps(&self) -> Apps<Manager> {
         unsafe {
-            let apps = sys::SteamAPI_SteamApps_v008();
+            let apps = sys::SteamAPI_SteamApps_v009();
             debug_assert!(!apps.is_null());
             Apps {
                 apps: apps,
@@ -373,7 +373,7 @@ impl<Manager> Client<Manager> {
     /// Returns an accessor to the steam friends interface
     pub fn friends(&self) -> Friends<Manager> {
         unsafe {
-            let friends = sys::SteamAPI_SteamFriends_v017();
+            let friends = sys::SteamAPI_SteamFriends_v018();
             debug_assert!(!friends.is_null());
             Friends {
                 friends: friends,
@@ -397,7 +397,7 @@ impl<Manager> Client<Manager> {
     /// Returns an accessor to the steam user stats interface
     pub fn user_stats(&self) -> UserStats<Manager> {
         unsafe {
-            let us = sys::SteamAPI_SteamUserStats_v012();
+            let us = sys::SteamAPI_SteamUserStats_v013();
             debug_assert!(!us.is_null());
             UserStats {
                 user_stats: us,
@@ -409,7 +409,7 @@ impl<Manager> Client<Manager> {
     ///// Returns an accessor to the steam remote storage interface
     //pub fn remote_storage(&self) -> RemoteStorage<Manager> {
     //    unsafe {
-    //        let rs = sys::SteamAPI_SteamRemoteStorage_v014();
+    //        let rs = sys::SteamAPI_SteamRemoteStorage_v016();
     //        debug_assert!(!rs.is_null());
     //        let util = sys::SteamAPI_SteamUtils_v010();
     //        debug_assert!(!util.is_null());
@@ -424,7 +424,7 @@ impl<Manager> Client<Manager> {
     ///// Returns an accessor to the steam UGC interface (steam workshop)
     //pub fn ugc(&self) -> UGC<Manager> {
     //    unsafe {
-    //        let ugc = sys::SteamAPI_SteamUGC_v014();
+    //        let ugc = sys::SteamAPI_SteamUGC_v021();
     //        debug_assert!(!ugc.is_null());
     //        UGC {
     //            ugc,
